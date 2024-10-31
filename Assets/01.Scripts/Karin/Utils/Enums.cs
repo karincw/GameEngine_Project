@@ -6,19 +6,15 @@ using UnityEngine;
 namespace Karin
 {
 
-    [Flags]
     public enum BaseShapeType : int
     {
-        Black = 0,
-        Pink,
-        Diamond,
+        Diamond = 0,
         Heart,
         Clover,
         Spade,
     }
 
-    [Flags]
-    public enum SpecialShapeType
+    public enum SpecialShapeType : int
     {
         Diamond = 0,
         Heart,
@@ -28,7 +24,7 @@ namespace Karin
         Shield,
     }
 
-    public enum CountType
+    public enum CountType : int
     {
         ACE = 0,
         One,
@@ -45,5 +41,14 @@ namespace Karin
         Queen,
         King,
     }
+
+    public enum CardType : int
+    {
+        Basic = 0,
+        Blue,
+        Red,
+        Gold
+    }
+
 
 }
