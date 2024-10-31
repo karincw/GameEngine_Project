@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Karin
@@ -5,16 +6,21 @@ namespace Karin
 
     public class CardBase : MonoBehaviour
     {
+        [Header("Settings")]
         public CardDataSO cardData;
+
+        [Header("States")]
+        public bool isDragging;
+        public bool isHovering;
 
         private CardVisual _cardVisual;
 
         private void Awake()
         {
-            _cardVisual = GetComponentInChildren<CardVisual>();
+            _cardVisual = GetComponent<CardVisual>();
         }
 
-        private void Start()
+        public void Initialize()
         {
             _cardVisual.Initialize(this);
         }
@@ -30,6 +36,8 @@ namespace Karin
 
             return false;
         }
+        public void SetHovering(bool state) => isHovering = state;
+        public void SetDragging(bool state) => isDragging = state;
     }
 
 }
