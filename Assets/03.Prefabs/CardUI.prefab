@@ -117,6 +117,7 @@ MonoBehaviour:
   _countText:
   - {fileID: 5992815885195106852}
   - {fileID: 4830485886255076111}
+  _flipTime: 5
 --- !u!1 &599286495172519560
 GameObject:
   m_ObjectHideFlags: 0

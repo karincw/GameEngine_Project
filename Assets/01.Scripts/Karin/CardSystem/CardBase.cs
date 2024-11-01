@@ -1,9 +1,7 @@
-using System;
 using UnityEngine;
 
 namespace Karin
 {
-
     public class CardBase : MonoBehaviour
     {
         [Header("Settings")]
@@ -15,13 +13,10 @@ namespace Karin
 
         private CardVisual _cardVisual;
 
-        private void Awake()
+        public void Initialize(CardDataSO data)
         {
             _cardVisual = GetComponent<CardVisual>();
-        }
-
-        public void Initialize()
-        {
+            cardData = data;
             _cardVisual.Initialize(this);
         }
 

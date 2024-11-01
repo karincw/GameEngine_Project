@@ -1,3 +1,4 @@
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,18 +8,30 @@ namespace Karin
 
     public class CardVisual : MonoBehaviour
     {
+        [Header("Settings")]
         [SerializeField] private Image _cardBackground;
         [SerializeField] private Image _mainImage;
         [SerializeField] private Image[] _subImage;
         [SerializeField] private TextMeshProUGUI[] _countText;
 
+        [Header("Flip-Settings")]
+        [SerializeField] private float _flipTime;
         private CardBase _owner;
 
+        private bool _isFront;
         private Color alphaZero = new Color(0, 0, 0, 0);
+        private RectTransform _rectTrm;
+
+        private void Awake()
+        {
+            _rectTrm = transform as RectTransform;
+        }
 
         public void Initialize(CardBase card)
         {
             _owner = card;
+            _isFront = false;
+            SetVisual(false);
         }
 
         public void SetVisual(bool isFront)
@@ -63,6 +76,32 @@ namespace Karin
                     ct.text = string.Empty;
                 }
             }
+        }
+
+        [ContextMenu("FlipTest")]
+        public void Flip()
+        {
+            _rectTrm.DORotate(new Vector3(0, 90, 0), _flipTime / 2)
+                .SetEase(Ease.Linear)
+                .OnComplete(() =>
+                 {
+                     SetVisual(!_isFront);
+
+                     _rectTrm.DORotate(new Vector3(0, 0, 0), _flipTime / 2).SetEase(Ease.Linear);
+                     _isFront = !_isFront;
+                 });
+        }
+        public void Flip(bool front)
+        {
+            _rectTrm.DORotate(new Vector3(0, 90, 0), _flipTime / 2)
+                .SetEase(Ease.Linear)
+                .OnComplete(() =>
+                {
+                    SetVisual(front);
+
+                    _rectTrm.DORotate(new Vector3(0, 0, 0), _flipTime / 2).SetEase(Ease.Linear);
+                    _isFront = front;
+                });
         }
     }
 
