@@ -15,9 +15,21 @@ namespace Karin
         [SerializeField] private TextMeshProUGUI[] _countText;
 
         [Header("Flip-Settings")]
+        [SerializeField] private RectTransform _cardTrm;
         [SerializeField] private float _flipTime;
-        private CardBase _owner;
+        [SerializeField] private AnimationCurve _forwardFlipEase;
+        [SerializeField] private AnimationCurve _backwardFlipEaseCurve;
 
+        [Header("Scale-Settings")]
+        [SerializeField] private float _scaleDuration = 0.2f;
+        [SerializeField] private float _scaleExpandValue = 1.1f;
+
+        [Header("Move-Settings")]
+        [SerializeField] private float _moveDuration = 0.2f;
+        [SerializeField] private float _movePosition;
+        public bool isSelected = false;
+
+        private CardBase _owner;
         private bool _isFront;
         private Color alphaZero = new Color(0, 0, 0, 0);
         private RectTransform _rectTrm;
@@ -26,12 +38,23 @@ namespace Karin
         {
             _rectTrm = transform as RectTransform;
         }
+        private void OnDisable()
+        {
+            _owner.PointerEnterEvent -= PointerEnterHandle;
+            _owner.PointerExitEvent -= PointerExitHandle;
+            _owner.PointerUpEvent -= PointerDownHandle;
+        }
 
         public void Initialize(CardBase card)
         {
             _owner = card;
             _isFront = false;
+            isSelected = false;
             SetVisual(false);
+
+            _owner.PointerEnterEvent += FristFlip;
+            _owner.PointerExitEvent += PointerExitHandle;
+            _owner.PointerUpEvent += PointerDownHandle;
         }
 
         public void SetVisual(bool isFront)
@@ -78,31 +101,70 @@ namespace Karin
             }
         }
 
-        [ContextMenu("FlipTest")]
+        #region Flip-Section
         public void Flip()
         {
-            _rectTrm.DORotate(new Vector3(0, 90, 0), _flipTime / 2)
-                .SetEase(Ease.Linear)
+            _cardTrm.DORotate(new Vector3(0, 90, 0), _flipTime / 2)
+                .SetEase(_forwardFlipEase)
                 .OnComplete(() =>
                  {
                      SetVisual(!_isFront);
 
-                     _rectTrm.DORotate(new Vector3(0, 0, 0), _flipTime / 2).SetEase(Ease.Linear);
+                     _cardTrm.DORotate(new Vector3(0, 0, 0), _flipTime / 2).SetEase(_backwardFlipEaseCurve);
                      _isFront = !_isFront;
                  });
         }
         public void Flip(bool front)
         {
-            _rectTrm.DORotate(new Vector3(0, 90, 0), _flipTime / 2)
-                .SetEase(Ease.Linear)
+            _cardTrm.DORotate(new Vector3(0, 90, 0), _flipTime / 2)
+                .SetEase(_forwardFlipEase)
                 .OnComplete(() =>
                 {
                     SetVisual(front);
 
-                    _rectTrm.DORotate(new Vector3(0, 0, 0), _flipTime / 2).SetEase(Ease.Linear);
+                    _cardTrm.DORotate(new Vector3(0, 0, 0), _flipTime / 2).SetEase(_backwardFlipEaseCurve);
                     _isFront = front;
                 });
         }
+        private void FristFlip()
+        {
+            _owner.PointerEnterEvent -= FristFlip;
+            _owner.PointerEnterEvent += PointerEnterHandle;
+            Flip(true);
+        }
+        #endregion
+
+        #region Scale-Section
+        public void CardScaleChange(float multiplyValue = 1.1f)
+        {
+            _owner.transform.DOScale(Vector3.one * multiplyValue, _scaleDuration).SetEase(Ease.Linear);
+        }
+        private void PointerEnterHandle()
+        {
+            CardScaleChange(_scaleExpandValue);
+        }
+        private void PointerExitHandle()
+        {
+            CardScaleChange(1);
+        }
+        #endregion
+
+        #region Move-Section
+        public void MoveCard(float offset)
+        {
+            _owner.transform.DOLocalMoveY(_owner.originPos.y + offset, _moveDuration).SetEase(Ease.Linear);
+        }
+        private void PointerDownHandle()
+        {
+            if (!isSelected)
+                MoveCard(_movePosition);
+            else
+                MoveCard(0);
+
+            isSelected = !isSelected;
+        }
+        #endregion
+
     }
 
 }
