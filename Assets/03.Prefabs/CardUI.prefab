@@ -60,10 +60,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardData: {fileID: 11400000, guid: 9837fb294e3aa1447ae20bef24b7c91d, type: 2}
-  _isDragging: 0
+  isDragging: 0
+  indexChange: 0
   _isHovering: 0
   _moveSpeedLimit: 50
-  yPos: 0
+  originPos: {x: 0, y: 0, z: 0}
 --- !u!114 &651886739249621185
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -312,7 +313,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1299436529148936442}
-  - component: {fileID: 5051666924635439464}
   - component: {fileID: 1283167102530604542}
   m_Layer: 5
   m_Name: Visual
@@ -345,14 +345,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!222 &5051666924635439464
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2167380312710057640}
-  m_CullTransparentMesh: 1
 --- !u!114 &1283167102530604542
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -399,7 +391,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  _backwardFlipEaseCurve:
+  _backwardFlipEase:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
@@ -407,18 +399,18 @@ MonoBehaviour:
       value: 0
       inSlope: 1
       outSlope: 1
-      tangentMode: 34
+      tangentMode: 1
       weightedMode: 0
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
       time: 1
       value: 1
-      inSlope: 1
-      outSlope: 1
-      tangentMode: 34
+      inSlope: 0.011183659
+      outSlope: 0.011183659
+      tangentMode: 0
       weightedMode: 0
-      inWeight: 0
+      inWeight: 0.1709742
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -427,7 +419,10 @@ MonoBehaviour:
   _scaleExpandValue: 1.15
   _moveDuration: 0.2
   _movePosition: 100
-  _isSelected: 0
+  isSelected: 0
+  _swapRotationAngle: 15
+  _swapDuration: 0.15
+  _swapVibrato: 3
 --- !u!1 &2589261399678480996
 GameObject:
   m_ObjectHideFlags: 0

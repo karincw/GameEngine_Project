@@ -8,13 +8,26 @@ namespace Karin
     {
         public CardType cardType;
         public CountType count;
-        public BaseShapeType Shape;
-        public SpecialShapeType SpecialShape;
+        public BaseShapeType shape;
+        public SpecialShapeType specialShape;
 
-        public virtual void Ability()
+        #region »ý¼ºÀÚ
+        public CardDataSO(CardType cardType, CountType count, BaseShapeType shape, SpecialShapeType specialShape)
         {
-
+            this.cardType = cardType;
+            this.count = count;
+            this.shape = shape;
+            this.specialShape = specialShape;
         }
+        public CardDataSO(CardDataSO data)
+        {
+            this.cardType = data.cardType;
+            this.count = data.count;
+            this.shape = data.shape;
+            this.specialShape = data.specialShape;
+        }
+        private CardDataSO() { }
+        #endregion
     }
 
 }

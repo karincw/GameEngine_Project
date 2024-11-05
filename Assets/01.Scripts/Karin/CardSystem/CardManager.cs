@@ -9,9 +9,9 @@ namespace Karin
 
     public class CardManager : MonoSingleton<CardManager>
     {
-        [SerializedDictionary("ShapeType","TargetSprite")]
+        [SerializedDictionary("ShapeType", "TargetSprite")]
         public SerializedDictionary<SpecialShapeType, Sprite> ShapeToSpriteDictionary = new();
-        [SerializedDictionary("ShapeType","TargetColor")]
+        [SerializedDictionary("ShapeType", "TargetColor")]
         public SerializedDictionary<SpecialShapeType, Color> ShapeToColorDictionary = new();
 
         public TMP_FontAsset BlackFont, PinkFont;

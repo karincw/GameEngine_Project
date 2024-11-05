@@ -18,7 +18,7 @@ namespace Karin
         [SerializeField] private RectTransform _cardTrm;
         [SerializeField] private float _flipTime;
         [SerializeField] private AnimationCurve _forwardFlipEase;
-        [SerializeField] private AnimationCurve _backwardFlipEaseCurve;
+        [SerializeField] private AnimationCurve _backwardFlipEase;
 
         [Header("Scale-Settings")]
         [SerializeField] private float _scaleDuration = 0.2f;
@@ -28,6 +28,11 @@ namespace Karin
         [SerializeField] private float _moveDuration = 0.2f;
         [SerializeField] private float _movePosition;
         public bool isSelected = false;
+
+        [Header("Shake-Settings")]
+        [SerializeField] private float _swapRotationAngle;
+        [SerializeField] private float _swapDuration;
+        [SerializeField] private int _swapVibrato;
 
         private CardBase _owner;
         private bool _isFront;
@@ -65,11 +70,11 @@ namespace Karin
                 CardDataSO data = _owner.cardData;
 
                 _cardBackground.sprite = cm.cards[(int)data.cardType];
-                _mainImage.sprite = cm.ShapeToSpriteDictionary[data.SpecialShape];
-                _mainImage.color = cm.ShapeToColorDictionary[data.SpecialShape];
+                _mainImage.sprite = cm.ShapeToSpriteDictionary[data.specialShape];
+                _mainImage.color = cm.ShapeToColorDictionary[data.specialShape];
 
-                Sprite subSprite = cm.ShapeToSpriteDictionary[(SpecialShapeType)data.Shape];
-                Color subColor = cm.ShapeToColorDictionary[(SpecialShapeType)data.Shape];
+                Sprite subSprite = cm.ShapeToSpriteDictionary[(SpecialShapeType)data.shape];
+                Color subColor = cm.ShapeToColorDictionary[(SpecialShapeType)data.shape];
 
                 foreach (var sb in _subImage)
                 {
@@ -110,7 +115,7 @@ namespace Karin
                  {
                      SetVisual(!_isFront);
 
-                     _cardTrm.DORotate(new Vector3(0, 0, 0), _flipTime / 2).SetEase(_backwardFlipEaseCurve);
+                     _cardTrm.DORotate(new Vector3(0, 0, 0), _flipTime / 2).SetEase(_backwardFlipEase);
                      _isFront = !_isFront;
                  });
         }
@@ -122,7 +127,7 @@ namespace Karin
                 {
                     SetVisual(front);
 
-                    _cardTrm.DORotate(new Vector3(0, 0, 0), _flipTime / 2).SetEase(_backwardFlipEaseCurve);
+                    _cardTrm.DORotate(new Vector3(0, 0, 0), _flipTime / 2).SetEase(_backwardFlipEase);
                     _isFront = front;
                 });
         }
@@ -164,6 +169,18 @@ namespace Karin
             isSelected = !isSelected;
         }
         #endregion
+
+
+        /// <summary>
+        /// Left : 1
+        /// Right : -1
+        /// </summary>
+        /// <param name="dir"></param>
+        public void SwapAnimation(float dir)
+        {
+            _cardTrm.DOComplete();
+            _cardTrm.DOPunchRotation((Vector3.forward * _swapRotationAngle) * dir, _swapDuration, _swapVibrato).SetId(3);
+        }
 
     }
 

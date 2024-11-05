@@ -15,10 +15,18 @@ namespace Karin
         [SerializeField] private float _xPadding;
         public float layoutXDelta;
 
-        [SerializeField] private CardVisual _selectCard;
+        public CardBase SelectCard
+        {
+            set
+            {
+                _selectCard = value;
+            }
+        }
+        [SerializeField] private CardBase _selectCard;
 
         [SerializeField] private List<CardBase> cards = new List<CardBase>();
         [SerializeField] private List<float> layouts = new List<float>();
+
 
         [Header("Prefabs")]
         [SerializeField] private CardBase _cardPrefabs;
@@ -38,6 +46,7 @@ namespace Karin
             {
                 AddCard();
             }
+            MoveLayout();
         }
 
         public CardDataSO testData;
@@ -65,9 +74,36 @@ namespace Karin
 
         }
 
-        public void UseCard()
+        public void UseCard(CardBase card)
         {
 
+        }
+
+        public void MoveLayout()
+        {
+            if (_selectCard == null) return;
+
+            int cardIdx = cards.FindIndex(x => x == _selectCard);
+            float offset = layouts[cardIdx];
+            Vector3 position = _selectCard.transform.localPosition;
+
+            if (Mathf.Abs(offset - position.x) > layoutXDelta)
+            {
+                if (offset + position.x < offset && cardIdx > 0) //¿ÞÂÊ
+                {
+                    cards[cardIdx - 1].Swap(1);
+                    (cards[cardIdx], cards[cardIdx - 1]) = (cards[cardIdx - 1], cards[cardIdx]);
+                }
+
+                else if (offset + position.x > offset && cardIdx < cards.Count - 1) //¿À¸¥ÂÊ
+                {
+                    cards[cardIdx + 1].Swap(-1);
+                    (cards[cardIdx], cards[cardIdx + 1]) = (cards[cardIdx + 1], cards[cardIdx]);
+                }
+
+                _selectCard.indexChange = true;
+                ApplyLayoutWithTween(.3f);
+            }
         }
 
         private void AddLayout()
@@ -80,11 +116,10 @@ namespace Karin
             if (cards.Count < 0 || cards == null) return;
 
             int cardCount = cards.Count;
-            int siblingIdx = cardCount + 1;
             for (int i = 0; i < cardCount; i++)
             {
                 cards[i].transform.SetSiblingIndex(i);
-                //cards[i].gameObject.name = $"Card idx[{i}] s[{siblingIdx}]";
+                cards[i].gameObject.name = $"Card [{i}]";
             }
         }
         public void SortingLayout()
@@ -92,36 +127,25 @@ namespace Karin
             if (layouts.Count < 0 || layouts == null) return;
             int count = layouts.Count;
 
-            float lengthDelta = holderWidth / (count + 1);
+            layoutXDelta = holderWidth / (count + 1);
             float leftPos = -holderWidth / 2;
             float prev = leftPos;
 
             for (int i = 0; i < layouts.Count; i++)
             {
-                layouts[i] = prev + lengthDelta;
+                layouts[i] = prev + layoutXDelta;
                 prev = layouts[i];
             }
         }
-        public void ApplyLayout(int startIdx = 0)
-        {
-            int len = Mathf.Min(layouts.Count, cards.Count);
-            Vector3 temp = Vector3.zero;
-            temp.x += -holderWidth / 2;
-
-            for (int i = startIdx; i < len; i++)
-            {
-                temp.x = layouts[i];
-                (cards[i].transform as RectTransform).localPosition = temp;
-            }
-        }
-        public void ApplyLayoutWithTween(float speed, int startIdx = 0)
+        public void ApplyLayoutWithTween(float time, int startIdx = 0)
         {
             int len = Mathf.Min(layouts.Count, cards.Count);
 
             for (int i = startIdx; i < len; i++)
             {
                 float temp = layouts[i];
-                (cards[i].transform as RectTransform).DOLocalMoveX(temp, speed);
+                if (cards[i].isDragging) continue;
+                (cards[i].transform as RectTransform).DOLocalMoveX(temp, time);
             }
         }
     }

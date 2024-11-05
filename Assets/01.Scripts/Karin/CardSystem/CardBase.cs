@@ -13,7 +13,8 @@ namespace Karin
         public CardDataSO cardData;
 
         [Header("States")]
-        [SerializeField] private bool _isDragging;
+        public bool isDragging;
+        public bool indexChange;
         [SerializeField] private bool _isHovering;
 
         [Header("Move-Settings")]
@@ -30,10 +31,10 @@ namespace Karin
         private CardHolder _cardHolder;
         private CardVisual _cardVisual;
         private Camera _mainCam;
-        private Vector3 _offset;
         private GraphicRaycaster _graphicRaycaster;
         private Image _imageCompo;
         private RectTransform _rectTrm;
+        private Vector3 _offset;
         private float _lastPointerDownTime;
         private float _lastPointerUpTime;
         private int _slibingIndex;
@@ -49,6 +50,7 @@ namespace Karin
             _cardVisual.Initialize(this);
             _mainCam = Camera.main;
             _cardHolder = holder;
+            indexChange = false;
         }
 
         private void Update()
@@ -60,7 +62,7 @@ namespace Karin
         {
             if (cardData == null) return false;
 
-            if (cardData.count.Equals(c) || ((int)cardData.Shape & (int)s) > 0)
+            if (cardData.count.Equals(c) || ((int)cardData.shape & (int)s) > 0)
             {
                 return true;
             }
@@ -69,7 +71,7 @@ namespace Karin
         }
         private void DragFollow()
         {
-            if (!_isDragging) return;
+            if (!isDragging) return;
 
             Vector2 targetPos = _mainCam.ScreenToWorldPoint(Input.mousePosition) - _offset;
             Vector2 delta = (targetPos - (Vector2)transform.position);
@@ -77,6 +79,10 @@ namespace Karin
             Vector2 velocity = delta.normalized * Mathf.Min(_moveSpeedLimit, delta.magnitude / Time.deltaTime);
 
             transform.Translate(velocity * Time.deltaTime);
+        }
+        public void Swap(float dir)
+        {
+            _cardVisual.SwapAnimation(dir);
         }
 
         #region Interface
@@ -113,25 +119,31 @@ namespace Karin
         public void OnBeginDrag(PointerEventData eventData)
         {
             BeginDragEvent?.Invoke();
-
+            indexChange = false;
             Vector2 mousePosition = _mainCam.ScreenToWorldPoint(Input.mousePosition);
             _slibingIndex = transform.GetSiblingIndex();
             transform.SetAsLastSibling();
             _offset = mousePosition - (Vector2)transform.position;
             _graphicRaycaster.enabled = false;
             _imageCompo.raycastTarget = false;
-            _isDragging = true;
+            isDragging = true;
+            _cardHolder.SelectCard = this;
         }
         public void OnEndDrag(PointerEventData eventData)
         {
             EndDragEvent?.Invoke();
+
+            _cardHolder.SelectCard = null;
             _graphicRaycaster.enabled = true;
             _imageCompo.raycastTarget = true;
-            _isDragging = false;
+            isDragging = false;
             _cardVisual.isSelected = false;
-
+            if (!indexChange)
+                transform.SetSiblingIndex(_slibingIndex);
+            else
+                _cardHolder.SortingLayerOrder();
             _cardHolder.ApplyLayoutWithTween(0.3f);
-            _rectTrm.DOLocalMoveY(originPos.y, 0.3f).OnComplete(() => { transform.SetSiblingIndex(_slibingIndex); });
+            _rectTrm.DOLocalMoveY(originPos.y, 0.3f);
 
         }
         public void OnDrag(PointerEventData eventData)

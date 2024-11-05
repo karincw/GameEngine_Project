@@ -215,6 +215,7 @@ MonoBehaviour:
   _cardSpawnTrm: {fileID: 69560961}
   _graphicRaycaster: {fileID: 1136646024}
   _xPadding: 200
+  layoutXDelta: 0
   _selectCard: {fileID: 0}
   cards: []
   layouts: []
