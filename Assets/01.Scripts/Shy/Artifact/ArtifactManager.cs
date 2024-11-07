@@ -62,7 +62,8 @@ namespace Shy
             }
             else if(Input.GetKeyDown(KeyCode.Alpha2))
             {
-                Instantiate(obj, pos);
+                Artifact art = Instantiate(obj, pos);
+                p_Atf.Add(art);
             }
         }
     }
