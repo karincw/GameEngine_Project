@@ -1,6 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace Shy
 {
@@ -10,7 +9,7 @@ namespace Shy
 
         private void Start()
         {
-            Init();    
+            Init();
         }
 
         public void Init()

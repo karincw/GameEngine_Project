@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-namespace Shy
+﻿namespace Shy
 {
     public enum EVENT_TYPE
     {
@@ -20,19 +16,11 @@ namespace Shy
 
     public class ArtifactManager : MonoSingleton<ArtifactManager>
     {
-        public List<Artifact> p_Atf;
-        public List<Artifact> e_Atf;
-
-        public Artifact obj;
-        public Transform pos;
-
-        public EVENT_TYPE testType;
-
         public void OnEvent(EVENT_TYPE _pType = EVENT_TYPE.NONE, EVENT_TYPE _eType = EVENT_TYPE.NONE)
         {
             if(_pType != EVENT_TYPE.NONE)
             {
-                foreach (Artifact item in p_Atf)
+                foreach (Artifact item in GameManager.Instance.playerCard.artifacts)
                 {
                     for (int i = 0; i < item.effects.Length; i++)
                         if (item.effects[i].eType == _pType) item.effects[i].Effect();
@@ -41,7 +29,7 @@ namespace Shy
 
             if (_eType != EVENT_TYPE.NONE)
             {
-                foreach (Artifact item in e_Atf)
+                foreach (Artifact item in GameManager.Instance.enemyCard.artifacts)
                 {
                     for (int i = 0; i < item.effects.Length; i++)
                         if (item.effects[i].eType == _eType)
@@ -50,20 +38,6 @@ namespace Shy
                             break;
                         }
                 }
-            }
-        }
-
-        private void Update()
-        {
-            if(Input.GetKeyDown(KeyCode.Alpha1))
-            {
-                Debug.Log("플레이어 턴 시작");
-                OnEvent(testType);
-            }
-            else if(Input.GetKeyDown(KeyCode.Alpha2))
-            {
-                Artifact art = Instantiate(obj, pos);
-                p_Atf.Add(art);
             }
         }
     }

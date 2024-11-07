@@ -10,11 +10,11 @@ namespace Shy
         public GameObject curSelectObject;
         public GameObject lastChooseUI;
         [SerializeField] private NameCard nameCardPrefab;
-        [SerializeField] private NameCard n;
 
         [SerializeField, Header("STAGE")] private StageListSO stageSO;
         [SerializeField] private List<Stage> nowMap;
 
+        #region 캐릭터 선택 과정
         public void SetSelector()
         {
             selectorPos.gameObject.SetActive(true);
@@ -36,8 +36,6 @@ namespace Shy
                     selectorPos.GetChild(i).GetComponent<NameCard>().Init(c);
                     nowMap[0].spawnEnemy.Remove(c);
                     cList.Add(c);
-
-                    selectorPos.GetChild(i).gameObject.SetActive(true);
                 }
                 else
                     selectorPos.GetChild(i).gameObject.SetActive(false);
@@ -51,14 +49,23 @@ namespace Shy
         {
             curSelectObject = _obj;
             lastChooseUI.SetActive(true);
+            if(_obj.GetComponent<NameCard>().data.cardDeck.Count != 0)
+            {
+                lastChooseUI.transform.GetChild(1).gameObject.SetActive(true);
+                lastChooseUI.transform.GetChild(0).gameObject.SetActive(false);
+            }
+            else
+            {
+                lastChooseUI.transform.GetChild(0).gameObject.SetActive(true);
+                lastChooseUI.transform.GetChild(1).gameObject.SetActive(false);
+            }
         }
 
         public void ChooseSelect()
         {
             lastChooseUI.SetActive(false);
             selectorPos.gameObject.SetActive(false);
-            n.gameObject.SetActive(true);
-            n.Init(curSelectObject.GetComponent<NameCard>().data);
+            GameManager.Instance.enemyCard.Init(curSelectObject.GetComponent<NameCard>().data);
         }
 
         public void ChooseCancel()
@@ -66,16 +73,17 @@ namespace Shy
             curSelectObject = null;
             lastChooseUI.SetActive(false);
         }
+        #endregion
+
 
         private void StageUpdate()
         {
             Debug.Log("StageUpdate : " + nowMap[0]);
             DisplaySign.Instance.SignUpdate(nowMap[0].mapType == MAP_TYPE.BATTLE ? "WHO'S NEXT?" : "BONUS EVENT");
 
-            SetSelector();
+            if(nowMap[0].mapType == MAP_TYPE.BATTLE) SetSelector();
         }
 
-        
         public void StageInit()
         {
             nowMap = new List<Stage>(stageSO.stageList);
@@ -83,7 +91,7 @@ namespace Shy
 
         private void Start()
         {
-            n.gameObject.SetActive(false);
+            GameManager.Instance.enemyCard.gameObject.SetActive(false);
             StageInit();
         }
 

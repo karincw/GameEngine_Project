@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using CardBase = Karin.CardBase;
 
 namespace Shy
 {
@@ -9,7 +10,7 @@ namespace Shy
     {
         public string cName;
         public int life;
-        //public List<CardBase> deck;
+        public List<CardBase> cardDeck;
         public List<Artifact> artifacts;
     }
 }

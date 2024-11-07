@@ -17,15 +17,19 @@ namespace Shy
             get => Health;
             set { Health = value; lifePos.text = Health.ToString(); }
         }
+        public List<Artifact> artifacts;
 
-       public void Init(CharacterBaseSO _base)
-       {
+
+        public void Init(CharacterBaseSO _base)
+        {
             data = _base;
 
             health = data.life;
             namePos.text = data.cName;
 
             gameObject.SetActive(true);
-       }
+
+            artifacts = new List<Artifact>(data.artifacts);
+        }
     }
 }
