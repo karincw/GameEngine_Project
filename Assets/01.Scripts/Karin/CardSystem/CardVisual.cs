@@ -34,6 +34,11 @@ namespace Karin
         [SerializeField] private float _swapDuration;
         [SerializeField] private int _swapVibrato;
 
+        [Header("Punch-Settings")]
+        [SerializeField] private float _selectPunchAmount;
+        [SerializeField] private float _hoverPunchAngle;
+        [SerializeField] private float _hoverTransition;
+
         private CardBase _owner;
         private bool _isFront;
         private Color alphaZero = new Color(0, 0, 0, 0);
@@ -110,7 +115,8 @@ namespace Karin
         public void Flip()
         {
             _cardTrm.DORotate(new Vector3(0, 90, 0), _flipTime / 2)
-                .SetEase(_forwardFlipEase)
+                //.SetEase(_forwardFlipEase)
+                .SetEase(Ease.Linear)
                 .OnComplete(() =>
                  {
                      SetVisual(!_isFront);
@@ -170,7 +176,7 @@ namespace Karin
         }
         #endregion
 
-
+        #region Punch-Section
         /// <summary>
         /// Left : 1
         /// Right : -1
@@ -181,6 +187,12 @@ namespace Karin
             _cardTrm.DOComplete();
             _cardTrm.DOPunchRotation((Vector3.forward * _swapRotationAngle) * dir, _swapDuration, _swapVibrato).SetId(3);
         }
+        public void PunchAnimation(float dir)
+        {
+            _cardTrm.DOPunchPosition(_cardTrm.up * _selectPunchAmount * dir, _scaleDuration);
+            _cardTrm.DOPunchRotation(Vector3.forward * (_hoverPunchAngle * 0.5f), _hoverTransition, 20).SetId(2);
+        }
+        #endregion
 
     }
 
