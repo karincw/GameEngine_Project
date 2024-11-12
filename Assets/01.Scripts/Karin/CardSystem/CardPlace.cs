@@ -32,15 +32,24 @@ namespace Karin
         {
             cards.Add(card);
             card.transform.SetParent(transform);
-            Vector2 positionDelta = new Vector2(Random.Range(-10f, 10f), Random.Range(-10f, 10f)); 
+            Vector2 positionDelta = new Vector2(Random.Range(-10f, 10f), Random.Range(-10f, 10f));
             card.transform.DOLocalMove(positionDelta, 0.1f);
+
+            TurnManager.Instance.Attack(CardManager.Instance.GetDamage(card.cardData.count));
+            TurnManager.Instance.ChangeTurn();
         }
 
         [ContextMenu("StartSettings")]
-        public void FirstCardSetting()
+        public void CardSetting()
         {
             CardBase card = Instantiate(_cardPrefabs, transform);
+            RectTransform cardRect = card.transform as RectTransform;
+            cardRect.localPosition = new Vector3(248, 22, 0);
             card.Initialize(_pack.GetCardData());
+
+            card.Flip(true);
+            cardRect.DOLocalMove(Vector3.zero, 0.8f);
+
             cards.Add(card);
         }
     }

@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Card
   m_EditorClassIdentifier: 
   cardType: 3
-  count: 13
-  Shape: 1
-  SpecialShape: 1
+  count: 1
+  shape: 0
+  specialShape: 0

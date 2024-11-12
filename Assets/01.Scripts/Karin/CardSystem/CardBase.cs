@@ -1,5 +1,6 @@
 using DG.Tweening;
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -16,6 +17,7 @@ namespace Karin
         [Header("States")]
         public bool isDragging;
         public bool indexChange;
+        public bool canDrag;
         [SerializeField] private bool _isHovering;
 
         [Header("Move-Settings")]
@@ -59,7 +61,7 @@ namespace Karin
             cardData = data;
             _cardVisual = GetComponentInChildren<CardVisual>();
             _imageCompo = GetComponent<Image>();
-            _cardVisual.InitializeFront(this);
+            _cardVisual.InitializeNoEvent(this);
             _imageCompo.raycastTarget = false;
         }
 
@@ -72,6 +74,11 @@ namespace Karin
         {
             _cardHolder.UseCard(this);
             _place.UseCard(this);
+        }
+
+        public void Flip(bool front)
+        {
+            _cardVisual.Flip(front);
         }
 
         private void DragFollow()
@@ -93,14 +100,17 @@ namespace Karin
         #region Interface
         public void OnPointerEnter(PointerEventData eventData)
         {
+            if (!canDrag) return;
             PointerEnterEvent?.Invoke();
         }
         public void OnPointerExit(PointerEventData eventData)
         {
+            if (!canDrag) return;
             PointerExitEvent?.Invoke();
         }
         public void OnPointerDown(PointerEventData eventData)
         {
+            if (!canDrag) return;
             //if not mouse left click, then return
             if (eventData.button != PointerEventData.InputButton.Left) return;
 
@@ -109,6 +119,7 @@ namespace Karin
         }
         public void OnPointerUp(PointerEventData eventData)
         {
+            if (!canDrag) return;
             if (eventData.button != PointerEventData.InputButton.Left) return;
 
             float pointDownThreshold = 0.2f;
@@ -122,6 +133,7 @@ namespace Karin
         }
         public void OnBeginDrag(PointerEventData eventData)
         {
+            if (!canDrag) return;
             BeginDragEvent?.Invoke();
             indexChange = false;
             Vector2 mousePosition = _mainCam.ScreenToWorldPoint(Input.mousePosition);
@@ -135,6 +147,7 @@ namespace Karin
         }
         public void OnEndDrag(PointerEventData eventData)
         {
+            if (!canDrag) return;
             EndDragEvent?.Invoke();
 
             _cardHolder.SelectCard = null;
@@ -159,7 +172,7 @@ namespace Karin
         }
         public void OnDrag(PointerEventData eventData)
         {
-
+            if (!canDrag) return;
         }
         #endregion
     }

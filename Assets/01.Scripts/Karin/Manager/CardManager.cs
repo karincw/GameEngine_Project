@@ -31,7 +31,6 @@ namespace Karin
             {
                 case CountType.ACE:
                     return "A";
-                case CountType.One:
                 case CountType.Two:
                 case CountType.Three:
                 case CountType.Four:
@@ -52,7 +51,29 @@ namespace Karin
             Debug.LogError("GetCountText Error");
             return null;
         }
-
+        public int GetDamage(CountType ct)
+        {
+            switch (ct)
+            {
+                case CountType.ACE:
+                    return 3;
+                case CountType.Two:
+                    return 2;
+                case CountType.Three:
+                case CountType.Four:
+                case CountType.Five:
+                case CountType.Six:
+                case CountType.Seven:
+                case CountType.Eight:
+                case CountType.Nine:
+                case CountType.Ten:
+                case CountType.Jack:
+                case CountType.Queen:
+                case CountType.King:
+                default:
+                    return 0;
+            }
+        }
     }
 
 }

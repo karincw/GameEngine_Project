@@ -1,4 +1,5 @@
 using DG.Tweening;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -38,6 +39,7 @@ namespace Karin
         {
             _rectTrm = transform as RectTransform;
             holderWidth = _rectTrm.sizeDelta.x - _xPadding;
+            CardDrag(false);
         }
 
         private void Update()
@@ -68,7 +70,6 @@ namespace Karin
             rectTrm.localPosition = new Vector3(leftPos - 300, 0, 0);
             rectTrm.DOLocalMoveX(leftPos + lengthDelta, 0.4f).SetEase(Ease.InExpo);
         }
-
         public void AddCard(CardDataSO data)
         {
             CardBase cb = Instantiate(_cardPrefabs, _cardSpawnTrm);
@@ -86,15 +87,13 @@ namespace Karin
             rectTrm.localPosition = new Vector3(leftPos - 300, 0, 0);
             rectTrm.DOLocalMoveX(leftPos + lengthDelta, 0.4f).SetEase(Ease.InExpo);
         }
-
         public void UseCard(CardBase card)
         {
             cards.Remove(card);
             RemoveLayout();
-            SortingLayerOrder(); 
+            SortingLayerOrder();
             ApplyLayoutWithTween(0.4f, 1);
         }
-
         public void MoveLayout()
         {
             if (_selectCard == null) return;
@@ -169,6 +168,29 @@ namespace Karin
                 (cards[i].transform as RectTransform).DOLocalMoveX(temp, time);
             }
         }
+
+        public void CardDrag(bool state)
+        {
+            foreach (var c in cards)
+            {
+                c.canDrag = state;
+            }
+        }
+        public void StartSettings()
+        {
+            StartCoroutine(StartSettingCoroutine());
+        }
+
+        private IEnumerator StartSettingCoroutine()
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                AddCard(GameManager.Instance.cardPack.GetCardData());
+                yield return new WaitForSeconds(0.2f);
+            }
+            CardDrag(true);
+        }
+
     }
 
 }
