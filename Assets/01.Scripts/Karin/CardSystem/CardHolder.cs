@@ -71,12 +71,28 @@ namespace Karin
 
         public void AddCard(CardDataSO data)
         {
+            CardBase cb = Instantiate(_cardPrefabs, _cardSpawnTrm);
+            cb.Initialize(data, this, _graphicRaycaster);
+            cards.Insert(0, cb);
+            AddLayout();
+            SortingLayerOrder();
+            ApplyLayoutWithTween(0.4f, 1);
 
+            RectTransform rectTrm = cb.transform as RectTransform;
+
+            float leftPos = -holderWidth / 2;
+            float lengthDelta = holderWidth / (layouts.Count + 1);
+
+            rectTrm.localPosition = new Vector3(leftPos - 300, 0, 0);
+            rectTrm.DOLocalMoveX(leftPos + lengthDelta, 0.4f).SetEase(Ease.InExpo);
         }
 
         public void UseCard(CardBase card)
         {
-
+            cards.Remove(card);
+            RemoveLayout();
+            SortingLayerOrder(); 
+            ApplyLayoutWithTween(0.4f, 1);
         }
 
         public void MoveLayout()
@@ -109,6 +125,11 @@ namespace Karin
         private void AddLayout()
         {
             layouts.Add(1000);
+            SortingLayout();
+        }
+        private void RemoveLayout()
+        {
+            layouts.RemoveAt(layouts.Count - 1);
             SortingLayout();
         }
         public void SortingLayerOrder()

@@ -11,6 +11,7 @@ namespace Karin
     {
         [Header("Settings")]
         public CardDataSO cardData;
+        private CardPlace _place;
 
         [Header("States")]
         public bool isDragging;
@@ -51,6 +52,15 @@ namespace Karin
             _mainCam = Camera.main;
             _cardHolder = holder;
             indexChange = false;
+            _place = FindObjectOfType<CardPlace>();
+        }
+        public void Initialize(CardDataSO data)
+        {
+            cardData = data;
+            _cardVisual = GetComponentInChildren<CardVisual>();
+            _imageCompo = GetComponent<Image>();
+            _cardVisual.InitializeFront(this);
+            _imageCompo.raycastTarget = false;
         }
 
         private void Update()
@@ -58,17 +68,12 @@ namespace Karin
             DragFollow();
         }
 
-        public bool CanUse(int c, BaseShapeType s)
+        public void UseCard()
         {
-            if (cardData == null) return false;
-
-            if (cardData.count.Equals(c) || ((int)cardData.shape & (int)s) > 0)
-            {
-                return true;
-            }
-
-            return false;
+            _cardHolder.UseCard(this);
+            _place.UseCard(this);
         }
+
         private void DragFollow()
         {
             if (!isDragging) return;
@@ -101,7 +106,6 @@ namespace Karin
 
             PointerDownEvent?.Invoke();
             _lastPointerDownTime = Time.time;
-
         }
         public void OnPointerUp(PointerEventData eventData)
         {
@@ -134,17 +138,24 @@ namespace Karin
             EndDragEvent?.Invoke();
 
             _cardHolder.SelectCard = null;
-            _graphicRaycaster.enabled = true;
-            _imageCompo.raycastTarget = true;
             isDragging = false;
-            _cardVisual.isSelected = false;
-            if (!indexChange)
-                transform.SetSiblingIndex(_slibingIndex);
-            else
-                _cardHolder.SortingLayerOrder();
-            _cardHolder.ApplyLayoutWithTween(0.3f);
-            _rectTrm.DOLocalMoveY(originPos.y, 0.3f);
+            _graphicRaycaster.enabled = true;
 
+            if ((_place.transform.position - transform.position).sqrMagnitude <= 1.5f && _place.CanUse(cardData))
+            {
+                UseCard();
+            }
+            else
+            {
+                _cardVisual.isSelected = false;
+                if (!indexChange)
+                    transform.SetSiblingIndex(_slibingIndex);
+                else
+                    _cardHolder.SortingLayerOrder();
+                _cardHolder.ApplyLayoutWithTween(0.3f);
+                _rectTrm.DOLocalMoveY(originPos.y, 0.3f);
+                _imageCompo.raycastTarget = true;
+            }
         }
         public void OnDrag(PointerEventData eventData)
         {

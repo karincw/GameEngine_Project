@@ -67,6 +67,12 @@ namespace Karin
             _owner.PointerUpEvent += PointerDownHandle;
         }
 
+        public void InitializeFront(CardBase card)
+        {
+            _owner = card;
+            _isFront = true;
+            SetVisual(true);
+        }
         public void SetVisual(bool isFront)
         {
             CardManager cm = CardManager.Instance;
