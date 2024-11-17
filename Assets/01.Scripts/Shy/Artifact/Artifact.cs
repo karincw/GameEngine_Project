@@ -3,18 +3,20 @@ using UnityEngine.EventSystems;
 
 namespace Shy
 {
-    public class Artifact : MonoBehaviour
+    public class Artifact : MonoBehaviour, IPointerEnterHandler
     {
         internal ArtifactEffect[] effects;
+        internal ArtifactData data;
 
-        private void Start()
+        public void Init(ArtifactData _data)
         {
-            Init();
+            data = _data;
+            effects = GetComponents<ArtifactEffect>();
         }
 
-        public void Init()
+        public void OnPointerEnter(PointerEventData eventData)
         {
-            effects = GetComponents<ArtifactEffect>();
+            ExplainManager.Instance.ShowExplain(data, gameObject);
         }
     }
 }

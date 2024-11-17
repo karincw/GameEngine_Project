@@ -7,7 +7,8 @@ namespace Shy
     public enum MAP_TYPE
     {
         BATTLE = 0,
-        EVENT
+        EVENT,
+        REWARD
     }
 
     [CreateAssetMenu(menuName = "SO/Shy/Stage")]
@@ -19,7 +20,7 @@ namespace Shy
     [System.Serializable]public class Stage
     {
         public MAP_TYPE mapType;
-        public List<CharacterBaseSO> spawnEnemy;
+        public List<Item_DataSO> spawnItem;
         [Tooltip("최소, 최대 순서 상관 없음")] public Vector2 spawnCnt;
     }
 }

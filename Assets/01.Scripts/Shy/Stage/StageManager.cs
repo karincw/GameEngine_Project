@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
+using System.Collections;
 
 
 namespace Shy
@@ -7,15 +9,30 @@ namespace Shy
     public class StageManager : MonoSingleton<StageManager>
     {
         [SerializeField] private Transform selectorPos;
-        public GameObject curSelectObject;
+        private SelectorItem curSelectItem;
         public GameObject lastChooseUI;
-        [SerializeField] private NameCard nameCardPrefab;
 
         [SerializeField, Header("STAGE")] private StageListSO stageSO;
         [SerializeField] private List<Stage> nowMap;
+        [SerializeField] private Transform cardAnimeStart;
 
-        #region дЁ╦╞ем ╪╠ец ╟За╓
-        public void SetSelector()
+        [SerializeField] private EnemyData playerNormalSO;
+        public Selector_Enemy playerCard;
+        public Selector_Enemy enemyCard;
+
+        public void AddArtifact(ArtifactData _art, Selector_Enemy _nameCardPos = null)
+        {
+            Debug.Log(_nameCardPos);
+
+            if (_nameCardPos == null) _nameCardPos = playerCard;
+
+            Artifact a = Instantiate(_art.artifact, _nameCardPos.transform.GetChild(0).Find("Artifact"));
+            a.Init(_art);
+            _nameCardPos.artifacts.Add(a);
+        }
+
+        #region О©╫О©╫О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫
+        public void SetItem()
         {
             selectorPos.gameObject.SetActive(true);
 
@@ -23,86 +40,123 @@ namespace Shy
                 Mathf.Max(nowMap[0].spawnCnt.x, nowMap[0].spawnCnt.y) + 1);
 
             //Pool
+            List<Item_DataSO> cList = new List<Item_DataSO>();
+
+
             while (selectorPos.childCount < rand)
-                Instantiate(nameCardPrefab, selectorPos).gameObject.SetActive(false);
-
-            List<CharacterBaseSO> cList = new List<CharacterBaseSO>();
-
-            for (int i = 0; i < selectorPos.childCount; i++)
             {
-                if(i < rand)
-                {
-                    CharacterBaseSO c = nowMap[0].spawnEnemy[Random.Range(0, nowMap[0].spawnEnemy.Count)];
-                    selectorPos.GetChild(i).GetComponent<NameCard>().Init(c);
-                    nowMap[0].spawnEnemy.Remove(c);
-                    cList.Add(c);
-                }
-                else
-                    selectorPos.GetChild(i).gameObject.SetActive(false);
+                Item_DataSO c = nowMap[0].spawnItem[Random.Range(0, nowMap[0].spawnItem.Count)];
+                SelectorItem item = SelectorPooling.Instance.GetPool(c.iType);
+
+                item.transform.parent = selectorPos;
+                item.transform.GetChild(0).gameObject.SetActive(false);
+                
+                item.Init(c);
+                nowMap[0].spawnItem.Remove(c);
+                cList.Add(c);
             }
 
             for (int i = 0; i < cList.Count; i++)
-                nowMap[0].spawnEnemy.Add(cList[i]);
+                nowMap[0].spawnItem.Add(cList[i]);
+
+            StartCoroutine(Anime());
         }
 
-        public void ChooseItem(GameObject _obj)
+        public IEnumerator Anime()
         {
-            curSelectObject = _obj;
-            lastChooseUI.SetActive(true);
-            if(_obj.GetComponent<NameCard>().data.cardDeck.Count != 0)
+            yield return new WaitForEndOfFrame();
+
+            Sequence seq = DOTween.Sequence();
+
+            for (int i = 0; i < selectorPos.childCount; i++)
             {
-                lastChooseUI.transform.GetChild(1).gameObject.SetActive(true);
-                lastChooseUI.transform.GetChild(0).gameObject.SetActive(false);
+                Transform visual = selectorPos.GetChild(i).Find("Visual");
+                visual.position = cardAnimeStart.position;
+                visual.gameObject.SetActive(true);
+
+                seq.Append(visual.DOLocalMove(Vector3.zero, 0.8f));
             }
-            else
+
+            seq.OnComplete(() => Debug.Log("К│²"));
+        }
+
+        public void EnemyChoose(SelectorItem _item)
+        {
+            curSelectItem = _item;
+            lastChooseUI.SetActive(true);
+
+            if(_item is Selector_Enemy)
             {
-                lastChooseUI.transform.GetChild(0).gameObject.SetActive(true);
-                lastChooseUI.transform.GetChild(1).gameObject.SetActive(false);
+                if ((_item as Selector_Enemy).data.cardDeck.Count != 0)
+                {
+                    lastChooseUI.transform.GetChild(1).gameObject.SetActive(true);
+                    lastChooseUI.transform.GetChild(0).gameObject.SetActive(false);
+                }
+                else
+                {
+                    lastChooseUI.transform.GetChild(0).gameObject.SetActive(true);
+                    lastChooseUI.transform.GetChild(1).gameObject.SetActive(false);
+                }
             }
         }
 
-        public void ChooseSelect()
+        public void EnemySelect()
         {
             lastChooseUI.SetActive(false);
-            selectorPos.gameObject.SetActive(false);
-            GameManager.Instance.enemyCard.Init(curSelectObject.GetComponent<NameCard>().data);
+            while (selectorPos.childCount != 0)
+                SelectorPooling.Instance.ReturnPool(selectorPos.GetComponentInChildren<SelectorItem>());
+
+            if(curSelectItem is Selector_Enemy)
+            {
+                enemyCard.Init((curSelectItem as Selector_Enemy).data);
+                return;
+            }
         }
 
-        public void ChooseCancel()
+        public void EnemyCancel()
         {
-            curSelectObject = null;
+            curSelectItem = null;
             lastChooseUI.SetActive(false);
         }
         #endregion
 
 
-        private void StageUpdate()
+        public void StageUpdate()
         {
-            Debug.Log("StageUpdate : " + nowMap[0]);
+            Debug.Log("StageUpdate : " + nowMap[0].mapType);
             DisplaySign.Instance.SignUpdate(nowMap[0].mapType == MAP_TYPE.BATTLE ? "WHO'S NEXT?" : "BONUS EVENT");
 
-            if(nowMap[0].mapType == MAP_TYPE.BATTLE) SetSelector();
+            if(nowMap[0].mapType != MAP_TYPE.EVENT) SetItem();
         }
 
-        public void StageInit()
+        public void StageClear()
         {
+            if(nowMap.Count == 1)
+            {
+                Debug.Log("О©╫О©╫ О©╫л╩О©╫ О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫О©╫о╢О©╫. О©╫О©╫");
+                return;
+            }
+
+            SelectorPooling.Instance.ReturnPool(selectorPos.GetComponentsInChildren<SelectorItem>());
+
+            ExplainManager.Instance.HideExplain();
+
+            nowMap.RemoveAt(0);
+            StageUpdate();
+        }
+
+        private void StageInit()
+        {
+            enemyCard.gameObject.SetActive(false);
             nowMap = new List<Stage>(stageSO.stageList);
+
+            StageUpdate();
         }
 
         private void Start()
         {
-            GameManager.Instance.enemyCard.gameObject.SetActive(false);
+            playerCard.Init(playerNormalSO);
             StageInit();
         }
-
-#if UNITY_EDITOR
-        public void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.Alpha3))
-            {
-                StageUpdate();
-            }
-        }
-#endif
     }
 }

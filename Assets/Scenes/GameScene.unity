@@ -263,89 +263,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 405399609}
+  - {fileID: 1310713318295125381}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &405399608
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 405399609}
-  - component: {fileID: 405399610}
-  m_Layer: 0
-  m_Name: CardManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &405399609
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 405399608}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 234904647}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &405399610
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 405399608}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 91a0b86d0c01b1741818198f4c6bdd75, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ShapeToSpriteDictionary:
-    _serializedList:
-    - Key: 0
-      Value: {fileID: 1587227984, guid: c5a2125a3ca8a3341bed5c2864439214, type: 3}
-    - Key: 1
-      Value: {fileID: 1698835490, guid: c5a2125a3ca8a3341bed5c2864439214, type: 3}
-    - Key: 2
-      Value: {fileID: -1843047561, guid: c5a2125a3ca8a3341bed5c2864439214, type: 3}
-    - Key: 3
-      Value: {fileID: -1894577254, guid: c5a2125a3ca8a3341bed5c2864439214, type: 3}
-    - Key: 4
-      Value: {fileID: -2130096857, guid: c5a2125a3ca8a3341bed5c2864439214, type: 3}
-    - Key: 5
-      Value: {fileID: -202956629, guid: c5a2125a3ca8a3341bed5c2864439214, type: 3}
-  ShapeToColorDictionary:
-    _serializedList:
-    - Key: 0
-      Value: {r: 1, g: 0.21176471, b: 0.21176471, a: 1}
-    - Key: 1
-      Value: {r: 1, g: 0.21176471, b: 0.21176471, a: 1}
-    - Key: 2
-      Value: {r: 0, g: 0, b: 0, a: 1}
-    - Key: 3
-      Value: {r: 0, g: 0, b: 0, a: 1}
-    - Key: 4
-      Value: {r: 1, g: 1, b: 1, a: 1}
-    - Key: 5
-      Value: {r: 1, g: 1, b: 1, a: 1}
-  BlackFont: {fileID: 11400000, guid: b47ee6e115867e04ea1737ba0603955d, type: 2}
-  PinkFont: {fileID: 11400000, guid: 4f8dffa1b9ed675449b1cb9b0b9d7d9c, type: 2}
-  cards:
-  - {fileID: 437910178, guid: 15741bcbcefbf5e44a1e268cabdfa632, type: 3}
-  - {fileID: -513526692, guid: 15741bcbcefbf5e44a1e268cabdfa632, type: 3}
-  - {fileID: -1209034033, guid: 15741bcbcefbf5e44a1e268cabdfa632, type: 3}
-  - {fileID: 2090582405, guid: 15741bcbcefbf5e44a1e268cabdfa632, type: 3}
-  - {fileID: 283795970, guid: 15741bcbcefbf5e44a1e268cabdfa632, type: 3}
 --- !u!1 &834060338
 GameObject:
   m_ObjectHideFlags: 0
@@ -694,6 +614,86 @@ MonoBehaviour:
     mipBias: 0
     varianceClampScale: 0.9
     contrastAdaptiveSharpening: 0
+--- !u!4 &1310713318295125381
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5126137403172712545}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 234904647}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5126137403172712545
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1310713318295125381}
+  - component: {fileID: 5365674355264720032}
+  m_Layer: 0
+  m_Name: CardManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &5365674355264720032
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5126137403172712545}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91a0b86d0c01b1741818198f4c6bdd75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShapeToSpriteDictionary:
+    _serializedList:
+    - Key: 0
+      Value: {fileID: 1587227984, guid: c5a2125a3ca8a3341bed5c2864439214, type: 3}
+    - Key: 1
+      Value: {fileID: 1698835490, guid: c5a2125a3ca8a3341bed5c2864439214, type: 3}
+    - Key: 2
+      Value: {fileID: -1843047561, guid: c5a2125a3ca8a3341bed5c2864439214, type: 3}
+    - Key: 3
+      Value: {fileID: -1894577254, guid: c5a2125a3ca8a3341bed5c2864439214, type: 3}
+    - Key: 4
+      Value: {fileID: -2130096857, guid: c5a2125a3ca8a3341bed5c2864439214, type: 3}
+    - Key: 5
+      Value: {fileID: -202956629, guid: c5a2125a3ca8a3341bed5c2864439214, type: 3}
+  ShapeToColorDictionary:
+    _serializedList:
+    - Key: 0
+      Value: {r: 1, g: 0.21176471, b: 0.21176471, a: 1}
+    - Key: 1
+      Value: {r: 1, g: 0.21176471, b: 0.21176471, a: 1}
+    - Key: 2
+      Value: {r: 0, g: 0, b: 0, a: 1}
+    - Key: 3
+      Value: {r: 0, g: 0, b: 0, a: 1}
+    - Key: 4
+      Value: {r: 1, g: 1, b: 1, a: 1}
+    - Key: 5
+      Value: {r: 1, g: 1, b: 1, a: 1}
+  BlackFont: {fileID: 11400000, guid: b47ee6e115867e04ea1737ba0603955d, type: 2}
+  PinkFont: {fileID: 11400000, guid: 4f8dffa1b9ed675449b1cb9b0b9d7d9c, type: 2}
+  cards:
+  - {fileID: 437910178, guid: 15741bcbcefbf5e44a1e268cabdfa632, type: 3}
+  - {fileID: -513526692, guid: 15741bcbcefbf5e44a1e268cabdfa632, type: 3}
+  - {fileID: -1209034033, guid: 15741bcbcefbf5e44a1e268cabdfa632, type: 3}
+  - {fileID: 2090582405, guid: 15741bcbcefbf5e44a1e268cabdfa632, type: 3}
+  - {fileID: 283795970, guid: 15741bcbcefbf5e44a1e268cabdfa632, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
