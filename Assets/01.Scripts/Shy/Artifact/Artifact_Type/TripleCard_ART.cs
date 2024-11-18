@@ -7,6 +7,8 @@ namespace Shy
     public class TripleCard_ART : ArtifactEffect
     {
         private int cnt = 0;
+
+
         public override void Effect()
         {
             if(++cnt == 3)
@@ -14,6 +16,11 @@ namespace Shy
                 cnt = 0;
                 Debug.Log("적에게 3의 피해");
             }
+        }
+
+        public override void Init()
+        {
+            cnt = 0;
         }
     }
 }

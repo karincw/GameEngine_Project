@@ -17,7 +17,9 @@ MonoBehaviour:
     spawnItem:
     - {fileID: 11400000, guid: 303fab3807c04d642b5db0fad627d88c, type: 2}
     - {fileID: 11400000, guid: 303fab3807c04d642b5db0fad627d88c, type: 2}
-    spawnCnt: {x: 2, y: 2}
+    - {fileID: 11400000, guid: 303fab3807c04d642b5db0fad627d88c, type: 2}
+    - {fileID: 11400000, guid: 303fab3807c04d642b5db0fad627d88c, type: 2}
+    spawnCnt: {x: 4, y: 4}
   - mapType: 2
     spawnItem:
     - {fileID: 11400000, guid: 06d3335f7e859d74689cc2da4e37173d, type: 2}

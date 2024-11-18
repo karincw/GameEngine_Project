@@ -10,5 +10,9 @@ namespace Shy
         {
             Debug.Log("카드 뽑았죠 ㅋㅋ");
         }
+
+        public override void Init()
+        {
+        }
     }
 }

@@ -16,5 +16,4 @@ MonoBehaviour:
   itemName: "\uD589\uC6B4\uC758 \uCE69"
   itemExplain: "\uCE74\uB4DC\uB97C \uC138 \uC7A5 \uC0AC\uC6A9\uD560 \uB54C\uB9C8\uB2E4
     3\uC758 \uCE69\uC744 \uC5BB\uC2B5\uB2C8\uB2E4."
-  sprite: {fileID: 21300000, guid: 37973ee65d09ca74ba37189733effa5b, type: 3}
   artifact: {fileID: 3125783770619259300, guid: 9c7fba8243e9b6a4cbe7f8d10e9c411b, type: 3}

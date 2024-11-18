@@ -10,5 +10,9 @@ namespace Shy
         {
             Debug.Log("게임 시작했죠 ㅋㅋ");
         }
+
+        public override void Init()
+        {
+        }
     }
 }

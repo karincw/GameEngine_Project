@@ -9,5 +9,7 @@ namespace Shy
         public EVENT_TYPE eType;
 
         public abstract void Effect();
+
+        public abstract void Init();
     }
 }
