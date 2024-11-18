@@ -9,21 +9,21 @@ namespace Karin
     {
 
         [HideInInspector] public CardPlace cardPlace;
-        [HideInInspector] public CardHolder cardHolder;
+        public CardHolder playerCardHolder;
+        public CardHolder enemyCardHolder;
         [HideInInspector] public CardPack cardPack;
 
         private void Start()
         {
             cardPlace = FindObjectOfType<CardPlace>();
-            cardHolder = FindObjectOfType<CardHolder>();
-            cardPack = FindObjectOfType<CardPack>(); 
+            cardPack = FindObjectOfType<CardPack>();
         }
 
 #if UNITY_EDITOR
 
         private void Update()
         {
-            if(Input.GetKeyDown(KeyCode.P))
+            if (Input.GetKeyDown(KeyCode.P))
             {
                 GameStart();
             }
@@ -39,8 +39,14 @@ namespace Karin
         public void GameStart()
         {
             cardPlace.CardSetting();
-            cardHolder.StartSettings();
+            playerCardHolder.StartSettings();
         }
+
+        public void StartSettings()
+        {
+
+        }
+
     }
 
 }

@@ -1,6 +1,7 @@
 using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -44,16 +45,20 @@ namespace Karin
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.Q))
+            if (Input.GetKeyDown(KeyCode.F12))
             {
-                AddCard();
+                DebugAddCard();
+            }
+            else if(Input.GetKeyDown(KeyCode.F11))
+            {
+                AddCard(GameManager.Instance.cardPack.GetCardData());
             }
             MoveLayout();
         }
 
         public CardDataSO testData;
         [ContextMenu("TestAdd")]
-        public void AddCard()
+        public void DebugAddCard()
         {
             CardBase cb = Instantiate(_cardPrefabs, _cardSpawnTrm);
             cb.Initialize(testData, this, _graphicRaycaster);
@@ -70,6 +75,12 @@ namespace Karin
             rectTrm.localPosition = new Vector3(leftPos - 300, 0, 0);
             rectTrm.DOLocalMoveX(leftPos + lengthDelta, 0.4f).SetEase(Ease.InExpo);
         }
+
+        public void AddCard()
+        {
+            AddCard(GameManager.Instance.cardPack.GetCardData());
+        }
+
         public void AddCard(CardDataSO data)
         {
             CardBase cb = Instantiate(_cardPrefabs, _cardSpawnTrm);
