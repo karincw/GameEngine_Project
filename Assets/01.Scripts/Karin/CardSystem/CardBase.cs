@@ -1,5 +1,6 @@
 using DG.Tweening;
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -11,10 +12,12 @@ namespace Karin
     {
         [Header("Settings")]
         public CardDataSO cardData;
+        private CardPlace _place;
 
         [Header("States")]
         public bool isDragging;
         public bool indexChange;
+        public bool canDrag;
         [SerializeField] private bool _isHovering;
 
         [Header("Move-Settings")]
@@ -51,6 +54,15 @@ namespace Karin
             _mainCam = Camera.main;
             _cardHolder = holder;
             indexChange = false;
+            _place = FindObjectOfType<CardPlace>();
+        }
+        public void Initialize(CardDataSO data)
+        {
+            cardData = data;
+            _cardVisual = GetComponentInChildren<CardVisual>();
+            _imageCompo = GetComponent<Image>();
+            _cardVisual.InitializeNoEvent(this);
+            _imageCompo.raycastTarget = false;
         }
 
         private void Update()
@@ -58,17 +70,17 @@ namespace Karin
             DragFollow();
         }
 
-        public bool CanUse(int c, BaseShapeType s)
+        public void UseCard()
         {
-            if (cardData == null) return false;
-
-            if (cardData.count.Equals(c) || ((int)cardData.shape & (int)s) > 0)
-            {
-                return true;
-            }
-
-            return false;
+            _cardHolder.UseCard(this);
+            _place.UseCard(this);
         }
+
+        public void Flip(bool front)
+        {
+            _cardVisual.Flip(front);
+        }
+
         private void DragFollow()
         {
             if (!isDragging) return;
@@ -88,23 +100,26 @@ namespace Karin
         #region Interface
         public void OnPointerEnter(PointerEventData eventData)
         {
+            if (!canDrag) return;
             PointerEnterEvent?.Invoke();
         }
         public void OnPointerExit(PointerEventData eventData)
         {
+            if (!canDrag) return;
             PointerExitEvent?.Invoke();
         }
         public void OnPointerDown(PointerEventData eventData)
         {
+            if (!canDrag) return;
             //if not mouse left click, then return
             if (eventData.button != PointerEventData.InputButton.Left) return;
 
             PointerDownEvent?.Invoke();
             _lastPointerDownTime = Time.time;
-
         }
         public void OnPointerUp(PointerEventData eventData)
         {
+            if (!canDrag) return;
             if (eventData.button != PointerEventData.InputButton.Left) return;
 
             float pointDownThreshold = 0.2f;
@@ -118,6 +133,7 @@ namespace Karin
         }
         public void OnBeginDrag(PointerEventData eventData)
         {
+            if (!canDrag) return;
             BeginDragEvent?.Invoke();
             indexChange = false;
             Vector2 mousePosition = _mainCam.ScreenToWorldPoint(Input.mousePosition);
@@ -131,24 +147,32 @@ namespace Karin
         }
         public void OnEndDrag(PointerEventData eventData)
         {
+            if (!canDrag) return;
             EndDragEvent?.Invoke();
 
             _cardHolder.SelectCard = null;
-            _graphicRaycaster.enabled = true;
-            _imageCompo.raycastTarget = true;
             isDragging = false;
-            _cardVisual.isSelected = false;
-            if (!indexChange)
-                transform.SetSiblingIndex(_slibingIndex);
-            else
-                _cardHolder.SortingLayerOrder();
-            _cardHolder.ApplyLayoutWithTween(0.3f);
-            _rectTrm.DOLocalMoveY(originPos.y, 0.3f);
+            _graphicRaycaster.enabled = true;
 
+            if ((_place.transform.position - transform.position).sqrMagnitude <= 1.5f && _place.CanUse(cardData))
+            {
+                UseCard();
+            }
+            else
+            {
+                _cardVisual.isSelected = false;
+                if (!indexChange)
+                    transform.SetSiblingIndex(_slibingIndex);
+                else
+                    _cardHolder.SortingLayerOrder();
+                _cardHolder.ApplyLayoutWithTween(0.3f);
+                _rectTrm.DOLocalMoveY(originPos.y, 0.3f);
+                _imageCompo.raycastTarget = true;
+            }
         }
         public void OnDrag(PointerEventData eventData)
         {
-
+            if (!canDrag) return;
         }
         #endregion
     }

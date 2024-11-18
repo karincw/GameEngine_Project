@@ -60,6 +60,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardData: {fileID: 11400000, guid: 9837fb294e3aa1447ae20bef24b7c91d, type: 2}
+  _placeMask:
+    serializedVersion: 2
+    m_Bits: 32
   isDragging: 0
   indexChange: 0
   _isHovering: 0
@@ -366,7 +369,7 @@ MonoBehaviour:
   - {fileID: 5992815885195106852}
   - {fileID: 4830485886255076111}
   _cardTrm: {fileID: 5238076864820556413}
-  _flipTime: 1
+  _flipTime: 0.4
   _forwardFlipEase:
     serializedVersion: 2
     m_Curve:
@@ -421,8 +424,11 @@ MonoBehaviour:
   _movePosition: 100
   isSelected: 0
   _swapRotationAngle: 15
-  _swapDuration: 0.15
+  _swapDuration: 0.1
   _swapVibrato: 3
+  _selectPunchAmount: 0
+  _hoverPunchAngle: 0
+  _hoverTransition: 0
 --- !u!1 &2589261399678480996
 GameObject:
   m_ObjectHideFlags: 0

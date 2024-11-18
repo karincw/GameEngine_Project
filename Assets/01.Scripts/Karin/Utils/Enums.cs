@@ -6,6 +6,7 @@ using UnityEngine;
 namespace Karin
 {
 
+    #region Card
     public enum BaseShapeType : int
     {
         Diamond = 0,
@@ -13,7 +14,6 @@ namespace Karin
         Clover,
         Spade,
     }
-
     public enum SpecialShapeType : int
     {
         Diamond = 0,
@@ -23,11 +23,9 @@ namespace Karin
         Sword,
         Shield,
     }
-
     public enum CountType : int
     {
-        ACE = 0,
-        One,
+        ACE = 1,
         Two,
         Three,
         Four,
@@ -41,7 +39,6 @@ namespace Karin
         Queen,
         King,
     }
-
     public enum CardType : int
     {
         Basic = 0,
@@ -49,6 +46,12 @@ namespace Karin
         Red,
         Gold
     }
+    #endregion
 
+    public enum Turn
+    {
+        Player,
+        Enemy
+    }
 
 }
