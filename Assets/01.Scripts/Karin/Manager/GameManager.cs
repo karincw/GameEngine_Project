@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Karin
@@ -10,13 +11,17 @@ namespace Karin
 
         [HideInInspector] public CardPlace cardPlace;
         public CardHolder playerCardHolder;
-        public CardHolder enemyCardHolder;
+        public EnemyCardHolder enemyCardHolder;
         [HideInInspector] public CardPack cardPack;
+
+        [SerializeField] private CardDataSO baseCardData;
 
         private void Start()
         {
             cardPlace = FindObjectOfType<CardPlace>();
             cardPack = FindObjectOfType<CardPack>();
+
+            StartSettings();
         }
 
 #if UNITY_EDITOR
@@ -38,13 +43,33 @@ namespace Karin
         [ContextMenu("GameStart")]
         public void GameStart()
         {
+            cardPack.SetCards(playerCardHolder.myCards);
             cardPlace.CardSetting();
             playerCardHolder.StartSettings();
         }
 
         public void StartSettings()
         {
-
+            int delta = 5;
+            CountType c = CountType.ACE;
+            BaseShapeType s = 0;
+            for (int i = 1; i < 53; i++)
+            {
+                CardDataSO data = Instantiate(baseCardData);
+                if (i >= delta)
+                { 
+                    c++;
+                    delta += 4;
+                }
+                if ((int)s == 4)
+                {
+                    s = BaseShapeType.Diamond;
+                }
+                data.shape = s;
+                data.specialShape = (SpecialShapeType)s++;
+                data.count = c;
+                playerCardHolder.myCards.Add(data);
+            }
         }
 
     }

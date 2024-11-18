@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -14,25 +13,21 @@ namespace Karin
 
         [SerializeField] private CardPlace _place;
 
-        public void SetCards(params HashSet<CardDataSO>[] hashs)
+        public void SetCards(List<CardDataSO> datas)
         {
-            HashSet<CardDataSO> hashSet = new HashSet<CardDataSO>();
-            foreach (var hash in hashs)
-            {
-                hashSet.UnionWith(hash);
-            }
-            cards = hashSet.ToList();
-        }
-
-        public void AddCard()
-        {
-
+            cards.AddRange(datas);
+            Shuffle();
         }
 
         public CardDataSO GetCardData()
         {
-            CardDataSO rcard = cards.Last();
-            cards.Remove(rcard);
+            int idx = cards.Count - 1;
+            CardDataSO rcard = cards[idx];
+            if (cards.Count <= 10)
+            {
+                SetCards(_place.GetCards().Select(c => c.cardData).ToList());
+            }
+            cards.RemoveAt(idx);
             return rcard;
         }
 

@@ -1,10 +1,16 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 namespace Karin
 {
+    public struct attackInfo
+    {
+        public bool hit;
+        public Turn who;
+    }
 
     public class TurnManager : MonoSingleton<TurnManager>
     {
@@ -14,6 +20,7 @@ namespace Karin
         [SerializeField] private AttackText _enemyText;
 
         public bool useCard;
+        public attackInfo hitInfo;
 
         public event Action<Turn> TurnChangedEvent;
         public event Action<Turn> OnAttackEvent;
@@ -29,8 +36,17 @@ namespace Karin
                 }
                 else if (currentTurn == Turn.Enemy)
                 {
-                    GameManager.Instance.enemyCardHolder.AddCard();
+                    //GameManager.Instance.enemyCardHolder.AddCard();
                 }
+            }
+
+            if (hitInfo.hit && hitInfo.who != currentTurn)
+            {
+                Debug.Log($"{currentTurn} <- hit / damage:{GetHitText().Count}");
+                AttackText at = GetHitText();
+                at.Count = 0;
+                at.Fade(false);
+                hitInfo.hit = false;
             }
 
             if (currentTurn == Turn.Player)
@@ -43,8 +59,15 @@ namespace Karin
                 currentTurn = Turn.Player;
                 GameManager.Instance.playerCardHolder.CardDrag(true);
             }
-            TurnChangedEvent?.Invoke(currentTurn);
+
             useCard = false;
+            TurnChangedEvent?.Invoke(currentTurn);
+
+        }
+
+        private AttackText GetHitText()
+        {
+            return currentTurn != Turn.Player ? _enemyText : _playerText;
         }
 
         public void ChangeTurn(Turn who)
@@ -69,6 +92,8 @@ namespace Karin
                 _enemyText.Count = 0;
                 _enemyText.Fade(false);
             }
+            hitInfo.hit = true;
+            hitInfo.who = currentTurn;
             OnAttackEvent?.Invoke(currentTurn);
         }
 

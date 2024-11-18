@@ -27,6 +27,7 @@ namespace Karin
 
         public string GetCountText(CountType ct)
         {
+            Debug.Log(ct);
             switch (ct)
             {
                 case CountType.ACE:

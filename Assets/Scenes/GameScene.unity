@@ -220,6 +220,7 @@ MonoBehaviour:
   cards: []
   layouts: []
   _cardPrefabs: {fileID: 7441560689303665698, guid: 469a553ae9e8b984daabff53f7a48c89, type: 3}
+  myCards: []
   testData: {fileID: 11400000, guid: 9837fb294e3aa1447ae20bef24b7c91d, type: 2}
 --- !u!1 &234904645
 GameObject:
@@ -314,6 +315,7 @@ MonoBehaviour:
   playerCardHolder: {fileID: 69560964}
   enemyCardHolder: {fileID: 1692924056}
   cardPack: {fileID: 0}
+  baseCardData: {fileID: 11400000, guid: 9837fb294e3aa1447ae20bef24b7c91d, type: 2}
 --- !u!1 &372489613
 GameObject:
   m_ObjectHideFlags: 0
@@ -1251,17 +1253,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9beb4e1f5f99914290d4d802cf225ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cards:
-  - {fileID: 11400000, guid: 9837fb294e3aa1447ae20bef24b7c91d, type: 2}
-  - {fileID: 11400000, guid: 9837fb294e3aa1447ae20bef24b7c91d, type: 2}
-  - {fileID: 11400000, guid: 9837fb294e3aa1447ae20bef24b7c91d, type: 2}
-  - {fileID: 11400000, guid: 9837fb294e3aa1447ae20bef24b7c91d, type: 2}
-  - {fileID: 11400000, guid: 9837fb294e3aa1447ae20bef24b7c91d, type: 2}
-  - {fileID: 11400000, guid: 9837fb294e3aa1447ae20bef24b7c91d, type: 2}
-  - {fileID: 11400000, guid: 9837fb294e3aa1447ae20bef24b7c91d, type: 2}
-  - {fileID: 11400000, guid: 9837fb294e3aa1447ae20bef24b7c91d, type: 2}
-  - {fileID: 11400000, guid: 9837fb294e3aa1447ae20bef24b7c91d, type: 2}
-  - {fileID: 11400000, guid: 9837fb294e3aa1447ae20bef24b7c91d, type: 2}
+  cards: []
   _place: {fileID: 1730992943}
 --- !u!1 &1136646023
 GameObject:
@@ -1816,19 +1808,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1692924051}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f9c4ebe3adba854ab2f89a748311721, type: 3}
+  m_Script: {fileID: 11500000, guid: 8e25a2137ac6b06479264448ad596f00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _inputReader: {fileID: 11400000, guid: 58a0a7266d44ec54584583f87e329622, type: 2}
-  _cardSpawnTrm: {fileID: 69560961}
-  _graphicRaycaster: {fileID: 1136646024}
-  _xPadding: 100
-  layoutXDelta: 0
-  _selectCard: {fileID: 0}
-  cards: []
-  layouts: []
-  _cardPrefabs: {fileID: 7441560689303665698, guid: 469a553ae9e8b984daabff53f7a48c89, type: 3}
-  testData: {fileID: 11400000, guid: 9837fb294e3aa1447ae20bef24b7c91d, type: 2}
 --- !u!1 &1730992938
 GameObject:
   m_ObjectHideFlags: 0
