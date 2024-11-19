@@ -1817,6 +1817,7 @@ MonoBehaviour:
   _cardPrefabs: {fileID: 7441560689303665698, guid: 469a553ae9e8b984daabff53f7a48c89, type: 3}
   _xPadding: 100
   _cardMoveTime: 0.4
+  _delayTime: 1.3
 --- !u!1 &1730992938
 GameObject:
   m_ObjectHideFlags: 0

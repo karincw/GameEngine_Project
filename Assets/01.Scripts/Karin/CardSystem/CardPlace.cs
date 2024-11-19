@@ -20,7 +20,15 @@ namespace Karin
         {
             if (c == null) return false;
 
-            if (c.count == firstCardData.count || ((int)c.shape == (int)firstCardData.shape))
+            if (TurnManager.Instance.hitInfo.hit)
+            {
+                if ((c.count == firstCardData.count || ((int)c.shape == (int)firstCardData.shape))
+                    && (c.IsAttackCard || c.IsDefenceCard))
+                {
+                    return true;
+                }
+            }
+            else if (c.count == firstCardData.count || ((int)c.shape == (int)firstCardData.shape))
             {
                 return true;
             }

@@ -18,6 +18,10 @@ namespace Karin
         [SerializeField] private float _xPadding;
         [SerializeField] private float _cardMoveTime;
 
+
+        [Header("AttackSettinges")]
+        [SerializeField] private float _delayTime;
+
         private CardPlace _cardPlace;
         private RectTransform _rectTrm;
         private float holderWidth;
@@ -63,7 +67,7 @@ namespace Karin
             ApplyLayoutWithTween(_cardMoveTime, 1);
 
             if (card.cardData.count == CountType.ACE || card.cardData.count == CountType.Two)
-                TurnManager.Instance.hitInfo.hit = false;
+                TurnManager.Instance.hitInfo.nowhit = false;
         }
         private void AddLayout()
         {
@@ -138,28 +142,43 @@ namespace Karin
 
         public void AutoRun()
         {
+            StartCoroutine(AutoRunCoroutine());
+        }
+
+        private IEnumerator AutoRunCoroutine()
+        {
             CardBase selectedCard = ClacluateCard();
             SwapCard(selectedCard);
             ApplyLayout();
             SortingLayerOrder();
 
-            if(selectedCard == null)
-                return;
+            yield return new WaitForSeconds(_delayTime);
+
+            if (selectedCard == null)
+            {
+                TurnManager.Instance.ChangeTurn();
+                yield break;
+            }
 
             TurnManager.Instance.useCard = true;
+            selectedCard.Flip(true);
             UseCard(selectedCard);
             _cardPlace.UseCard(selectedCard);
 
-            if (selectedCard.cardData.count != CountType.King)
+            if (selectedCard.cardData.count == CountType.King)
             {
-                AutoRun();
                 TurnManager.Instance.useCard = false;
-                return;
+                AutoRun();
+                yield break;
             }
 
             if (selectedCard.cardData.count == CountType.ACE || selectedCard.cardData.count == CountType.Two)
-                TurnManager.Instance.hitInfo.hit = false;
+                TurnManager.Instance.hitInfo.nowhit = false;
+
+            Debug.Log("Enemy Turn End");
+            TurnManager.Instance.ChangeTurn();
         }
+
         public CardBase ClacluateCard()
         {
             List<CardBase> cardDatas = new();
@@ -172,7 +191,7 @@ namespace Karin
             if (cardDatas.Count <= 0)
                 return null;
 
-            if (TurnManager.Instance.hitInfo.hit == true) // 공격받은상태임
+            if (TurnManager.Instance.hitInfo.nowhit == true) // 공격받은상태임
             {
                 List<CardBase> attackCards = cardDatas.Where(c => c.cardData.IsAttackCard).ToList();
                 if (attackCards.Count > 0)

@@ -21,13 +21,13 @@ namespace Karin
 
         public CardDataSO GetCardData()
         {
-            int idx = cards.Count - 1;
-            CardDataSO rcard = cards[idx];
+            //int idx = cards.Count - 1;
+            CardDataSO rcard = cards[^1];
             if (cards.Count <= 10)
             {
                 SetCards(_place.GetCards().Select(c => c.cardData).ToList());
             }
-            cards.RemoveAt(idx);
+            cards.Remove(rcard);
             return rcard;
         }
 

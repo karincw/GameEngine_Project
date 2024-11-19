@@ -81,16 +81,19 @@ namespace Karin
             SortingLayerOrder();
             ApplyLayoutWithTween(0.4f, 1);
 
-            TurnManager.Instance.useCard = true;
 
             if (card.cardData.count != CountType.King)
             {
+                TurnManager.Instance.useCard = true;
                 CardDrag(false);
+            }
+            else
+            {
                 TurnManager.Instance.useCard = false;
             }
 
             if (card.cardData.count == CountType.ACE || card.cardData.count == CountType.Two)
-                TurnManager.Instance.hitInfo.hit = false;
+                TurnManager.Instance.hitInfo.nowhit = false;
 
         }
         public void MoveLayout()

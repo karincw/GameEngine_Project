@@ -1,14 +1,12 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 
 namespace Karin
 {
-    public struct attackInfo
+    public struct AttackInfo
     {
         public bool hit;
+        public bool nowhit;
         public Turn who;
     }
 
@@ -20,7 +18,7 @@ namespace Karin
         [SerializeField] private AttackText _enemyText;
 
         public bool useCard;
-        public attackInfo hitInfo;
+        public AttackInfo hitInfo;
 
         public event Action<Turn> TurnChangedEvent;
         public event Action<Turn> OnAttackEvent;
@@ -47,6 +45,7 @@ namespace Karin
                 at.Count = 0;
                 at.Fade(false);
                 hitInfo.hit = false;
+                hitInfo.nowhit = false;
             }
 
             if (currentTurn == Turn.Player)
@@ -81,21 +80,22 @@ namespace Karin
 
         public void Attack(int damage)
         {
-            if(damage <= 0) return;
+            if (damage <= 0) return;
 
             if (currentTurn == Turn.Player)
             {
-                _enemyText.Count += damage;
+                _enemyText.Count += _playerText.Count + damage;
                 _playerText.Count = 0;
                 _playerText.Fade(false);
             }
             else if (currentTurn == Turn.Enemy)
             {
-                _playerText.Count += damage;
+                _playerText.Count += _enemyText.Count + damage;
                 _enemyText.Count = 0;
                 _enemyText.Fade(false);
             }
             hitInfo.hit = true;
+            hitInfo.nowhit = true;
             hitInfo.who = currentTurn;
             OnAttackEvent?.Invoke(currentTurn);
         }
