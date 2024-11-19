@@ -15,4 +15,4 @@ MonoBehaviour:
   cardType: 3
   count: 1
   shape: 0
-  specialShape: 0
+  specialShape: 5

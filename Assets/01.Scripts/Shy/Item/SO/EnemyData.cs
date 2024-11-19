@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using CardBase = Karin.CardBase;
+using CardDataSO = Karin.CardDataSO;
 
 namespace Shy
 {
@@ -9,7 +9,7 @@ namespace Shy
     public class EnemyData : Item_DataSO
     {
         public int life;
-        public List<CardBase> cardDeck;
+        public List<CardDataSO> cardDeck;
         public List<ArtifactData> artifacts;
     }
 }

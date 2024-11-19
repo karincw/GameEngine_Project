@@ -2,7 +2,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using System.Collections;
-
+using Karin;
+using UnityEngine.UI;
+using TMPro;
 
 namespace Shy
 {
@@ -21,6 +23,7 @@ namespace Shy
         public Selector_Enemy enemyCard;
 
         private bool canUseItem = false;
+        private CardBase[] enemyHaveCards = new CardBase[31];
 
 
 
@@ -92,12 +95,39 @@ namespace Shy
 
             if(_item is Selector_Enemy)
             {
-                if ((_item as Selector_Enemy).data.cardDeck.Count != 0)
+                Selector_Enemy item = _item as Selector_Enemy;
+                if (item.data.cardDeck.Count != 0)
                 {
                     lastChooseUI.transform.GetChild(1).gameObject.SetActive(true);
                     lastChooseUI.transform.GetChild(0).gameObject.SetActive(false);
 
+                    Debug.Log(lastChooseUI.transform.GetChild(1).gameObject.name);
+                    Debug.Log(lastChooseUI.transform.GetChild(1).GetComponentInChildren<CardBase>());
+                    if (enemyHaveCards[0] == null) 
+                        enemyHaveCards = lastChooseUI.transform.GetChild(1).GetComponentsInChildren<CardBase>();
 
+                    for (int i = 0; i < 30; i++)
+                    {
+                        if(i < item.data.cardDeck.Count)
+                        {
+                            enemyHaveCards[i].gameObject.SetActive(true);
+                            enemyHaveCards[i].cardData = item.data.cardDeck[i];
+
+                            Transform visual = enemyHaveCards[i].transform.GetChild(0);
+
+                            visual.GetChild(0).GetComponent<Image>().sprite = CardManager.lnstance.ShapeToSpriteDictionary[enemyHaveCards[i].cardData.specialShape];
+
+                            visual.GetChild(1).GetComponent<Image>().color = 
+                                CardManager.lnstance.ShapeToColorDictionary[(SpecialShapeType)enemyHaveCards[i].cardData.shape];
+                            visual.GetChild(2).GetComponent<Image>().color =
+                                CardManager.lnstance.ShapeToColorDictionary[(SpecialShapeType)enemyHaveCards[i].cardData.shape];
+
+                            ColorUpdate(visual.GetChild(3).GetComponent<TextMeshProUGUI>(), enemyHaveCards[i]);
+                            ColorUpdate(visual.GetChild(4).GetComponent<TextMeshProUGUI>(), enemyHaveCards[i]);
+                        }
+                        else
+                            enemyHaveCards[i].gameObject.SetActive(false);
+                    }
                 }
                 else
                 {
@@ -105,6 +135,13 @@ namespace Shy
                     lastChooseUI.transform.GetChild(1).gameObject.SetActive(false);
                 }
             }
+        }
+
+        public void ColorUpdate(TextMeshProUGUI _tmp, CardBase _s)
+        {
+            _tmp.text = CardManager.lnstance.GetCountText(_s.cardData.count);
+            _tmp.font = (_s.cardData.specialShape is SpecialShapeType.Diamond or
+                SpecialShapeType.Heart) ? CardManager.lnstance.PinkFont : CardManager.lnstance.BlackFont;
         }
 
         public void EnemySelect()

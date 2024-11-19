@@ -16,6 +16,9 @@ MonoBehaviour:
   itemName: "\uC624\uC724\uC131"
   itemExplain: 
   life: 2
-  cardDeck: []
+  cardDeck:
+  - {fileID: 11400000, guid: 9837fb294e3aa1447ae20bef24b7c91d, type: 2}
+  - {fileID: 11400000, guid: 9837fb294e3aa1447ae20bef24b7c91d, type: 2}
+  - {fileID: 11400000, guid: 9837fb294e3aa1447ae20bef24b7c91d, type: 2}
   artifacts:
   - {fileID: 11400000, guid: 06d3335f7e859d74689cc2da4e37173d, type: 2}
