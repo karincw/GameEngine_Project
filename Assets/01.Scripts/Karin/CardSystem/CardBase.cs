@@ -1,6 +1,5 @@
 using DG.Tweening;
 using System;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -61,6 +60,10 @@ namespace Karin
             cardData = data;
             _cardVisual = GetComponentInChildren<CardVisual>();
             _imageCompo = GetComponent<Image>();
+            _place = FindObjectOfType<CardPlace>();
+            _rectTrm = transform as RectTransform;
+            originPos = _rectTrm.localPosition;
+
             _cardVisual.InitializeNoEvent(this);
             _imageCompo.raycastTarget = false;
         }
@@ -72,6 +75,8 @@ namespace Karin
 
         public void UseCard()
         {
+            if(!_place.CanUse(cardData)) return;
+
             _cardHolder.UseCard(this);
             _place.UseCard(this);
         }

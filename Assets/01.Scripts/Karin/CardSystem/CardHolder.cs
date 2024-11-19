@@ -28,9 +28,11 @@ namespace Karin
         [SerializeField] private List<CardBase> cards = new List<CardBase>();
         [SerializeField] private List<float> layouts = new List<float>();
 
-
         [Header("Prefabs")]
         [SerializeField] private CardBase _cardPrefabs;
+
+        [Header("Cards")]
+        public List<CardDataSO> myCards;
 
         private RectTransform _rectTrm;
         private float holderWidth;
@@ -44,41 +46,26 @@ namespace Karin
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.Q))
+            if (Input.GetKeyDown(KeyCode.F11))
             {
-                AddCard();
+                AddCard(GameManager.Instance.cardPack.GetCardData());
             }
             MoveLayout();
         }
 
-        public CardDataSO testData;
-        [ContextMenu("TestAdd")]
         public void AddCard()
         {
-            CardBase cb = Instantiate(_cardPrefabs, _cardSpawnTrm);
-            cb.Initialize(testData, this, _graphicRaycaster);
-            cards.Insert(0, cb);
-            AddLayout();
-            SortingLayerOrder();
-            ApplyLayoutWithTween(0.4f, 1);
-
-            RectTransform rectTrm = cb.transform as RectTransform;
-
-            float leftPos = -holderWidth / 2;
-            float lengthDelta = holderWidth / (layouts.Count + 1);
-
-            rectTrm.localPosition = new Vector3(leftPos - 300, 0, 0);
-            rectTrm.DOLocalMoveX(leftPos + lengthDelta, 0.4f).SetEase(Ease.InExpo);
+            AddCard(GameManager.Instance.cardPack.GetCardData());
         }
         public void AddCard(CardDataSO data)
         {
             CardBase cb = Instantiate(_cardPrefabs, _cardSpawnTrm);
             cb.Initialize(data, this, _graphicRaycaster);
+            cb.canDrag = true;
             cards.Insert(0, cb);
             AddLayout();
             SortingLayerOrder();
             ApplyLayoutWithTween(0.4f, 1);
-
             RectTransform rectTrm = cb.transform as RectTransform;
 
             float leftPos = -holderWidth / 2;
@@ -93,6 +80,21 @@ namespace Karin
             RemoveLayout();
             SortingLayerOrder();
             ApplyLayoutWithTween(0.4f, 1);
+
+
+            if (card.cardData.count != CountType.King)
+            {
+                TurnManager.Instance.useCard = true;
+                CardDrag(false);
+            }
+            else
+            {
+                TurnManager.Instance.useCard = false;
+            }
+
+            if (card.cardData.count == CountType.ACE || card.cardData.count == CountType.Two)
+                TurnManager.Instance.hitInfo.nowhit = false;
+
         }
         public void MoveLayout()
         {

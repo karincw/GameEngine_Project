@@ -9,7 +9,7 @@ namespace Karin
     public class CardPlace : MonoBehaviour
     {
         public List<CardBase> cards = new List<CardBase>();
-        private CardDataSO firstCardData => cards[0].cardData;
+        private CardDataSO firstCardData => cards[cards.Count - 1].cardData;
 
         [SerializeField] private Outline _outLine;
         [SerializeField] private CardPack _pack;
@@ -20,7 +20,15 @@ namespace Karin
         {
             if (c == null) return false;
 
-            if (c.count.Equals(firstCardData.count) || ((int)c.shape & (int)firstCardData.shape) > 0)
+            if (TurnManager.Instance.hitInfo.hit)
+            {
+                if ((c.count == firstCardData.count || ((int)c.shape == (int)firstCardData.shape))
+                    && (c.IsAttackCard || c.IsDefenceCard))
+                {
+                    return true;
+                }
+            }
+            else if (c.count == firstCardData.count || ((int)c.shape == (int)firstCardData.shape))
             {
                 return true;
             }
@@ -35,8 +43,12 @@ namespace Karin
             Vector2 positionDelta = new Vector2(Random.Range(-10f, 10f), Random.Range(-10f, 10f));
             card.transform.DOLocalMove(positionDelta, 0.1f);
 
-            TurnManager.lnstance.Attack(CardManager.lnstance.GetDamage(card.cardData.count));
-            TurnManager.lnstance.ChangeTurn();
+            TurnManager.Instance.Attack(CardManager.Instance.GetDamage(card.cardData.count));
+        }
+
+        public List<CardBase> GetCards()
+        {
+            return cards.GetRange(0, cards.Count - 5);
         }
 
         [ContextMenu("StartSettings")]

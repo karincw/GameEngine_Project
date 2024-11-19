@@ -1,9 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 namespace Karin
 {
+    public struct AttackInfo
+    {
+        public bool hit;
+        public bool nowhit;
+        public Turn who;
+    }
 
     public class TurnManager : MonoSingleton<TurnManager>
     {
@@ -12,40 +17,109 @@ namespace Karin
         [SerializeField] private AttackText _playerText;
         [SerializeField] private AttackText _enemyText;
 
+        public bool useCard;
+        public AttackInfo hitInfo;
+
+        public event Action<Turn> TurnChangedEvent;
+        public event Action<Turn> OnAttackEvent;
+        public event Action<Turn> OnDefenceEvent;
+
         public void ChangeTurn()
         {
+            if (!useCard) // useCard == false
+            {
+                if (currentTurn == Turn.Player)
+                {
+                    GameManager.Instance.playerCardHolder.AddCard();
+                }
+                else if (currentTurn == Turn.Enemy)
+                {
+                    GameManager.Instance.enemyCardHolder.AddCard();
+                }
+            }
+
+            if (hitInfo.hit && currentTurn != hitInfo.who)
+            {
+                Debug.Log($"{currentTurn} <- hit / damage:{GetHitText().Count}");
+                AttackText at = GetHitText();
+                at.Count = 0;
+                at.Fade(false);
+                hitInfo.hit = false;
+                hitInfo.nowhit = false;
+            }
+
             if (currentTurn == Turn.Player)
             {
                 currentTurn = Turn.Enemy;
-                GameManager.lnstance.cardHolder.CardDrag(false);
+                GameManager.Instance.enemyCardHolder.AutoRun();
+                GameManager.Instance.playerCardHolder.CardDrag(false);
             }
             else if (currentTurn == Turn.Enemy)
             {
                 currentTurn = Turn.Player;
-                GameManager.lnstance.cardHolder.CardDrag(true);
-
+                GameManager.Instance.playerCardHolder.CardDrag(true);
             }
+
+            useCard = false;
+            TurnChangedEvent?.Invoke(currentTurn);
+
         }
+
+        private AttackText GetHitText()
+        {
+            return currentTurn != Turn.Player ? _enemyText : _playerText;
+        }
+
         public void ChangeTurn(Turn who)
         {
             currentTurn = who;
-            GameManager.lnstance.cardHolder.CardDrag(who == Turn.Player);
+            GameManager.Instance.playerCardHolder.CardDrag(who == Turn.Player);
+            TurnChangedEvent?.Invoke(currentTurn);
+            useCard = false;
         }
 
         public void Attack(int damage)
         {
+            if (damage <= 0) return;
+
             if (currentTurn == Turn.Player)
             {
-                _enemyText.Count += damage;
+                _enemyText.Count += _playerText.Count + damage;
                 _playerText.Count = 0;
                 _playerText.Fade(false);
             }
             else if (currentTurn == Turn.Enemy)
             {
-                _playerText.Count += damage;
+                _playerText.Count += _enemyText.Count + damage;
                 _enemyText.Count = 0;
                 _enemyText.Fade(false);
             }
+            hitInfo.hit = true;
+            hitInfo.nowhit = true;
+            hitInfo.who = currentTurn;
+            OnAttackEvent?.Invoke(currentTurn);
+        }
+
+        public void Defence(int defence)
+        {
+            if (defence <= 0) return;
+
+            if (defence == -1)
+                defence = _enemyText.Count;
+
+            if (currentTurn == Turn.Player)
+            {
+                _enemyText.Count -= defence;
+                _playerText.Count = 0;
+                _playerText.Fade(false);
+            }
+            else if (currentTurn == Turn.Enemy)
+            {
+                _playerText.Count -= defence;
+                _enemyText.Count = 0;
+                _enemyText.Fade(false);
+            }
+            OnDefenceEvent?.Invoke(currentTurn);
         }
     }
 
