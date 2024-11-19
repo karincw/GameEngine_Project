@@ -20,7 +20,7 @@ namespace Shy
         public override void Init(Item_DataSO _base)
         {
             data = _base as StickerData;
-            CardManager cm = CardManager.lnstance;
+            CardManager cm = CardManager.Instance;
 
             rand = Random.Range(1, 14);
             shape = Random.Range(0, 4);
@@ -37,18 +37,18 @@ namespace Shy
 
         public override void OnPointerDown(PointerEventData eventData)
         {
-            StageManager.lnstance.StageClear();
+            StageManager.Instance.StageClear();
         }
 
         public override void OnPointerEnter(PointerEventData eventData)
         {
-            ExplainManager.lnstance.ShowExplain(data, gameObject);
+            ExplainManager.Instance.ShowExplain(data, gameObject);
         }
 
         private void ChangeSprite(Image _img, SpecialShapeType _shape)
         {
-            _img.sprite = CardManager.lnstance.ShapeToSpriteDictionary[_shape];
-            _img.color = CardManager.lnstance.ShapeToColorDictionary[_shape];
+            _img.sprite = CardManager.Instance.ShapeToSpriteDictionary[_shape];
+            _img.color = CardManager.Instance.ShapeToColorDictionary[_shape];
         }
     }
 }

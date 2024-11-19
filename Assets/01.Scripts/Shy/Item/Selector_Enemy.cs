@@ -33,7 +33,7 @@ namespace Shy
 
             Debug.Log("Enemy init");
             for (int i = 0; i < data.artifacts.Count; i++)
-                StageManager.lnstance.AddArtifact(data.artifacts[i], this);
+                StageManager.Instance.AddArtifact(data.artifacts[i], this);
         }
 
         public void GetDamage()
@@ -45,7 +45,7 @@ namespace Shy
         {
             if (isButton == false) return;
 
-            StageManager.lnstance.EnemyChoose(this);
+            StageManager.Instance.EnemyChoose(this);
         }
     }
 }
