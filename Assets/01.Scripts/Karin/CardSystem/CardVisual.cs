@@ -75,7 +75,7 @@ namespace Karin
         }
         public void SetVisual(bool isFront)
         {
-            CardManager cm = CardManager.Instance;
+            CardManager cm = CardManager.lnstance;
             if (isFront)
             {
                 CardDataSO data = _owner.cardData;

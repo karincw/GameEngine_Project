@@ -17,19 +17,19 @@ namespace Karin
             if (currentTurn == Turn.Player)
             {
                 currentTurn = Turn.Enemy;
-                GameManager.Instance.cardHolder.CardDrag(false);
+                GameManager.lnstance.cardHolder.CardDrag(false);
             }
             else if (currentTurn == Turn.Enemy)
             {
                 currentTurn = Turn.Player;
-                GameManager.Instance.cardHolder.CardDrag(true);
+                GameManager.lnstance.cardHolder.CardDrag(true);
 
             }
         }
         public void ChangeTurn(Turn who)
         {
             currentTurn = who;
-            GameManager.Instance.cardHolder.CardDrag(who == Turn.Player);
+            GameManager.lnstance.cardHolder.CardDrag(who == Turn.Player);
         }
 
         public void Attack(int damage)

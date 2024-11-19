@@ -5,7 +5,7 @@ public class MonoSingleton<T> : MonoBehaviour where T : MonoBehaviour
     private static T _instance = null;
     private static bool IsDestoryed = false;
 
-    public static T Instance
+    public static T lnstance
     {
         get
         {

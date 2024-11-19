@@ -35,8 +35,8 @@ namespace Karin
             Vector2 positionDelta = new Vector2(Random.Range(-10f, 10f), Random.Range(-10f, 10f));
             card.transform.DOLocalMove(positionDelta, 0.1f);
 
-            TurnManager.Instance.Attack(CardManager.Instance.GetDamage(card.cardData.count));
-            TurnManager.Instance.ChangeTurn();
+            TurnManager.lnstance.Attack(CardManager.lnstance.GetDamage(card.cardData.count));
+            TurnManager.lnstance.ChangeTurn();
         }
 
         [ContextMenu("StartSettings")]

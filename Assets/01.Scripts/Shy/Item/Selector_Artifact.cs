@@ -21,13 +21,13 @@ namespace Shy
 
         public override void OnPointerEnter(PointerEventData eventData)
         {
-            ExplainManager.Instance.ShowExplain(data, gameObject);
+            ExplainManager.lnstance.ShowExplain(data, gameObject);
         }
 
         public override void OnPointerDown(PointerEventData eventData)
         {
-            StageManager.Instance.AddArtifact(data);
-            StageManager.Instance.StageClear();
+            StageManager.lnstance.AddArtifact(data);
+            StageManager.lnstance.StageClear();
         }
     }
 }

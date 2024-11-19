@@ -13,6 +13,11 @@ namespace Shy
         [SerializeField] private float delay;
         [SerializeField] private int roopCnt;
 
+        public void SignUpdate(Karin.Turn _turn)
+        {
+            SignUpdate(Karin.Turn.Player == _turn ? "Your Turn" : "Other Turn");
+        }
+
         public void SignUpdate(string _mes)
         {
             boardMes.text = _mes;

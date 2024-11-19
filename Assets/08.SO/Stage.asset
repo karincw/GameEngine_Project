@@ -17,13 +17,14 @@ MonoBehaviour:
     spawnItem:
     - {fileID: 11400000, guid: 303fab3807c04d642b5db0fad627d88c, type: 2}
     - {fileID: 11400000, guid: 303fab3807c04d642b5db0fad627d88c, type: 2}
-    - {fileID: 11400000, guid: 303fab3807c04d642b5db0fad627d88c, type: 2}
+    - {fileID: 11400000, guid: 54bc9e42d2a4e214cbc42411418ef9f4, type: 2}
     - {fileID: 11400000, guid: 303fab3807c04d642b5db0fad627d88c, type: 2}
     spawnCnt: {x: 4, y: 4}
   - mapType: 2
     spawnItem:
-    - {fileID: 11400000, guid: 06d3335f7e859d74689cc2da4e37173d, type: 2}
-    spawnCnt: {x: 1, y: 1}
+    - {fileID: 11400000, guid: 1e142c53695316b4198af12d76785c28, type: 2}
+    - {fileID: 11400000, guid: 30afb8e6f5ca49141b06da764e4228e3, type: 2}
+    spawnCnt: {x: 2, y: 2}
   - mapType: 0
     spawnItem:
     - {fileID: 11400000, guid: 88287f86d565bc144b0d2be479da6232, type: 2}

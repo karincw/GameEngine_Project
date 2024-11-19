@@ -8,7 +8,7 @@ namespace Shy
     {
         public EVENT_TYPE eType;
 
-        public abstract void Effect();
+        public abstract void Effect(Selector_Enemy _opponent);
 
         public abstract void Init();
     }

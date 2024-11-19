@@ -33,14 +33,19 @@ namespace Shy
 
             Debug.Log("Enemy init");
             for (int i = 0; i < data.artifacts.Count; i++)
-                StageManager.Instance.AddArtifact(data.artifacts[i], this);
+                StageManager.lnstance.AddArtifact(data.artifacts[i], this);
+        }
+
+        public void GetDamage()
+        {
+
         }
 
         public override void OnPointerDown(PointerEventData eventData)
         {
             if (isButton == false) return;
 
-            StageManager.Instance.EnemyChoose(this);
+            StageManager.lnstance.EnemyChoose(this);
         }
     }
 }

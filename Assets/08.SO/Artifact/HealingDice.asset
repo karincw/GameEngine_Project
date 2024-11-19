@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43566e8f1501ff9469dc24bc97a2dbec, type: 3}
+  m_Name: HealingDice
+  m_EditorClassIdentifier: 
+  iType: 3
+  itemName: "\uD589\uC6B4\uC758 \uC8FC\uC0AC\uC704"
+  itemExplain: "\uB9E4  \uC804\uD22C\uAC00  \uCC98\uC74C  \uC2DC\uC791\uD560  \uB54C, 
+    \uC8FC\uC0AC\uC704\uB97C  \uAD74\uB9AC\uACE0  \uB098\uC628  \uC218\uC758  \uB450 
+    \uBC30\uB9CC\uD07C  \uCE69\uC744  \uC5BB\uC2B5\uB2C8\uB2E4."
+  artifact: {fileID: 3125783770619259300, guid: cdafa361c1fb0dc4ab728c8b8eed6f4e, type: 3}

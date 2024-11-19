@@ -9,10 +9,11 @@ namespace Shy
         private int cnt = 0;
 
 
-        public override void Effect()
+        public override void Effect(Selector_Enemy _opponent)
         {
             if(++cnt == 3)
             {
+                _opponent.health -= 3;
                 cnt = 0;
                 Debug.Log("적에게 3의 피해");
             }

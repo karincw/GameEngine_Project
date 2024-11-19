@@ -185,7 +185,7 @@ namespace Karin
         {
             for (int i = 0; i < 5; i++)
             {
-                AddCard(GameManager.Instance.cardPack.GetCardData());
+                AddCard(GameManager.lnstance.cardPack.GetCardData());
                 yield return new WaitForSeconds(0.2f);
             }
             CardDrag(true);

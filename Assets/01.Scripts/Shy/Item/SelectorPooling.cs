@@ -9,11 +9,9 @@ namespace Shy
     {
         [SerializeField] private SerializedDictionary<ITEM_TYPE, SelectorItem> poolingItem;
         [SerializeField] private List<SelectorItem> poolResult;
-        private Transform poolPos;
 
         private void Awake()
         {
-            poolPos = transform.Find("PoolPos");
             foreach (ITEM_TYPE keys in poolingItem.Keys)
             {
                 for (int i = 0; i < 5; i++)
@@ -38,7 +36,7 @@ namespace Shy
 
         public void ReturnPool(SelectorItem _item)
         {
-            _item.transform.parent = poolPos;
+            _item.transform.parent = transform;
             _item.gameObject.SetActive(false);
             poolResult.Add(_item);
         }
@@ -46,7 +44,7 @@ namespace Shy
         {
             foreach (SelectorItem item in _item)
             {
-                item.transform.parent = poolPos;
+                item.transform.parent = transform;
                 item.gameObject.SetActive(false);
                 poolResult.Add(item);
             }
@@ -56,7 +54,7 @@ namespace Shy
         {
             if (!poolingItem.ContainsKey(_type)) return null;
 
-            SelectorItem item = Instantiate(poolingItem[_type], poolPos);
+            SelectorItem item = Instantiate(poolingItem[_type], transform);
             item.gameObject.SetActive(false);
             return item;
         }

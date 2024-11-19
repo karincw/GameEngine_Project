@@ -430,6 +430,8 @@ MonoBehaviour:
   num:
   - {fileID: 6123086546996448196}
   - {fileID: 7323065780701995799}
+  rand: 1
+  shape: 3
 --- !u!1 &7869098334986309181
 GameObject:
   m_ObjectHideFlags: 0
