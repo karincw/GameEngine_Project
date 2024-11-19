@@ -12,7 +12,7 @@ namespace Shy
     {
         [SerializeField] private Transform selectorPos;
         private SelectorItem curSelectItem;
-        public GameObject lastChooseUI;
+        public GameObject lastChooseUI; 
 
         [SerializeField, Header("STAGE")] private StageListSO stageSO;
         [SerializeField] private List<Stage> nowMap;

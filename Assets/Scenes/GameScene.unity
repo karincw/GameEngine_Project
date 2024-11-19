@@ -437,6 +437,7 @@ MonoBehaviour:
   currentTurn: 0
   _playerText: {fileID: 2017355414}
   _enemyText: {fileID: 547406027}
+  _turnChangeBtn: {fileID: 1563261770}
   useCard: 0
 --- !u!1 &405399608
 GameObject:
@@ -1641,7 +1642,7 @@ MonoBehaviour:
     m_HighlightedColor: {r: 0.24705884, g: 0.054901965, b: 0.054901965, a: 1}
     m_PressedColor: {r: 0.106918216, g: 0, b: 0, a: 1}
     m_SelectedColor: {r: 0.24705884, g: 0.054901965, b: 0.054901965, a: 1}
-    m_DisabledColor: {r: 0.10588236, g: 0, b: 0, a: 0.5019608}
+    m_DisabledColor: {r: 0.10588236, g: 0, b: 0, a: 1}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -2022,7 +2023,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.19537848, g: 0.21383637, b: 0.19164579, a: 1}
+  m_Color: {r: 0.08235294, g: 0.39607844, b: 0.25490198, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

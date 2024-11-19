@@ -68,6 +68,12 @@ namespace Karin
 
             if (card.cardData.count == CountType.ACE || card.cardData.count == CountType.Two)
                 TurnManager.Instance.hitInfo.nowhit = false;
+
+            if (cards.Count <= 0)
+            {
+                TurnManager.Instance.Attack(10);
+                StartSettings();
+            }
         }
         private void AddLayout()
         {
@@ -175,7 +181,6 @@ namespace Karin
             if (selectedCard.cardData.count == CountType.ACE || selectedCard.cardData.count == CountType.Two)
                 TurnManager.Instance.hitInfo.nowhit = false;
 
-            Debug.Log("Enemy Turn End");
             TurnManager.Instance.ChangeTurn();
         }
 

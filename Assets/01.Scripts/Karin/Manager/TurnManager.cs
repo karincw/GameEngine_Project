@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Karin
 {
@@ -16,6 +17,7 @@ namespace Karin
 
         [SerializeField] private AttackText _playerText;
         [SerializeField] private AttackText _enemyText;
+        [SerializeField] private Button _turnChangeBtn;
 
         public bool useCard;
         public AttackInfo hitInfo;
@@ -51,12 +53,14 @@ namespace Karin
             if (currentTurn == Turn.Player)
             {
                 currentTurn = Turn.Enemy;
+                _turnChangeBtn.interactable = false;
                 GameManager.Instance.enemyCardHolder.AutoRun();
                 GameManager.Instance.playerCardHolder.CardDrag(false);
             }
             else if (currentTurn == Turn.Enemy)
             {
                 currentTurn = Turn.Player;
+                _turnChangeBtn.interactable = true;
                 GameManager.Instance.playerCardHolder.CardDrag(true);
             }
 

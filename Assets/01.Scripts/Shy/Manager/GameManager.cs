@@ -18,7 +18,7 @@ namespace Shy
             }
             else if (Input.GetKeyDown(KeyCode.Alpha2))
             {
-                Debug.Log("플레이어 턴 시작");
+                Debug.Log("플레이어 턴 시작"); 
                 DamageEffect.Instance.Damage(-12, StageManager.Instance.playerCard);
             }
             else if (Input.GetKeyDown(KeyCode.Alpha3))

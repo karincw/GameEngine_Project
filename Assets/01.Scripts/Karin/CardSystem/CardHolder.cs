@@ -95,6 +95,12 @@ namespace Karin
             if (card.cardData.count == CountType.ACE || card.cardData.count == CountType.Two)
                 TurnManager.Instance.hitInfo.nowhit = false;
 
+            if (cards.Count <= 0)
+            {
+                TurnManager.Instance.Attack(10);
+                StartSettings();
+            }
+
         }
         public void MoveLayout()
         {
