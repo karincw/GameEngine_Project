@@ -36,7 +36,6 @@ namespace Karin
             card.transform.DOLocalMove(positionDelta, 0.1f);
 
             TurnManager.Instance.Attack(CardManager.Instance.GetDamage(card.cardData.count));
-            TurnManager.Instance.useCard = true;
         }
 
         public List<CardBase> GetCards()

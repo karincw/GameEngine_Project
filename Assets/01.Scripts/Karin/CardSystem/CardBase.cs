@@ -60,6 +60,10 @@ namespace Karin
             cardData = data;
             _cardVisual = GetComponentInChildren<CardVisual>();
             _imageCompo = GetComponent<Image>();
+            _place = FindObjectOfType<CardPlace>();
+            _rectTrm = transform as RectTransform;
+            originPos = _rectTrm.localPosition;
+
             _cardVisual.InitializeNoEvent(this);
             _imageCompo.raycastTarget = false;
         }

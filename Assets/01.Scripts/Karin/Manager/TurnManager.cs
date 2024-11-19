@@ -28,7 +28,7 @@ namespace Karin
 
         public void ChangeTurn()
         {
-            if (!useCard)
+            if (!useCard) // useCard == false
             {
                 if (currentTurn == Turn.Player)
                 {
@@ -36,11 +36,11 @@ namespace Karin
                 }
                 else if (currentTurn == Turn.Enemy)
                 {
-                    //GameManager.Instance.enemyCardHolder.AddCard();
+                    GameManager.Instance.enemyCardHolder.AddCard();
                 }
             }
 
-            if (hitInfo.hit && hitInfo.who != currentTurn)
+            if (hitInfo.hit && currentTurn != hitInfo.who)
             {
                 Debug.Log($"{currentTurn} <- hit / damage:{GetHitText().Count}");
                 AttackText at = GetHitText();
@@ -52,6 +52,7 @@ namespace Karin
             if (currentTurn == Turn.Player)
             {
                 currentTurn = Turn.Enemy;
+                GameManager.Instance.enemyCardHolder.AutoRun();
                 GameManager.Instance.playerCardHolder.CardDrag(false);
             }
             else if (currentTurn == Turn.Enemy)
@@ -80,6 +81,8 @@ namespace Karin
 
         public void Attack(int damage)
         {
+            if(damage <= 0) return;
+
             if (currentTurn == Turn.Player)
             {
                 _enemyText.Count += damage;
@@ -99,6 +102,8 @@ namespace Karin
 
         public void Defence(int defence)
         {
+            if (defence <= 0) return;
+
             if (defence == -1)
                 defence = _enemyText.Count;
 

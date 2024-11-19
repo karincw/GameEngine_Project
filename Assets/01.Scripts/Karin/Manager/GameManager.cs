@@ -16,11 +16,14 @@ namespace Karin
 
         [SerializeField] private CardDataSO baseCardData;
 
-        private void Start()
+        private void Awake()
         {
             cardPlace = FindObjectOfType<CardPlace>();
             cardPack = FindObjectOfType<CardPack>();
+        }
 
+        private void Start()
+        {
             StartSettings();
         }
 
@@ -36,6 +39,10 @@ namespace Karin
             {
                 TurnManager.Instance.ChangeTurn();
             }
+            if (Input.GetKeyDown(KeyCode.F10))
+            {
+                DebugCardView();
+            }
         }
 
 #endif
@@ -46,6 +53,16 @@ namespace Karin
             cardPack.SetCards(playerCardHolder.myCards);
             cardPlace.CardSetting();
             playerCardHolder.StartSettings();
+            enemyCardHolder.StartSettings();
+        }
+
+        [ContextMenu("DebugCardView")]
+        public void DebugCardView() 
+        {
+            FindObjectsOfType<CardVisual>().ToList().ForEach(c =>
+            {
+                c.SetVisual(true);
+            });
         }
 
         public void StartSettings()

@@ -11,6 +11,9 @@ namespace Karin
         public BaseShapeType shape;
         public SpecialShapeType specialShape;
 
+        public bool IsAttackCard => specialShape == SpecialShapeType.Sword || count == CountType.ACE || count == CountType.Two;
+        public bool IsDefenceCard => specialShape == SpecialShapeType.Shield || count == CountType.Three;
+
         #region »ý¼ºÀÚ
         public CardDataSO(CardType cardType, CountType count, BaseShapeType shape, SpecialShapeType specialShape)
         {
