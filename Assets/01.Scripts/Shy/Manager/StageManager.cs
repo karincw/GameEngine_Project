@@ -53,7 +53,7 @@ namespace Shy
             while (selectorPos.childCount < rand)
             {
                 Item_DataSO c = nowMap[0].spawnItem[Random.Range(0, nowMap[0].spawnItem.Count)];
-                SelectorItem item = SelectorPooling.lnstance.GetPool(c.iType);
+                SelectorItem item = SelectorPooling.Instance.GetPool(c.iType);
 
                 item.transform.parent = selectorPos;
                 item.transform.GetChild(0).gameObject.SetActive(false);
@@ -115,12 +115,12 @@ namespace Shy
 
                             Transform visual = enemyHaveCards[i].transform.GetChild(0);
 
-                            visual.GetChild(0).GetComponent<Image>().sprite = CardManager.lnstance.ShapeToSpriteDictionary[enemyHaveCards[i].cardData.specialShape];
+                            visual.GetChild(0).GetComponent<Image>().sprite = CardManager.Instance.ShapeToSpriteDictionary[enemyHaveCards[i].cardData.specialShape];
 
                             visual.GetChild(1).GetComponent<Image>().color = 
-                                CardManager.lnstance.ShapeToColorDictionary[(SpecialShapeType)enemyHaveCards[i].cardData.shape];
+                                CardManager.Instance.ShapeToColorDictionary[(SpecialShapeType)enemyHaveCards[i].cardData.shape];
                             visual.GetChild(2).GetComponent<Image>().color =
-                                CardManager.lnstance.ShapeToColorDictionary[(SpecialShapeType)enemyHaveCards[i].cardData.shape];
+                                CardManager.Instance.ShapeToColorDictionary[(SpecialShapeType)enemyHaveCards[i].cardData.shape];
 
                             ColorUpdate(visual.GetChild(3).GetComponent<TextMeshProUGUI>(), enemyHaveCards[i]);
                             ColorUpdate(visual.GetChild(4).GetComponent<TextMeshProUGUI>(), enemyHaveCards[i]);
@@ -139,16 +139,16 @@ namespace Shy
 
         public void ColorUpdate(TextMeshProUGUI _tmp, CardBase _s)
         {
-            _tmp.text = CardManager.lnstance.GetCountText(_s.cardData.count);
+            _tmp.text = CardManager.Instance.GetCountText(_s.cardData.count);
             _tmp.font = (_s.cardData.specialShape is SpecialShapeType.Diamond or
-                SpecialShapeType.Heart) ? CardManager.lnstance.PinkFont : CardManager.lnstance.BlackFont;
+                SpecialShapeType.Heart) ? CardManager.Instance.PinkFont : CardManager.Instance.BlackFont;
         }
 
         public void EnemySelect()
         {
             lastChooseUI.SetActive(false);
             while (selectorPos.childCount != 0)
-                SelectorPooling.lnstance.ReturnPool(selectorPos.GetComponentInChildren<SelectorItem>());
+                SelectorPooling.Instance.ReturnPool(selectorPos.GetComponentInChildren<SelectorItem>());
 
             enemyCard.Init((curSelectItem as Selector_Enemy).data);
             //여기서 전투 시작 함수
@@ -165,7 +165,7 @@ namespace Shy
         public void StageUpdate()
         {
             Debug.Log("StageUpdate : " + nowMap[0].mapType);
-            DisplaySign.lnstance.SignUpdate(nowMap[0].mapType == MAP_TYPE.BATTLE ? "WHO'S NEXT?" : "CHOOSE ONE");
+            DisplaySign.Instance.SignUpdate(nowMap[0].mapType == MAP_TYPE.BATTLE ? "WHO'S NEXT?" : "CHOOSE ONE");
 
             if(nowMap[0].mapType != MAP_TYPE.EVENT) SetItem();
         }
@@ -178,9 +178,9 @@ namespace Shy
                 return;
             }
 
-            SelectorPooling.lnstance.ReturnPool(selectorPos.GetComponentsInChildren<SelectorItem>());
+            SelectorPooling.Instance.ReturnPool(selectorPos.GetComponentsInChildren<SelectorItem>());
 
-            ExplainManager.lnstance.HideExplain();
+            ExplainManager.Instance.HideExplain();
 
             nowMap.RemoveAt(0);
             StageUpdate();

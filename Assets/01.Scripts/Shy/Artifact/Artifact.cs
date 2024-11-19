@@ -16,7 +16,7 @@ namespace Shy
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            ExplainManager.lnstance.ShowExplain(data, gameObject);
+            ExplainManager.Instance.ShowExplain(data, gameObject);
         }
     }
 }

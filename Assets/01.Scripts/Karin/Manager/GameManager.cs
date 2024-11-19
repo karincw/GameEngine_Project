@@ -37,7 +37,7 @@ namespace Karin
             }
             if (Input.GetKeyDown(KeyCode.O))
             {
-                TurnManager.lnstance.ChangeTurn();
+                TurnManager.Instance.ChangeTurn();
             }
             if (Input.GetKeyDown(KeyCode.F10))
             {

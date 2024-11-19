@@ -25,7 +25,7 @@ namespace Shy
 
         public virtual void OnPointerExit(PointerEventData eventData)
         {
-            ExplainManager.lnstance.HideExplain();
+            ExplainManager.Instance.HideExplain();
         }
     }
 }
