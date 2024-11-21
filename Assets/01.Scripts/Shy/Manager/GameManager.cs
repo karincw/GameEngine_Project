@@ -23,7 +23,7 @@ namespace Shy
             }
             else if (Input.GetKeyDown(KeyCode.Alpha3))
             {
-                StartCoroutine(StageManager.Instance.StageUpdate());
+                StartCoroutine(StageManager.Instance.Updating());
             }
             else if (Input.GetKeyDown(KeyCode.Alpha4))
             {

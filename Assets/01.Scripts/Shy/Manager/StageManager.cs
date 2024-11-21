@@ -161,7 +161,12 @@ namespace Shy
             battleUI.SetActive(true);
         }
 
-        public IEnumerator StageUpdate()
+        public void StageUpdate()
+        {
+            StartCoroutine(Updating());
+        }
+
+        public IEnumerator Updating()
         {
             Debug.Log("StageUpdate : " + nowMap[0].mapType);
             DisplayManager.Instance.SignUpdate(nowMap[0].mapType == MAP_TYPE.BATTLE ? "WHO'S NEXT?" : "CHOOSE ONE");
@@ -185,7 +190,7 @@ namespace Shy
             ExplainManager.Instance.HideExplain();
 
             nowMap.RemoveAt(0);
-            StartCoroutine(StageUpdate());
+            StartCoroutine(Updating());
         }
 
         private void StageInit()
@@ -194,7 +199,7 @@ namespace Shy
             nowMap = new List<Stage>(stageSO.stageList);
             battleUI.SetActive(false);
 
-            StartCoroutine(StageUpdate());
+            StartCoroutine(Updating());
         }
 
         private void Start()
