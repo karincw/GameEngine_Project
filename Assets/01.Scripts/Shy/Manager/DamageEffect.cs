@@ -19,7 +19,7 @@ namespace Shy
         {
             damageTxt.gameObject.SetActive(true);
 
-            damageTxt.text = "  " + (_value < 0 ? "" : " ") + _value.ToString();
+            damageTxt.text = "  " + Mathf.Abs(_value).ToString();
             damageTxt.color = _value < 0 ? minusColor : plusColor;
 
             damageTxt.transform.localScale = Vector3.one;

@@ -8,6 +8,12 @@ using TMPro;
 
 namespace Shy
 {
+    public enum ATTACK_TYPE
+    {
+        ATTACK,
+        HEAL
+    }
+
     public class StageManager : MonoSingleton<StageManager>
     {
         [SerializeField, Header("STAGE")] private StageListSO stageSO;
@@ -213,10 +219,12 @@ namespace Shy
             StageInit();
         }
 
-        public void Damage(int _value, Turn _turn)
+        public void Damage(int _value, Turn _turn, ATTACK_TYPE _atkType = ATTACK_TYPE.ATTACK)
         {
-            if (_turn == Turn.Enemy) DamageEffect.Instance.Damage(_value, playerNameCard);
-            else if (_turn == Turn.Player) DamageEffect.Instance.Damage(_value, enemyNameCard);
+            _value *= (_atkType == ATTACK_TYPE.ATTACK) ? -1 : 1;
+
+            if (_turn == Turn.Player) DamageEffect.Instance.Damage(_value, playerNameCard);
+            else if (_turn == Turn.Enemy) DamageEffect.Instance.Damage(_value, enemyNameCard);
         }
     }
 }
