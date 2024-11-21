@@ -13,11 +13,13 @@ namespace Shy
         [SerializeField] private TextMeshProUGUI damageTxt;
         [SerializeField] private ParticleSystem particle;
 
+       
+
         public void Damage(int _value, Selector_Enemy _target)
         {
             damageTxt.gameObject.SetActive(true);
 
-            damageTxt.text = "   " + _value.ToString();
+            damageTxt.text = "  " + (_value < 0 ? "" : " ") + _value.ToString();
             damageTxt.color = _value < 0 ? minusColor : plusColor;
 
             damageTxt.transform.localScale = Vector3.one;
@@ -26,7 +28,7 @@ namespace Shy
             Sequence seq = DOTween.Sequence();
 
             seq.Append(damageTxt.transform.DOMove(_target.transform.GetChild(0).Find("Coin_Img").GetChild(0).position, 3f));
-            seq.Insert(1.3f, damageTxt.transform.DOScale(0.5f, 1.5f)).OnComplete(
+            seq.Insert(0, damageTxt.transform.DOScale(0.5f, 2.5f)).OnComplete(
                 () => {
                     particle.transform.position = damageTxt.transform.position;
                     if(_value < 0) particle.Play();

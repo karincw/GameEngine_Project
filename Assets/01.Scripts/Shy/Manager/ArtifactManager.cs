@@ -31,12 +31,12 @@ namespace Shy
         {
             if(_pType != EVENT_TYPE.NONE)
             {
-                foreach (Artifact item in StageManager.Instance.playerCard.artifacts)
+                foreach (Artifact item in StageManager.Instance.playerNameCard.artifacts)
                 {
                     for (int i = 0; i < item.effects.Length; i++)
                         if (item.effects[i].eType == _pType)
                         {
-                            item.effects[i].Effect(StageManager.Instance.enemyCard);
+                            item.effects[i].Effect(StageManager.Instance.enemyNameCard);
                             break;
                         }
                 }
@@ -44,12 +44,12 @@ namespace Shy
 
             if (_eType != EVENT_TYPE.NONE)
             {
-                foreach (Artifact item in StageManager.Instance.enemyCard.artifacts)
+                foreach (Artifact item in StageManager.Instance.enemyNameCard.artifacts)
                 {
                     for (int i = 0; i < item.effects.Length; i++)
                         if (item.effects[i].eType == _eType)
                         {
-                            item.effects[i].Effect(StageManager.Instance.playerCard);
+                            item.effects[i].Effect(StageManager.Instance.playerNameCard);
                             break;
                         }
                 }

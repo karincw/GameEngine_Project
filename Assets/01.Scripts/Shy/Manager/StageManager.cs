@@ -10,20 +10,26 @@ namespace Shy
 {
     public class StageManager : MonoSingleton<StageManager>
     {
-        [SerializeField] private Transform selectorPos;
-        private SelectorItem curSelectItem;
-        public GameObject lastChooseUI; 
-
         [SerializeField, Header("STAGE")] private StageListSO stageSO;
         [SerializeField] private List<Stage> nowMap;
-        [SerializeField] private Transform cardAnimeStart;
+
+
+        [SerializeField, Header("ITEM")] private Transform cardAnimeStart;
+        [SerializeField] private Transform selectorPos;
+        private SelectorItem curSelectItem;
+
+        [SerializeField] private CardBase enemyCardPrefab;
+        [SerializeField] private Transform enemyCardUi; 
+
 
         [SerializeField] private EnemyData playerNormalSO;
-        public Selector_Enemy playerCard;
-        public Selector_Enemy enemyCard;
+        public Selector_Enemy playerNameCard;
+        public Selector_Enemy enemyNameCard;
 
         private bool canUseItem = false;
         private CardBase[] enemyHaveCards = new CardBase[31];
+
+        [SerializeField, Header("BATTLE")] private GameObject battleUI;
 
 
 
@@ -31,7 +37,7 @@ namespace Shy
         {
             Debug.Log(_nameCardPos);
 
-            if (_nameCardPos == null) _nameCardPos = playerCard;
+            if (_nameCardPos == null) _nameCardPos = playerNameCard;
 
             Artifact a = Instantiate(_art.artifact, _nameCardPos.transform.GetChild(0).Find("Artifact"));
             a.Init(_art);
@@ -91,20 +97,15 @@ namespace Shy
         public void EnemyChoose(SelectorItem _item)
         {
             curSelectItem = _item;
-            lastChooseUI.SetActive(true);
+            enemyCardUi.gameObject.SetActive(true);
 
             if(_item is Selector_Enemy)
             {
                 Selector_Enemy item = _item as Selector_Enemy;
                 if (item.data.cardDeck.Count != 0)
                 {
-                    lastChooseUI.transform.GetChild(1).gameObject.SetActive(true);
-                    lastChooseUI.transform.GetChild(0).gameObject.SetActive(false);
-
-                    Debug.Log(lastChooseUI.transform.GetChild(1).gameObject.name);
-                    Debug.Log(lastChooseUI.transform.GetChild(1).GetComponentInChildren<CardBase>());
-                    if (enemyHaveCards[0] == null) 
-                        enemyHaveCards = lastChooseUI.transform.GetChild(1).GetComponentsInChildren<CardBase>();
+                    enemyCardUi.GetChild(1).gameObject.SetActive(true);
+                    enemyCardUi.GetChild(0).gameObject.SetActive(false);
 
                     for (int i = 0; i < 30; i++)
                     {
@@ -117,13 +118,12 @@ namespace Shy
 
                             visual.GetChild(0).GetComponent<Image>().sprite = CardManager.Instance.ShapeToSpriteDictionary[enemyHaveCards[i].cardData.specialShape];
 
-                            visual.GetChild(1).GetComponent<Image>().color = 
-                                CardManager.Instance.ShapeToColorDictionary[(SpecialShapeType)enemyHaveCards[i].cardData.shape];
-                            visual.GetChild(2).GetComponent<Image>().color =
-                                CardManager.Instance.ShapeToColorDictionary[(SpecialShapeType)enemyHaveCards[i].cardData.shape];
+                            visual.GetChild(1).GetComponent<Image>().sprite = 
+                                CardManager.Instance.ShapeToSpriteDictionary[(SpecialShapeType)enemyHaveCards[i].cardData.shape];
+                            visual.GetChild(2).GetComponent<Image>().sprite =
+                                CardManager.Instance.ShapeToSpriteDictionary[(SpecialShapeType)enemyHaveCards[i].cardData.shape];
+                            //visual.GetChild(3).GetComponent<TextMeshProUGUI>().font = CardManager.Instance.font
 
-                            ColorUpdate(visual.GetChild(3).GetComponent<TextMeshProUGUI>(), enemyHaveCards[i]);
-                            ColorUpdate(visual.GetChild(4).GetComponent<TextMeshProUGUI>(), enemyHaveCards[i]);
                         }
                         else
                             enemyHaveCards[i].gameObject.SetActive(false);
@@ -131,41 +131,43 @@ namespace Shy
                 }
                 else
                 {
-                    lastChooseUI.transform.GetChild(0).gameObject.SetActive(true);
-                    lastChooseUI.transform.GetChild(1).gameObject.SetActive(false);
+                    enemyCardUi.transform.GetChild(0).gameObject.SetActive(true);
+                    enemyCardUi.transform.GetChild(1).gameObject.SetActive(false);
                 }
             }
         }
 
-        public void ColorUpdate(TextMeshProUGUI _tmp, CardBase _s)
-        {
-            _tmp.text = CardManager.Instance.GetCountText(_s.cardData.count);
-            _tmp.font = (_s.cardData.specialShape is SpecialShapeType.Diamond or
-                SpecialShapeType.Heart) ? CardManager.Instance.PinkFont : CardManager.Instance.BlackFont;
-        }
-
         public void EnemySelect()
         {
-            lastChooseUI.SetActive(false);
+            enemyCardUi.gameObject.SetActive(false);
             while (selectorPos.childCount != 0)
                 SelectorPooling.Instance.ReturnPool(selectorPos.GetComponentInChildren<SelectorItem>());
 
-            enemyCard.Init((curSelectItem as Selector_Enemy).data);
+            enemyNameCard.Init((curSelectItem as Selector_Enemy).data);
             //여기서 전투 시작 함수
+            StartBattle();
         }
 
         public void EnemyCancel()
         {
             curSelectItem = null;
-            lastChooseUI.SetActive(false);
+            enemyCardUi.gameObject.SetActive(false);
         }
         #endregion
 
 
-        public void StageUpdate()
+        public void StartBattle()
+        {
+            battleUI.SetActive(true);
+        }
+
+        public IEnumerator StageUpdate()
         {
             Debug.Log("StageUpdate : " + nowMap[0].mapType);
-            DisplaySign.Instance.SignUpdate(nowMap[0].mapType == MAP_TYPE.BATTLE ? "WHO'S NEXT?" : "CHOOSE ONE");
+            DisplayManager.Instance.SignUpdate(nowMap[0].mapType == MAP_TYPE.BATTLE ? "WHO'S NEXT?" : "CHOOSE ONE");
+
+
+            yield return new WaitForSeconds(0.7f);
 
             if(nowMap[0].mapType != MAP_TYPE.EVENT) SetItem();
         }
@@ -183,21 +185,33 @@ namespace Shy
             ExplainManager.Instance.HideExplain();
 
             nowMap.RemoveAt(0);
-            StageUpdate();
+            StartCoroutine(StageUpdate());
         }
 
         private void StageInit()
         {
-            enemyCard.gameObject.SetActive(false);
+            enemyNameCard.gameObject.SetActive(false);
             nowMap = new List<Stage>(stageSO.stageList);
+            battleUI.SetActive(false);
 
-            StageUpdate();
+            StartCoroutine(StageUpdate());
         }
 
         private void Start()
         {
-            playerCard.Init(playerNormalSO);
+            playerNameCard.Init(playerNormalSO);
+            for (int i = 0; i < 30; i++)
+            {
+                Instantiate(enemyCardPrefab, enemyCardUi.GetChild(1));
+            }
+            enemyHaveCards = enemyCardUi.GetChild(1).GetComponentsInChildren<CardBase>();
             StageInit();
+        }
+
+        public void Damage(int _value, Turn _turn)
+        {
+            if (_turn == Turn.Enemy) DamageEffect.Instance.Damage(_value, playerNameCard);
+            else if (_turn == Turn.Player) DamageEffect.Instance.Damage(_value, enemyNameCard);
         }
     }
 }

@@ -15,7 +15,7 @@ namespace Shy
 
         private void Awake()
         {
-            panel = transform.GetChild(0).GetComponent<RectTransform>();
+            panel = transform.GetChild(1).GetComponent<RectTransform>();
             itemName = panel.Find("ItemName").GetComponent<TextMeshProUGUI>();
             itemExplain = panel.Find("ItemExplain").GetComponent<TextMeshProUGUI>();
 

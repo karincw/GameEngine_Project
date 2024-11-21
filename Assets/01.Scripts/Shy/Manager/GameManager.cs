@@ -19,15 +19,15 @@ namespace Shy
             else if (Input.GetKeyDown(KeyCode.Alpha2))
             {
                 Debug.Log("플레이어 턴 시작"); 
-                DamageEffect.Instance.Damage(-12, StageManager.Instance.playerCard);
+                DamageEffect.Instance.Damage(-12, StageManager.Instance.playerNameCard);
             }
             else if (Input.GetKeyDown(KeyCode.Alpha3))
             {
-                StageManager.Instance.StageUpdate();
+                StartCoroutine(StageManager.Instance.StageUpdate());
             }
             else if (Input.GetKeyDown(KeyCode.Alpha4))
             {
-                DisplaySign.Instance.SignUpdate(Karin.Turn.Player);
+                DisplayManager.Instance.SignUpdate(Karin.Turn.Player);
             }
         }
 #endif

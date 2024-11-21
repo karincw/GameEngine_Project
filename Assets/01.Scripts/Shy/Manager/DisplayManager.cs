@@ -6,7 +6,7 @@ using DG.Tweening;
 
 namespace Shy
 {
-    public class DisplaySign : MonoSingleton<DisplaySign>
+    public class DisplayManager : MonoSingleton<DisplayManager>
     {
         [SerializeField] private Color baseColor;
         [SerializeField] private TextMeshProUGUI boardMes;

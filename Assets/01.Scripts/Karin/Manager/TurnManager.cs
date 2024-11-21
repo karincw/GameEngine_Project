@@ -102,6 +102,8 @@ namespace Karin
             hitInfo.nowhit = true;
             hitInfo.who = currentTurn;
             OnAttackEvent?.Invoke(currentTurn);
+
+            Shy.StageManager.Instance.Damage(damage, currentTurn);
         }
 
         public void Defence(int defence)
