@@ -44,6 +44,7 @@ namespace Karin
             {
                 Debug.Log($"{currentTurn} <- hit / damage:{GetHitText().Count}");
                 AttackText at = GetHitText();
+                Shy.StageManager.Instance.Damage(at.Count, currentTurn);
                 at.Count = 0;
                 at.Fade(false);
                 hitInfo.hit = false;
@@ -102,8 +103,6 @@ namespace Karin
             hitInfo.nowhit = true;
             hitInfo.who = currentTurn;
             OnAttackEvent?.Invoke(currentTurn);
-
-            Shy.StageManager.Instance.Damage(damage, currentTurn);
         }
 
         public void Defence(int defence)
