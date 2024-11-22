@@ -87,15 +87,17 @@ namespace Karin
         {
             if (damage <= 0) return;
 
+            var nowDamage = Mathf.Max(_enemyText.Count, _playerText.Count);
+
             if (currentTurn == Turn.Player)
             {
-                _enemyText.Count += _playerText.Count + damage;
+                _enemyText.Count += nowDamage + damage;
                 _playerText.Count = 0;
                 _playerText.Fade(false);
             }
             else if (currentTurn == Turn.Enemy)
             {
-                _playerText.Count += _enemyText.Count + damage;
+                _playerText.Count += nowDamage + damage;
                 _enemyText.Count = 0;
                 _enemyText.Fade(false);
             }
@@ -107,23 +109,33 @@ namespace Karin
 
         public void Defence(int defence)
         {
-            if (defence <= 0) return;
-
             if (defence == -1)
-                defence = _enemyText.Count;
+            {
+                defence = Mathf.Max(_enemyText.Count, _playerText.Count);
+            }
 
             if (currentTurn == Turn.Player)
             {
-                _enemyText.Count -= defence;
-                _playerText.Count = 0;
+                _playerText.Count -= defence;
                 _playerText.Fade(false);
+                if (_playerText.Count <= 0)
+                {
+                    hitInfo.hit = false;
+                    hitInfo.nowhit = false;
+                }
             }
             else if (currentTurn == Turn.Enemy)
             {
-                _playerText.Count -= defence;
-                _enemyText.Count = 0;
+                _enemyText.Count -= defence;
                 _enemyText.Fade(false);
+                if (_enemyText.Count <= 0)
+                {
+                    hitInfo.hit = false;
+                    hitInfo.nowhit = false;
+                }
             }
+
+
             OnDefenceEvent?.Invoke(currentTurn);
         }
     }

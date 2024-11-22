@@ -20,7 +20,7 @@ public class InputReaderSO : ScriptableObject, IInGameActions, IUIActions
     {
         set
         {
-            if(((int)value & (int)Actions.InGame) > 0)
+            if (((int)value & (int)Actions.InGame) > 0)
             {
                 _controls.InGame.Enable();
             }
@@ -54,6 +54,13 @@ public class InputReaderSO : ScriptableObject, IInGameActions, IUIActions
             _controls.UI.SetCallbacks(this);
         }
         CurrentAction = Actions.InGame | Actions.UI;
+
+    }
+
+    private void OnDisable()
+    {
+        _controls.UI.Disable();
+        _controls.InGame.Disable();
     }
 
     public void OnMLBClick(InputAction.CallbackContext context)

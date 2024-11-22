@@ -80,8 +80,10 @@ namespace Karin
                     s = BaseShapeType.Diamond;
                 }
                 data.shape = s;
-                data.specialShape = (SpecialShapeType)s++;
                 data.count = c;
+                data.specialShape = (SpecialShapeType)s++;
+                if (data.count == CountType.Three)
+                    data.specialShape = SpecialShapeType.Shield;
                 PlayerCardHolder.myCards.Add(data);
             }
         }

@@ -51,51 +51,40 @@ namespace Karin
             Debug.LogError("GetCountText Error");
             return null;
         }
-        public int GetDamage(CountType ct)
+        public void ApplyCardEffect(CardDataSO card)
         {
-            switch (ct)
+            if (card.IsDefenceCard)
             {
-                case CountType.ACE:
-                    return 3;
-                case CountType.Two:
-                    return 2;
-                case CountType.Three:
-                case CountType.Four:
-                case CountType.Five:
-                case CountType.Six:
-                case CountType.Seven:
-                case CountType.Eight:
-                case CountType.Nine:
-                case CountType.Ten:
-                case CountType.Jack:
-                case CountType.Queen:
-                case CountType.King:
-                default:
-                    return 0;
+                switch (card.specialShape)
+                {
+                    case SpecialShapeType.Shield:
+                        TurnManager.Instance.Defence(-1);
+                        break;
+                }
             }
-        }
-        public void ApplySpecialDamage(SpecialShapeType s)
-        {
-            switch (s)
+            if (card.IsAttackCard)
             {
-                case SpecialShapeType.Diamond:
-                    break;
-                case SpecialShapeType.Heart:
-                    break;
-                case SpecialShapeType.Clover:
-                    break;
-                case SpecialShapeType.Spade:
-                    break;
-                case SpecialShapeType.Sword:
-                    TurnManager.Instance.Attack(5);
-                    break;
-                case SpecialShapeType.Shield:
-                    TurnManager.Instance.Defence(-1);
-                    break;
-                default:
-                    Debug.Log("GetSpecialDamage Default Return");
-                    return;
+                TurnManager.Instance.hitInfo.nowhit = false;
+
+                switch (card.count)
+                {
+                    case CountType.ACE:
+                        TurnManager.Instance.Attack(3);
+                        break;
+                    case CountType.Two:
+                        TurnManager.Instance.Attack(2);
+                        break;
+                }
+
+                switch (card.specialShape)
+                {
+                    case SpecialShapeType.Sword:
+                        TurnManager.Instance.Attack(5);
+                        break;
+                }
+
             }
+
         }
 
     }
