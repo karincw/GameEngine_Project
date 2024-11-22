@@ -145,7 +145,15 @@ namespace Shy
 
             enemyNameCard.Init((curSelectItem as Selector_Enemy).data);
             //여기서 전투 시작 함수
+            StartCoroutine(StartGameCoroutine());
             StartBattle();
+        }
+
+        private IEnumerator StartGameCoroutine()
+        {
+            yield return new WaitForSeconds(1.5f);
+
+            Karin.GameManager.Instance.GameStart();
         }
 
         public void EnemyCancel()

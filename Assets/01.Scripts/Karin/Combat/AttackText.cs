@@ -86,6 +86,7 @@ namespace Karin
 
         public void SizeUpEffect()
         {
+            (transform as RectTransform).DOComplete();
             (transform as RectTransform).DOPunchScale(_targetSize, _sizeUpTime, 1000, 100);
         }
     }

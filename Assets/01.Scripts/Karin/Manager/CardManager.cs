@@ -74,6 +74,29 @@ namespace Karin
                     return 0;
             }
         }
+        public void ApplySpecialDamage(SpecialShapeType s)
+        {
+            switch (s)
+            {
+                case SpecialShapeType.Diamond:
+                    break;
+                case SpecialShapeType.Heart:
+                    break;
+                case SpecialShapeType.Clover:
+                    break;
+                case SpecialShapeType.Spade:
+                    break;
+                case SpecialShapeType.Sword:
+                    TurnManager.Instance.Attack(5);
+                    break;
+                case SpecialShapeType.Shield:
+                    TurnManager.Instance.Defence(-1);
+                    break;
+                default:
+                    Debug.Log("GetSpecialDamage Default Return");
+                    return;
+            }
+        }
 
     }
 

@@ -44,6 +44,7 @@ namespace Karin
             card.transform.DOLocalMove(positionDelta, 0.1f);
 
             TurnManager.Instance.Attack(CardManager.Instance.GetDamage(card.cardData.count));
+            CardManager.Instance.ApplySpecialDamage(card.cardData.specialShape);
         }
 
         public List<CardBase> GetCards()

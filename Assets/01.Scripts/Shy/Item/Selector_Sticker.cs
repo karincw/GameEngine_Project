@@ -1,9 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using CardManager = Karin.CardManager;
-using SpecialShapeType = Karin.SpecialShapeType;
-using CountType = Karin.CountType;
+using Karin;
 using UnityEngine.EventSystems;
 
 namespace Shy
@@ -11,6 +9,7 @@ namespace Shy
     public class Selector_Sticker : SelectorItem
     {
         private StickerData data;
+        private CardDataSO cardData;
         [SerializeField] private Image image;
         [SerializeField] private Image[] subIcon;
         [SerializeField] private TextMeshProUGUI[] num;
@@ -31,12 +30,14 @@ namespace Shy
             ChangeSprite(subIcon[0], (SpecialShapeType)shape);
             ChangeSprite(subIcon[1], (SpecialShapeType)shape);
             ChangeSprite(image, data.shape);
-            
+
+            cardData = new CardDataSO(CardType.Gold, (CountType)rand, (BaseShapeType)shape, data.shape);
             gameObject.SetActive(true);
         }
 
         public override void OnPointerDown(PointerEventData eventData)
         {
+            Karin.GameManager.Instance.PlayerCardHolder.ChangeSpecialType(cardData);
             StageManager.Instance.StageClear();
         }
 

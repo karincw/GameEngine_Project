@@ -1256,8 +1256,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardPlace: {fileID: 0}
-  playerCardHolder: {fileID: 1557432683}
-  enemyCardHolder: {fileID: 1348743519}
+  PlayerCardHolder: {fileID: 1557432683}
+  EnemyCardHolder: {fileID: 1348743519}
   cardPack: {fileID: 0}
   baseCardData: {fileID: 11400000, guid: 9837fb294e3aa1447ae20bef24b7c91d, type: 2}
 --- !u!1 &603524483
@@ -1655,7 +1655,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.15686275, g: 0.1764706, b: 0.15686275, a: 1}
+  m_Color: {r: 0.08235294, g: 0.39607847, b: 0.24705884, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -10503,7 +10503,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.15686275, g: 0.1764706, b: 0.15686275, a: 1}
+  m_Color: {r: 0.08235294, g: 0.39607847, b: 0.24705884, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

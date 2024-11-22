@@ -32,11 +32,11 @@ namespace Karin
             {
                 if (currentTurn == Turn.Player)
                 {
-                    GameManager.Instance.playerCardHolder.AddCard();
+                    GameManager.Instance.PlayerCardHolder.AddCard();
                 }
                 else if (currentTurn == Turn.Enemy)
                 {
-                    GameManager.Instance.enemyCardHolder.AddCard();
+                    GameManager.Instance.EnemyCardHolder.AddCard();
                 }
             }
 
@@ -55,14 +55,14 @@ namespace Karin
             {
                 currentTurn = Turn.Enemy;
                 _turnChangeBtn.interactable = false;
-                GameManager.Instance.enemyCardHolder.AutoRun();
-                GameManager.Instance.playerCardHolder.CardDrag(false);
+                GameManager.Instance.EnemyCardHolder.AutoRun();
+                GameManager.Instance.PlayerCardHolder.CardDrag(false);
             }
             else if (currentTurn == Turn.Enemy)
             {
                 currentTurn = Turn.Player;
                 _turnChangeBtn.interactable = true;
-                GameManager.Instance.playerCardHolder.CardDrag(true);
+                GameManager.Instance.PlayerCardHolder.CardDrag(true);
             }
 
             useCard = false;
@@ -78,7 +78,7 @@ namespace Karin
         public void ChangeTurn(Turn who)
         {
             currentTurn = who;
-            GameManager.Instance.playerCardHolder.CardDrag(who == Turn.Player);
+            GameManager.Instance.PlayerCardHolder.CardDrag(who == Turn.Player);
             TurnChangedEvent?.Invoke(currentTurn);
             useCard = false;
         }
