@@ -13,6 +13,9 @@ namespace Shy
         [SerializeField] private TextMeshProUGUI damageTxt;
         [SerializeField] private ParticleSystem particle;
 
+        [SerializeField] private Transform pStackPos;
+        [SerializeField] private Transform eStackPos;
+
        
 
         public void Damage(int _value, Selector_Enemy _target)
@@ -23,7 +26,8 @@ namespace Shy
             damageTxt.color = _value < 0 ? minusColor : plusColor;
 
             damageTxt.transform.localScale = Vector3.one;
-            damageTxt.transform.position = Vector3.zero;
+            
+            damageTxt.transform.position = _target.name.Contains("Player") ? pStackPos.position : eStackPos.position;
 
             Sequence seq = DOTween.Sequence();
 

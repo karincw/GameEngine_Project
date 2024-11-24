@@ -13,31 +13,31 @@ MonoBehaviour:
   m_Name: Stage
   m_EditorClassIdentifier: 
   stageList:
-  - mapType: 2
+  - mapType: 0
     spawnItem:
-    - {fileID: 11400000, guid: 39ca85a2d596a7b4ea1840374569d566, type: 2}
-    - {fileID: 11400000, guid: a795047f5c219274f9e7f9dfba9bdd66, type: 2}
-    - {fileID: 11400000, guid: 7b6010a00f5f78943ba0522e90634fdd, type: 2}
-    - {fileID: 11400000, guid: 54bc9e42d2a4e214cbc42411418ef9f4, type: 2}
-    - {fileID: 11400000, guid: 33b392e3a6fa51a4ea1a97116edbf658, type: 2}
-    - {fileID: 11400000, guid: 1b9c67e5e7e01744582502b7cd89914d, type: 2}
-    - {fileID: 11400000, guid: 745c3680384abb6469b0c3a83d767385, type: 2}
-    - {fileID: 11400000, guid: 6794898dc999cd0469358cea85fbe64e, type: 2}
-    - {fileID: 11400000, guid: ec3e4629fbbde294eaec8023604672c5, type: 2}
-    - {fileID: 11400000, guid: 303fab3807c04d642b5db0fad627d88c, type: 2}
-    - {fileID: 11400000, guid: 646521cbad27cae43b73895a18703de8, type: 2}
-    - {fileID: 11400000, guid: d550d4486df45e848a1b3f6ffebf1de5, type: 2}
-    - {fileID: 11400000, guid: 46f9d6cec73f9c343b4dc51d53d67961, type: 2}
-    spawnCnt: {x: 4, y: 4}
+    - {fileID: 11400000, guid: 88287f86d565bc144b0d2be479da6232, type: 2}
+    spawnCnt: {x: 1, y: 1}
   - mapType: 2
     spawnItem:
     - {fileID: 11400000, guid: 1e142c53695316b4198af12d76785c28, type: 2}
     - {fileID: 11400000, guid: 30afb8e6f5ca49141b06da764e4228e3, type: 2}
     spawnCnt: {x: 2, y: 2}
-  - mapType: 0
+  - mapType: 2
     spawnItem:
-    - {fileID: 11400000, guid: 88287f86d565bc144b0d2be479da6232, type: 2}
-    spawnCnt: {x: 1, y: 1}
+    - {fileID: 11400000, guid: 46f9d6cec73f9c343b4dc51d53d67961, type: 2}
+    - {fileID: 11400000, guid: ec3e4629fbbde294eaec8023604672c5, type: 2}
+    - {fileID: 11400000, guid: 646521cbad27cae43b73895a18703de8, type: 2}
+    - {fileID: 11400000, guid: 54bc9e42d2a4e214cbc42411418ef9f4, type: 2}
+    - {fileID: 11400000, guid: 303fab3807c04d642b5db0fad627d88c, type: 2}
+    - {fileID: 11400000, guid: 39ca85a2d596a7b4ea1840374569d566, type: 2}
+    - {fileID: 11400000, guid: 7b6010a00f5f78943ba0522e90634fdd, type: 2}
+    - {fileID: 11400000, guid: 33b392e3a6fa51a4ea1a97116edbf658, type: 2}
+    - {fileID: 11400000, guid: d550d4486df45e848a1b3f6ffebf1de5, type: 2}
+    - {fileID: 11400000, guid: 745c3680384abb6469b0c3a83d767385, type: 2}
+    - {fileID: 11400000, guid: 6794898dc999cd0469358cea85fbe64e, type: 2}
+    - {fileID: 11400000, guid: a795047f5c219274f9e7f9dfba9bdd66, type: 2}
+    - {fileID: 11400000, guid: 1b9c67e5e7e01744582502b7cd89914d, type: 2}
+    spawnCnt: {x: 4, y: 4}
   - mapType: 0
     spawnItem: []
     spawnCnt: {x: 0, y: 0}

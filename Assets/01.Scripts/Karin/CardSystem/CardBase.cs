@@ -3,6 +3,7 @@ using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using Explain = Shy.ExplainManager;
 
 namespace Karin
 {
@@ -111,16 +112,19 @@ namespace Karin
         #region Interface
         public void OnPointerEnter(PointerEventData eventData)
         {
+            Explain.Instance.ShowExplain(cardData.specialShape, gameObject);
             if (!canDrag) return;
             PointerEnterEvent?.Invoke();
         }
         public void OnPointerExit(PointerEventData eventData)
         {
+            Explain.Instance.HideExplain();
             if (!canDrag) return;
             PointerExitEvent?.Invoke();
         }
         public void OnPointerDown(PointerEventData eventData)
         {
+            Explain.Instance.HideExplain();
             if (!canDrag) return;
             //if not mouse left click, then return
             if (eventData.button != PointerEventData.InputButton.Left) return;
@@ -130,6 +134,7 @@ namespace Karin
         }
         public void OnPointerUp(PointerEventData eventData)
         {
+            Explain.Instance.ShowExplain(cardData.specialShape, gameObject);
             if (!canDrag) return;
             if (eventData.button != PointerEventData.InputButton.Left) return;
 
@@ -180,6 +185,7 @@ namespace Karin
                 _rectTrm.DOLocalMoveY(originPos.y, 0.3f);
                 _imageCompo.raycastTarget = true;
             }
+            Explain.Instance.HideExplain();
         }
         public void OnDrag(PointerEventData eventData)
         {
