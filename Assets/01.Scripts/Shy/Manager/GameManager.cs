@@ -29,6 +29,10 @@ namespace Shy
             {
                 DisplayManager.Instance.SignUpdate(Karin.Turn.Player);
             }
+            else if (Input.GetKeyDown(KeyCode.Alpha5))
+            {
+                Coin_Turn.Instance.CoinToss();
+            }
         }
 #endif
     }

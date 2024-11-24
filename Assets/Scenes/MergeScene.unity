@@ -2719,6 +2719,7 @@ GameObject:
   - component: {fileID: 1060289240}
   - component: {fileID: 1060289242}
   - component: {fileID: 1060289241}
+  - component: {fileID: 1060289243}
   m_Layer: 5
   m_Name: Coin
   m_TagString: Untagged
@@ -2784,6 +2785,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1060289239}
   m_CullTransparentMesh: 1
+--- !u!114 &1060289243
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1060289239}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14c275030fcc8224f81b2364ede43f00, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1106328682
 GameObject:
   m_ObjectHideFlags: 0
@@ -3373,7 +3386,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0.9433962, g: 0.22843233, b: 0.22843233, a: 1}
+      maxColor: {r: 0.55345905, g: 0.5237033, b: 0.40552187, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
