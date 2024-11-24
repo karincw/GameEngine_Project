@@ -29,6 +29,8 @@ namespace Shy
             
             damageTxt.transform.position = _target.name.Contains("Player") ? pStackPos.position : eStackPos.position;
 
+            Karin.GameManager.Instance.PlayerCardHolder.CardDrag(false);
+
             Sequence seq = DOTween.Sequence();
 
             seq.Append(damageTxt.transform.DOMove(_target.transform.GetChild(0).Find("Coin_Img").GetChild(0).position, 1.75f)
@@ -44,9 +46,6 @@ namespace Shy
 
         private IEnumerator HealthAnime(int _value, Selector_Enemy _target)
         {
-            //작동 막기
-            Karin.GameManager.Instance.PlayerCardHolder.CardDrag(false);
-
             for (int i = 0; i < Mathf.Abs(_value); i++)
             {
                 _target.health += _value >= 0 ? 1 : -1;
@@ -54,11 +53,11 @@ namespace Shy
             }
 
             //작동 풀기
-            Karin.GameManager.Instance.PlayerCardHolder.CardDrag(true);
+            Coin_Turn.Instance.CoinToss(Karin.TurnManager.Instance.currentTurn, Karin.TurnManager.Instance.turnChangeBtn);
 
             if(_target.health <= 0)
             {
-                StageManager.Instance.StageClear();
+                StageManager.Instance.GameFin();
             }
         }
     }

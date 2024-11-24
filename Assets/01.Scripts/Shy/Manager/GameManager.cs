@@ -19,7 +19,7 @@ namespace Shy
             else if (Input.GetKeyDown(KeyCode.Alpha2))
             {
                 Debug.Log("플레이어 턴 시작"); 
-                DamageEffect.Instance.Damage(12, StageManager.Instance.playerNameCard);
+                DamageEffect.Instance.Damage(-12, StageManager.Instance.enemyNameCard);
             }
             else if (Input.GetKeyDown(KeyCode.Alpha3))
             {
@@ -31,7 +31,7 @@ namespace Shy
             }
             else if (Input.GetKeyDown(KeyCode.Alpha5))
             {
-                Coin_Turn.Instance.CoinToss();
+                //Coin_Turn.Instance.CoinToss();
             }
         }
 #endif

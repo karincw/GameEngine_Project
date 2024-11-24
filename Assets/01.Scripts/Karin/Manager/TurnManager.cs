@@ -22,6 +22,7 @@ namespace Karin
 
         public bool useCard;
         public AttackInfo hitInfo;
+        private bool attack;
 
         public event Action<Turn> TurnChangedEvent;
         public event Action<Turn> OnAttackEvent;
@@ -48,6 +49,7 @@ namespace Karin
             {
                 Debug.Log($"{currentTurn} <- hit / damage:{GetHitText().Count}");
                 AttackText at = GetHitText();
+                attack = true;
                 if (Shy.StageManager.Instance.Damage(at.Count, currentTurn)) return;
                 at.Count = 0;
                 at.Fade(false);
@@ -55,23 +57,15 @@ namespace Karin
                 hitInfo.nowhit = false;
             }
 
-            if (currentTurn == Turn.Player)
+            if(attack == false)
             {
-                currentTurn = Turn.Enemy;
-                turnChangeBtn.interactable = false;
-                GameManager.Instance.EnemyCardHolder.AutoRun();
-                GameManager.Instance.PlayerCardHolder.CardDrag(false);
+                Coin_Turn.Instance.CoinToss(currentTurn, turnChangeBtn);
+                currentTurn = currentTurn == Turn.Player ? Turn.Enemy : Turn.Player;
             }
-            else if (currentTurn == Turn.Enemy)
-            {
-                currentTurn = Turn.Player;
-                turnChangeBtn.interactable = true;
-                GameManager.Instance.PlayerCardHolder.CardDrag(true);
-            }
-
             
 
             useCard = false;
+            attack = false;
             TurnChangedEvent?.Invoke(currentTurn);
 
         }

@@ -232,12 +232,21 @@ namespace Shy
             if(playerNameCard.health <= 0)
             {
                 Debug.Log("enemy win");
-                StageUpdate();
+                //플레이어 죽는 거
             }
             else if (enemyNameCard.health <= 0)
             {
                 Debug.Log("player win");
-                StageUpdate();
+
+                Sequence seq = DOTween.Sequence();
+
+                seq.Append(enemyNameCard.transform.GetChild(0).DOMoveY(8, 1.5f).OnComplete(()=>
+                {
+                    enemyNameCard.gameObject.SetActive(false);
+                    enemyNameCard.transform.GetChild(0).position = enemyNameCard.transform.position;
+                }));
+                battleUI.SetActive(false);
+                seq.OnComplete(() => StageClear());
             }
         }
 
