@@ -20,8 +20,20 @@ namespace Karin
         Heart,
         Clover,
         Spade,
-        Sword,
+        Sword2,
+        Sword3,
+        Sword5,
+        Sword7,
         Shield,
+        Reflect,
+        Give2,
+        Give3,
+        Give5,
+        Give7,
+        King,
+        Dice,
+        Lens,
+        ChangeShape,
     }
     public enum CountType : int
     {

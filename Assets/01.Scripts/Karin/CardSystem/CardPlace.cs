@@ -24,7 +24,7 @@ namespace Karin
             {
                 if (
                     (c.count == firstCardData.count || ((int)c.shape == (int)firstCardData.shape)) //모양이 같거나 숫자가 같음
-                    && (c.IsAttackCard || c.IsDefenceCard)) //공격카드이거나 수비 카드임
+                    && (c.IsAttackCard() || c.IsDefenceCard())) //공격카드이거나 수비 카드임
                 {
                     return true;
                 }

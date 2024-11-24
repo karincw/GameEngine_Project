@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 namespace Karin
 {
@@ -25,6 +26,9 @@ namespace Karin
         public event Action<Turn> TurnChangedEvent;
         public event Action<Turn> OnAttackEvent;
         public event Action<Turn> OnDefenceEvent;
+        public event Action<Turn> OnGiveEvent;
+        public event Action<Turn> OnLensEvent;
+        public event Action<Turn> OnReflectEvent;
 
         public void ChangeTurn()
         {
@@ -137,6 +141,85 @@ namespace Karin
 
 
             OnDefenceEvent?.Invoke(currentTurn);
+        }
+
+        public void GiveCard(int count)
+        {
+            if (currentTurn == Turn.Player)
+            {
+                for (int i = 0; i < count; i++)
+                    GameManager.Instance.EnemyCardHolder.AddCard();
+            }
+            else if (currentTurn == Turn.Enemy)
+            {
+                for (int i = 0; i < count; i++)
+                    GameManager.Instance.PlayerCardHolder.AddCard();
+            }
+            OnGiveEvent?.Invoke(currentTurn);
+        }
+
+        public void Lens(int count)
+        {
+            if (currentTurn == Turn.Player)
+            {
+                for (int i = 0; i < count; i++)
+                    GameManager.Instance.EnemyCardHolder.ViewCard();
+            }
+            else if (currentTurn == Turn.Enemy)
+            {
+
+            }
+            OnLensEvent?.Invoke(currentTurn);
+        }
+
+        public void Reflect()
+        {
+            var nowDamage = Mathf.Max(_enemyText.Count, _playerText.Count);
+
+            if (currentTurn == Turn.Player)
+            {
+                _playerText.Count -= nowDamage;
+                _enemyText.Count += nowDamage;
+                _playerText.Fade(false);
+
+                if (_playerText.Count <= 0)
+                {
+                    hitInfo.nowhit = false;
+                }
+            }
+            else if (currentTurn == Turn.Enemy)
+            {
+                _enemyText.Count -= nowDamage;
+                _playerText.Count += nowDamage;
+                _enemyText.Fade(false);
+
+                if (_enemyText.Count <= 0)
+                {
+                    hitInfo.nowhit = false;
+                }
+            }
+
+
+            OnReflectEvent?.Invoke(currentTurn);
+        }
+
+        public void Dice(float per = 0.5f)
+        {
+            if (Random.value <= per)
+            {
+                Defence(-1);
+            }
+            else
+            {
+                if (currentTurn == Turn.Player)
+                {
+                    _playerText.Count *= 2;
+                }
+                else if (currentTurn == Turn.Enemy)
+                {
+                    _enemyText.Count *= 2;
+                }
+            }
         }
     }
 

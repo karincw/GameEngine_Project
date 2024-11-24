@@ -49,7 +49,12 @@ namespace Shy
         private void ChangeSprite(Image _img, SpecialShapeType _shape)
         {
             _img.sprite = CardManager.Instance.ShapeToSpriteDictionary[_shape];
-            _img.color = CardManager.Instance.ShapeToColorDictionary[_shape];
+            Color color;
+            if (CardManager.Instance.ShapeToColorDictionary.ContainsKey(_shape))
+                color = CardManager.Instance.ShapeToColorDictionary[_shape];
+            else
+                color = Color.white;
+            _img.color = color;
         }
     }
 }

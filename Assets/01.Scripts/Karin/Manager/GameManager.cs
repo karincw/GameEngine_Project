@@ -82,8 +82,18 @@ namespace Karin
                 data.shape = s;
                 data.count = c;
                 data.specialShape = (SpecialShapeType)s++;
+
                 if (data.count == CountType.Three)
                     data.specialShape = SpecialShapeType.Shield;
+                if (data.count == CountType.ACE)
+                    data.specialShape = SpecialShapeType.Sword3;
+                if (data.count == CountType.Two)
+                    data.specialShape = SpecialShapeType.Sword2;
+                if (data.count == CountType.Seven)
+                    data.specialShape = SpecialShapeType.ChangeShape;
+                if (data.count == CountType.King)
+                    data.specialShape = SpecialShapeType.King;
+
                 PlayerCardHolder.myCards.Add(data);
             }
         }
