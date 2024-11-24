@@ -82,10 +82,22 @@ namespace Karin
 
                 _cardBackground.sprite = cm.cards[(int)data.cardType];
                 _mainImage.sprite = cm.ShapeToSpriteDictionary[data.specialShape];
-                _mainImage.color = cm.ShapeToColorDictionary[data.specialShape];
+
+                Color mainColor;
+                if (cm.ShapeToColorDictionary.ContainsKey(data.specialShape))
+                    mainColor = cm.ShapeToColorDictionary[data.specialShape];
+                else
+                    mainColor = Color.white;
+                _mainImage.color = mainColor;
+
 
                 Sprite subSprite = cm.ShapeToSpriteDictionary[(SpecialShapeType)data.shape];
-                Color subColor = cm.ShapeToColorDictionary[(SpecialShapeType)data.shape];
+                Color subColor;
+
+                if (cm.ShapeToColorDictionary.ContainsKey((SpecialShapeType)data.shape))
+                    subColor = cm.ShapeToColorDictionary[(SpecialShapeType)data.shape];
+                else
+                    subColor = Color.white;
 
                 foreach (var sb in _subImage)
                 {
@@ -93,11 +105,9 @@ namespace Karin
                     sb.color = subColor;
                 }
 
-                bool isBlack = subColor == Color.black;
-
                 foreach (var ct in _countText)
                 {
-                    ct.font = isBlack ? cm.BlackFont : cm.PinkFont;
+                    ct.font = subColor == Color.black ? cm.BlackFont : subColor == Color.white ? cm.BlackFont : cm.PinkFont;
                     ct.text = cm.GetCountText(data.count);
                 }
             }

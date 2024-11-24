@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 namespace Karin
 {
@@ -25,6 +26,9 @@ namespace Karin
         public event Action<Turn> TurnChangedEvent;
         public event Action<Turn> OnAttackEvent;
         public event Action<Turn> OnDefenceEvent;
+        public event Action<Turn> OnGiveEvent;
+        public event Action<Turn> OnLensEvent;
+        public event Action<Turn> OnReflectEvent;
 
         public void ChangeTurn()
         {
@@ -32,11 +36,11 @@ namespace Karin
             {
                 if (currentTurn == Turn.Player)
                 {
-                    GameManager.Instance.playerCardHolder.AddCard();
+                    GameManager.Instance.PlayerCardHolder.AddCard();
                 }
                 else if (currentTurn == Turn.Enemy)
                 {
-                    GameManager.Instance.enemyCardHolder.AddCard();
+                    GameManager.Instance.EnemyCardHolder.AddCard();
                 }
             }
 
@@ -55,14 +59,14 @@ namespace Karin
             {
                 currentTurn = Turn.Enemy;
                 _turnChangeBtn.interactable = false;
-                GameManager.Instance.enemyCardHolder.AutoRun();
-                GameManager.Instance.playerCardHolder.CardDrag(false);
+                GameManager.Instance.EnemyCardHolder.AutoRun();
+                GameManager.Instance.PlayerCardHolder.CardDrag(false);
             }
             else if (currentTurn == Turn.Enemy)
             {
                 currentTurn = Turn.Player;
                 _turnChangeBtn.interactable = true;
-                GameManager.Instance.playerCardHolder.CardDrag(true);
+                GameManager.Instance.PlayerCardHolder.CardDrag(true);
             }
 
             useCard = false;
@@ -78,7 +82,7 @@ namespace Karin
         public void ChangeTurn(Turn who)
         {
             currentTurn = who;
-            GameManager.Instance.playerCardHolder.CardDrag(who == Turn.Player);
+            GameManager.Instance.PlayerCardHolder.CardDrag(who == Turn.Player);
             TurnChangedEvent?.Invoke(currentTurn);
             useCard = false;
         }
@@ -87,15 +91,17 @@ namespace Karin
         {
             if (damage <= 0) return;
 
+            var nowDamage = Mathf.Max(_enemyText.Count, _playerText.Count);
+
             if (currentTurn == Turn.Player)
             {
-                _enemyText.Count += _playerText.Count + damage;
+                _enemyText.Count += nowDamage + damage;
                 _playerText.Count = 0;
                 _playerText.Fade(false);
             }
             else if (currentTurn == Turn.Enemy)
             {
-                _playerText.Count += _enemyText.Count + damage;
+                _playerText.Count += nowDamage + damage;
                 _enemyText.Count = 0;
                 _enemyText.Fade(false);
             }
@@ -107,24 +113,113 @@ namespace Karin
 
         public void Defence(int defence)
         {
-            if (defence <= 0) return;
-
             if (defence == -1)
-                defence = _enemyText.Count;
+            {
+                defence = Mathf.Max(_enemyText.Count, _playerText.Count);
+            }
 
             if (currentTurn == Turn.Player)
             {
-                _enemyText.Count -= defence;
-                _playerText.Count = 0;
+                _playerText.Count -= defence;
                 _playerText.Fade(false);
+                if (_playerText.Count <= 0)
+                {
+                    hitInfo.hit = false;
+                    hitInfo.nowhit = false;
+                }
             }
             else if (currentTurn == Turn.Enemy)
             {
-                _playerText.Count -= defence;
-                _enemyText.Count = 0;
+                _enemyText.Count -= defence;
                 _enemyText.Fade(false);
+                if (_enemyText.Count <= 0)
+                {
+                    hitInfo.hit = false;
+                    hitInfo.nowhit = false;
+                }
             }
+
+
             OnDefenceEvent?.Invoke(currentTurn);
+        }
+
+        public void GiveCard(int count)
+        {
+            if (currentTurn == Turn.Player)
+            {
+                for (int i = 0; i < count; i++)
+                    GameManager.Instance.EnemyCardHolder.AddCard();
+            }
+            else if (currentTurn == Turn.Enemy)
+            {
+                for (int i = 0; i < count; i++)
+                    GameManager.Instance.PlayerCardHolder.AddCard();
+            }
+            OnGiveEvent?.Invoke(currentTurn);
+        }
+
+        public void Lens(int count)
+        {
+            if (currentTurn == Turn.Player)
+            {
+                for (int i = 0; i < count; i++)
+                    GameManager.Instance.EnemyCardHolder.ViewCard();
+            }
+            else if (currentTurn == Turn.Enemy)
+            {
+
+            }
+            OnLensEvent?.Invoke(currentTurn);
+        }
+
+        public void Reflect()
+        {
+            var nowDamage = Mathf.Max(_enemyText.Count, _playerText.Count);
+
+            if (currentTurn == Turn.Player)
+            {
+                _playerText.Count -= nowDamage;
+                _enemyText.Count += nowDamage;
+                _playerText.Fade(false);
+
+                if (_playerText.Count <= 0)
+                {
+                    hitInfo.nowhit = false;
+                }
+            }
+            else if (currentTurn == Turn.Enemy)
+            {
+                _enemyText.Count -= nowDamage;
+                _playerText.Count += nowDamage;
+                _enemyText.Fade(false);
+
+                if (_enemyText.Count <= 0)
+                {
+                    hitInfo.nowhit = false;
+                }
+            }
+
+
+            OnReflectEvent?.Invoke(currentTurn);
+        }
+
+        public void Dice(float per = 0.5f)
+        {
+            if (Random.value <= per)
+            {
+                Defence(-1);
+            }
+            else
+            {
+                if (currentTurn == Turn.Player)
+                {
+                    _playerText.Count *= 2;
+                }
+                else if (currentTurn == Turn.Enemy)
+                {
+                    _enemyText.Count *= 2;
+                }
+            }
         }
     }
 

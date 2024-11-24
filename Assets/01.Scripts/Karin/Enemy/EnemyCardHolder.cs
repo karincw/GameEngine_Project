@@ -1,8 +1,10 @@
 using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Karin
 {
@@ -71,8 +73,8 @@ namespace Karin
 
             if (cards.Count <= 0)
             {
-                TurnManager.Instance.Attack(10);
                 StartSettings();
+                TurnManager.Instance.Attack(10);
             }
         }
         private void AddLayout()
@@ -133,6 +135,15 @@ namespace Karin
                 (cards[i].transform as RectTransform).localPosition = new Vector2(temp, 0);
             }
         }
+
+        public void ViewCard()
+        {
+            if (cards.Count == 0) return;
+
+            var cur = cards[Random.Range(0, cards.Count - 1)];
+            cur.Flip(true);
+        }
+
         public void StartSettings()
         {
             StartCoroutine(StartSettingCoroutine());
@@ -198,16 +209,32 @@ namespace Karin
 
             if (TurnManager.Instance.hitInfo.nowhit == true) // 공격받은상태임
             {
-                List<CardBase> attackCards = cardDatas.Where(c => c.cardData.IsAttackCard).ToList();
-                if (attackCards.Count > 0)
+                bool howToDeal = Convert.ToBoolean(Random.Range(0, 1));
+                if (howToDeal) // 공격으로 처리해볼래
                 {
-                    return attackCards[Random.Range(0, attackCards.Count)];
+                    List<CardBase> attackCards = cardDatas.Where(c => c.cardData.IsAttackCard()).ToList();
+                    if (attackCards.Count > 0)
+                    {
+                        return attackCards[Random.Range(0, attackCards.Count)];
+                    }
+                    List<CardBase> defenceCards = cardDatas.Where(c => c.cardData.IsDefenceCard()).ToList();
+                    if (defenceCards.Count > 0)
+                    {
+                        return defenceCards[Random.Range(0, defenceCards.Count)];
+                    }
                 }
-
-                List<CardBase> defenceCards = cardDatas.Where(c => c.cardData.IsDefenceCard).ToList();
-                if (defenceCards.Count > 0)
+                else
                 {
-                    return defenceCards[Random.Range(0, defenceCards.Count)];
+                    List<CardBase> attackCards = cardDatas.Where(c => c.cardData.IsAttackCard()).ToList();
+                    if (attackCards.Count > 0)
+                    {
+                        return attackCards[Random.Range(0, attackCards.Count)];
+                    }
+                    List<CardBase> defenceCards = cardDatas.Where(c => c.cardData.IsDefenceCard()).ToList();
+                    if (defenceCards.Count > 0)
+                    {
+                        return defenceCards[Random.Range(0, defenceCards.Count)];
+                    }
                 }
             }
 

@@ -51,28 +51,54 @@ namespace Karin
             Debug.LogError("GetCountText Error");
             return null;
         }
-        public int GetDamage(CountType ct)
+        public void ApplyCardEffect(CardDataSO card)
         {
-            switch (ct)
+            if (card.specialShape <= SpecialShapeType.Spade) return;
+
+            switch (card.specialShape)
             {
-                case CountType.ACE:
-                    return 3;
-                case CountType.Two:
-                    return 2;
-                case CountType.Three:
-                case CountType.Four:
-                case CountType.Five:
-                case CountType.Six:
-                case CountType.Seven:
-                case CountType.Eight:
-                case CountType.Nine:
-                case CountType.Ten:
-                case CountType.Jack:
-                case CountType.Queen:
-                case CountType.King:
-                default:
-                    return 0;
+
+                case SpecialShapeType.Shield:
+                    TurnManager.Instance.Defence(-1);
+                    return;
+                case SpecialShapeType.Sword2:
+                    TurnManager.Instance.Attack(2);
+                    return;
+                case SpecialShapeType.Sword3:
+                    TurnManager.Instance.Attack(3);
+                    return;
+                case SpecialShapeType.Sword5:
+                    TurnManager.Instance.Attack(5);
+                    return;
+                case SpecialShapeType.Sword7:
+                    TurnManager.Instance.Attack(7);
+                    return;
+                case SpecialShapeType.Give2:
+                    TurnManager.Instance.GiveCard(2);
+                    return;
+                case SpecialShapeType.Give3:
+                    TurnManager.Instance.GiveCard(3);
+                    return;
+                case SpecialShapeType.Give5:
+                    TurnManager.Instance.GiveCard(5);
+                    return;
+                case SpecialShapeType.Give7:
+                    TurnManager.Instance.GiveCard(7);
+                    return;
+                case SpecialShapeType.King:
+                    return;
+                case SpecialShapeType.Lens:
+                    TurnManager.Instance.Lens(2);
+                    return;
+                case SpecialShapeType.Reflect:
+                    TurnManager.Instance.Reflect();
+                    return;
+                case SpecialShapeType.Dice:
+                    return;
+                case SpecialShapeType.ChangeShape:
+                    return;
             }
+
         }
 
     }

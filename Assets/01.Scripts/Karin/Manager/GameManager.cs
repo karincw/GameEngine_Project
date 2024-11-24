@@ -10,8 +10,8 @@ namespace Karin
     {
 
         [HideInInspector] public CardPlace cardPlace;
-        public CardHolder playerCardHolder;
-        public EnemyCardHolder enemyCardHolder;
+        public CardHolder PlayerCardHolder;
+        public EnemyCardHolder EnemyCardHolder;
         [HideInInspector] public CardPack cardPack;
 
         [SerializeField] private CardDataSO baseCardData;
@@ -31,10 +31,6 @@ namespace Karin
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.P))
-            {
-                GameStart();
-            }
             if (Input.GetKeyDown(KeyCode.F9))
             {
                 TurnManager.Instance.ChangeTurn();
@@ -50,10 +46,11 @@ namespace Karin
         [ContextMenu("GameStart")]
         public void GameStart()
         {
-            cardPack.SetCards(playerCardHolder.myCards);
+            Debug.Log("GameStart");
+            cardPack.SetCards(PlayerCardHolder.myCards);
             cardPlace.CardSetting();
-            playerCardHolder.StartSettings();
-            enemyCardHolder.StartSettings();
+            PlayerCardHolder.StartSettings();
+            EnemyCardHolder.StartSettings();
         }
 
         [ContextMenu("DebugCardView")]
@@ -83,9 +80,21 @@ namespace Karin
                     s = BaseShapeType.Diamond;
                 }
                 data.shape = s;
-                data.specialShape = (SpecialShapeType)s++;
                 data.count = c;
-                playerCardHolder.myCards.Add(data);
+                data.specialShape = (SpecialShapeType)s++;
+
+                if (data.count == CountType.Three)
+                    data.specialShape = SpecialShapeType.Shield;
+                if (data.count == CountType.ACE)
+                    data.specialShape = SpecialShapeType.Sword3;
+                if (data.count == CountType.Two)
+                    data.specialShape = SpecialShapeType.Sword2;
+                if (data.count == CountType.Seven)
+                    data.specialShape = SpecialShapeType.ChangeShape;
+                if (data.count == CountType.King)
+                    data.specialShape = SpecialShapeType.King;
+
+                PlayerCardHolder.myCards.Add(data);
             }
         }
 

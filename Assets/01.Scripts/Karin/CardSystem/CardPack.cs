@@ -15,6 +15,7 @@ namespace Karin
 
         public void SetCards(List<CardDataSO> datas)
         {
+            Debug.Log("CardAdd");
             cards.AddRange(datas);
             Shuffle();
         }

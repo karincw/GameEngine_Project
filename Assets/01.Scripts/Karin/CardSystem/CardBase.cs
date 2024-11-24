@@ -75,7 +75,8 @@ namespace Karin
 
         public void UseCard()
         {
-            if(!_place.CanUse(cardData)) return;
+            if (!_place.CanUse(cardData)) return;
+            canDrag = false;
 
             _cardHolder.UseCard(this);
             _place.UseCard(this);

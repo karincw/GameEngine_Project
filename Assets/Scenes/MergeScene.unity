@@ -1256,8 +1256,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardPlace: {fileID: 0}
-  playerCardHolder: {fileID: 1557432683}
-  enemyCardHolder: {fileID: 1348743519}
+  PlayerCardHolder: {fileID: 1557432683}
+  EnemyCardHolder: {fileID: 1348743519}
   cardPack: {fileID: 0}
   baseCardData: {fileID: 11400000, guid: 9837fb294e3aa1447ae20bef24b7c91d, type: 2}
 --- !u!1 &603524483
@@ -1655,7 +1655,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.15686275, g: 0.1764706, b: 0.15686275, a: 1}
+  m_Color: {r: 0.08235294, g: 0.39607847, b: 0.24705884, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -8166,32 +8166,52 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShapeToSpriteDictionary:
     _serializedList:
-    - Key: 0
-      Value: {fileID: 1587227984, guid: c5a2125a3ca8a3341bed5c2864439214, type: 3}
-    - Key: 1
-      Value: {fileID: 1698835490, guid: c5a2125a3ca8a3341bed5c2864439214, type: 3}
-    - Key: 2
-      Value: {fileID: -1843047561, guid: c5a2125a3ca8a3341bed5c2864439214, type: 3}
     - Key: 3
-      Value: {fileID: -1894577254, guid: c5a2125a3ca8a3341bed5c2864439214, type: 3}
-    - Key: 4
+      Value: {fileID: -1843047561, guid: c5a2125a3ca8a3341bed5c2864439214, type: 3}
+    - Key: 0
+      Value: {fileID: 1698835490, guid: c5a2125a3ca8a3341bed5c2864439214, type: 3}
+    - Key: 1
       Value: {fileID: -2130096857, guid: c5a2125a3ca8a3341bed5c2864439214, type: 3}
-    - Key: 5
+    - Key: 2
       Value: {fileID: -202956629, guid: c5a2125a3ca8a3341bed5c2864439214, type: 3}
+    - Key: 10
+      Value: {fileID: -1894577254, guid: c5a2125a3ca8a3341bed5c2864439214, type: 3}
+    - Key: 11
+      Value: {fileID: 1587227984, guid: c5a2125a3ca8a3341bed5c2864439214, type: 3}
+    - Key: 12
+      Value: {fileID: 453820868, guid: c5a2125a3ca8a3341bed5c2864439214, type: 3}
+    - Key: 13
+      Value: {fileID: 747805426, guid: c5a2125a3ca8a3341bed5c2864439214, type: 3}
+    - Key: 4
+      Value: {fileID: 1040955823, guid: c5a2125a3ca8a3341bed5c2864439214, type: 3}
+    - Key: 5
+      Value: {fileID: -541689803, guid: c5a2125a3ca8a3341bed5c2864439214, type: 3}
+    - Key: 6
+      Value: {fileID: 1829370563, guid: c5a2125a3ca8a3341bed5c2864439214, type: 3}
+    - Key: 7
+      Value: {fileID: -1406860654, guid: c5a2125a3ca8a3341bed5c2864439214, type: 3}
+    - Key: 14
+      Value: {fileID: -803738898, guid: c5a2125a3ca8a3341bed5c2864439214, type: 3}
+    - Key: 15
+      Value: {fileID: -1470389619, guid: c5a2125a3ca8a3341bed5c2864439214, type: 3}
+    - Key: 17
+      Value: {fileID: -1632682457, guid: c5a2125a3ca8a3341bed5c2864439214, type: 3}
+    - Key: 16
+      Value: {fileID: 378561841, guid: c5a2125a3ca8a3341bed5c2864439214, type: 3}
+    - Key: 8
+      Value: {fileID: -140495602, guid: c5a2125a3ca8a3341bed5c2864439214, type: 3}
+    - Key: 9
+      Value: {fileID: 245470504, guid: c5a2125a3ca8a3341bed5c2864439214, type: 3}
   ShapeToColorDictionary:
     _serializedList:
+    - Key: 3
+      Value: {r: 0, g: 0, b: 0, a: 1}
     - Key: 0
       Value: {r: 1, g: 0.21176471, b: 0.21176471, a: 1}
     - Key: 1
       Value: {r: 1, g: 0.21176471, b: 0.21176471, a: 1}
     - Key: 2
       Value: {r: 0, g: 0, b: 0, a: 1}
-    - Key: 3
-      Value: {r: 0, g: 0, b: 0, a: 1}
-    - Key: 4
-      Value: {r: 1, g: 1, b: 1, a: 1}
-    - Key: 5
-      Value: {r: 1, g: 1, b: 1, a: 1}
   BlackFont: {fileID: 11400000, guid: b47ee6e115867e04ea1737ba0603955d, type: 2}
   PinkFont: {fileID: 11400000, guid: 4f8dffa1b9ed675449b1cb9b0b9d7d9c, type: 2}
   cards:
@@ -10503,7 +10523,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.15686275, g: 0.1764706, b: 0.15686275, a: 1}
+  m_Color: {r: 0.08235294, g: 0.39607847, b: 0.24705884, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

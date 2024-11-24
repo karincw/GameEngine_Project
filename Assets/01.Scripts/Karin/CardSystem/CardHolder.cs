@@ -57,6 +57,14 @@ namespace Karin
         {
             AddCard(GameManager.Instance.cardPack.GetCardData());
         }
+
+        public void ChangeSpecialType(CardDataSO ChangeCard)
+        {
+            int idx = myCards.FindIndex(card => card.count == ChangeCard.count && card.shape == ChangeCard.shape);
+            Debug.Log($"CardChanged : {ChangeCard.count} & {ChangeCard.shape} / {myCards[idx].specialShape} > {ChangeCard.specialShape}");
+            myCards[idx].specialShape = ChangeCard.specialShape;
+        }
+
         public void AddCard(CardDataSO data)
         {
             CardBase cb = Instantiate(_cardPrefabs, _cardSpawnTrm);
@@ -92,13 +100,10 @@ namespace Karin
                 TurnManager.Instance.useCard = false;
             }
 
-            if (card.cardData.count == CountType.ACE || card.cardData.count == CountType.Two)
-                TurnManager.Instance.hitInfo.nowhit = false;
-
             if (cards.Count <= 0)
             {
-                TurnManager.Instance.Attack(10);
                 StartSettings();
+                TurnManager.Instance.Attack(10);
             }
 
         }

@@ -19,7 +19,7 @@ namespace Karin
 
                 SizeUpEffect();
                 Fade(true);
-
+                value = Mathf.Max(0, value);
                 if (value > Count)
                 {
                     StartCoroutine(CountChangeCoroutine(1, _count, value));
@@ -86,7 +86,8 @@ namespace Karin
 
         public void SizeUpEffect()
         {
-            (transform as RectTransform).DOPunchScale(_targetSize, _sizeUpTime, 1000, 100);
+            (transform as RectTransform).DOComplete();
+            (transform as RectTransform).DOPunchScale(_targetSize, _sizeUpTime, 1000, 100).SetId(2);
         }
     }
 

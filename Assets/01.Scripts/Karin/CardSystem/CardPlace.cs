@@ -22,8 +22,9 @@ namespace Karin
 
             if (TurnManager.Instance.hitInfo.hit)
             {
-                if ((c.count == firstCardData.count || ((int)c.shape == (int)firstCardData.shape))
-                    && (c.IsAttackCard || c.IsDefenceCard))
+                if (
+                    (c.count == firstCardData.count || ((int)c.shape == (int)firstCardData.shape)) //모양이 같거나 숫자가 같음
+                    && (c.IsAttackCard() || c.IsDefenceCard())) //공격카드이거나 수비 카드임
                 {
                     return true;
                 }
@@ -43,12 +44,16 @@ namespace Karin
             Vector2 positionDelta = new Vector2(Random.Range(-10f, 10f), Random.Range(-10f, 10f));
             card.transform.DOLocalMove(positionDelta, 0.1f);
 
-            TurnManager.Instance.Attack(CardManager.Instance.GetDamage(card.cardData.count));
+            CardManager.Instance.ApplyCardEffect(card.cardData);
+
+
         }
 
         public List<CardBase> GetCards()
         {
-            return cards.GetRange(0, cards.Count - 5);
+            var card = cards.GetRange(0, cards.Count - 5);
+            cards.RemoveRange(0, cards.Count - 5);
+            return card;
         }
 
         [ContextMenu("StartSettings")]
