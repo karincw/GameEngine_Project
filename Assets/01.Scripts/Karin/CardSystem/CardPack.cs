@@ -26,7 +26,9 @@ namespace Karin
             CardDataSO rcard = cards[^1];
             if (cards.Count <= 10)
             {
-                SetCards(_place.GetCards().Select(c => c.cardData).ToList());
+                var cards = _place.GetCards();
+                SetCards(cards.Select(c => c.cardData).ToList());
+                cards.ForEach(c => Destroy(c));
             }
             cards.Remove(rcard);
             return rcard;

@@ -1,4 +1,5 @@
 using DG.Tweening;
+using JetBrains.Annotations;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -144,6 +145,48 @@ namespace Karin
             cur.Flip(true);
         }
 
+        public BaseShapeType GetNeedShape()
+        {
+            int spade = 0, clover = 0, diamond = 0, heart = 0;
+
+            cards.ForEach(c =>
+            {
+                switch (c.cardData.shape)
+                {
+                    case BaseShapeType.Diamond:
+                        heart++;
+                        break;
+                    case BaseShapeType.Heart:
+                        diamond++;
+                        break;
+                    case BaseShapeType.Clover:
+                        clover++;
+                        break;
+                    case BaseShapeType.Spade:
+                        spade++;
+                        break;
+                }
+            });
+
+            if (spade == Mathf.Max(spade, clover, diamond, heart))
+            {
+                return BaseShapeType.Spade;
+            }
+            else if (diamond == Mathf.Max(spade, clover, diamond, heart))
+            {
+                return BaseShapeType.Diamond;
+            }
+            else if (heart == Mathf.Max(spade, clover, diamond, heart))
+            {
+                return BaseShapeType.Heart;
+            }
+            else
+            {
+                return BaseShapeType.Clover;
+            }
+
+        }
+
         public void StartSettings()
         {
             StartCoroutine(StartSettingCoroutine());
@@ -193,6 +236,7 @@ namespace Karin
                 TurnManager.Instance.hitInfo.nowhit = false;
 
             TurnManager.Instance.ChangeTurn();
+            ApplyLayoutWithTween(.3f);
         }
 
         public CardBase ClacluateCard()

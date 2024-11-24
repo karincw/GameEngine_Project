@@ -15,6 +15,8 @@ namespace Karin
         [SerializeField] private CardPack _pack;
         [SerializeField] private CardBase _cardPrefabs;
 
+        private ChangeSprite _current;
+
 
         public bool CanUse(CardDataSO c)
         {
@@ -39,6 +41,8 @@ namespace Karin
 
         public void UseCard(CardBase card)
         {
+            if (_current != null) _current.SetOriginShape();
+
             cards.Add(card);
             card.transform.SetParent(transform);
             Vector2 positionDelta = new Vector2(Random.Range(-10f, 10f), Random.Range(-10f, 10f));
@@ -46,7 +50,19 @@ namespace Karin
 
             CardManager.Instance.ApplyCardEffect(card.cardData);
 
-
+            if (card.cardData.specialShape == SpecialShapeType.ChangeShape)
+            {
+                if (TurnManager.Instance.currentTurn == Turn.Player)
+                {
+                    _current = card.ChangeSprite;
+                    _current.SelectStart();
+                }
+                else
+                {
+                    _current = card.ChangeSprite;
+                    _current.Selected(GameManager.Instance.EnemyCardHolder.GetNeedShape());
+                }
+            }
         }
 
         public List<CardBase> GetCards()

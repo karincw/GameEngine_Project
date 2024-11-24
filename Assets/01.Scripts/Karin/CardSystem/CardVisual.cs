@@ -1,5 +1,6 @@
 using DG.Tweening;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -61,6 +62,7 @@ namespace Karin
             _isFront = false;
             isSelected = false;
             SetVisual(false);
+            _owner.canDrag = false;
 
             _owner.PointerEnterEvent += FristFlip;
             _owner.PointerExitEvent += PointerExitHandle;
@@ -131,7 +133,6 @@ namespace Karin
         public void Flip()
         {
             _cardTrm.DORotate(new Vector3(0, 90, 0), _flipTime / 2)
-                //.SetEase(_forwardFlipEase)
                 .SetEase(Ease.Linear)
                 .OnComplete(() =>
                  {
@@ -151,6 +152,7 @@ namespace Karin
 
                     _cardTrm.DORotate(new Vector3(0, 0, 0), _flipTime / 2).SetEase(_backwardFlipEase);
                     _isFront = front;
+                    _owner.canDrag = true;
                 });
         }
         private void FristFlip()

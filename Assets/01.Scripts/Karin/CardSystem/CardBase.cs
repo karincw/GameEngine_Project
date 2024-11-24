@@ -11,6 +11,8 @@ namespace Karin
     {
         [Header("Settings")]
         public CardDataSO cardData;
+        [HideInInspector] public CardVisual CardVisual;
+        [HideInInspector] public ChangeSprite ChangeSprite;
         private CardPlace _place;
 
         [Header("States")]
@@ -31,7 +33,6 @@ namespace Karin
 
         [HideInInspector] public Vector3 originPos;
         private CardHolder _cardHolder;
-        private CardVisual _cardVisual;
         private Camera _mainCam;
         private GraphicRaycaster _graphicRaycaster;
         private Image _imageCompo;
@@ -43,28 +44,32 @@ namespace Karin
 
         public void Initialize(CardDataSO data, CardHolder holder, GraphicRaycaster _gr)
         {
-            _cardVisual = GetComponentInChildren<CardVisual>();
+            CardVisual = GetComponentInChildren<CardVisual>();
             _imageCompo = GetComponent<Image>();
             _rectTrm = transform as RectTransform;
             originPos = _rectTrm.localPosition;
             _graphicRaycaster = _gr;
             cardData = data;
-            _cardVisual.Initialize(this);
+            CardVisual.Initialize(this);
             _mainCam = Camera.main;
             _cardHolder = holder;
+            ChangeSprite = GetComponentInChildren<ChangeSprite>();
+            ChangeSprite.Init(this);
             indexChange = false;
             _place = FindObjectOfType<CardPlace>();
         }
         public void Initialize(CardDataSO data)
         {
             cardData = data;
-            _cardVisual = GetComponentInChildren<CardVisual>();
+            CardVisual = GetComponentInChildren<CardVisual>();
             _imageCompo = GetComponent<Image>();
             _place = FindObjectOfType<CardPlace>();
             _rectTrm = transform as RectTransform;
             originPos = _rectTrm.localPosition;
+            ChangeSprite = GetComponentInChildren<ChangeSprite>();
+            ChangeSprite.Init(this);
 
-            _cardVisual.InitializeNoEvent(this);
+            CardVisual.InitializeNoEvent(this);
             _imageCompo.raycastTarget = false;
         }
 
@@ -84,7 +89,7 @@ namespace Karin
 
         public void Flip(bool front)
         {
-            _cardVisual.Flip(front);
+            CardVisual.Flip(front);
         }
 
         private void DragFollow()
@@ -100,7 +105,7 @@ namespace Karin
         }
         public void Swap(float dir)
         {
-            _cardVisual.SwapAnimation(dir);
+            CardVisual.SwapAnimation(dir);
         }
 
         #region Interface
@@ -166,7 +171,7 @@ namespace Karin
             }
             else
             {
-                _cardVisual.isSelected = false;
+                CardVisual.isSelected = false;
                 if (!indexChange)
                     transform.SetSiblingIndex(_slibingIndex);
                 else

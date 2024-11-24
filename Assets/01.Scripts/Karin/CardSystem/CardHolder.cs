@@ -106,6 +106,7 @@ namespace Karin
                 TurnManager.Instance.Attack(10);
             }
 
+            ApplyLayoutWithTween(.3f);
         }
         public void MoveLayout()
         {

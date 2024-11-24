@@ -861,7 +861,7 @@ MonoBehaviour:
   currentTurn: 0
   _playerText: {fileID: 346989973}
   _enemyText: {fileID: 1360301335}
-  _turnChangeBtn: {fileID: 2070900330}
+  turnChangeBtn: {fileID: 2070900330}
   useCard: 0
 --- !u!1 &346989971
 GameObject:

@@ -18,7 +18,7 @@ namespace Karin
 
         [SerializeField] private AttackText _playerText;
         [SerializeField] private AttackText _enemyText;
-        [SerializeField] private Button _turnChangeBtn;
+        public Button turnChangeBtn;
 
         public bool useCard;
         public AttackInfo hitInfo;
@@ -58,14 +58,14 @@ namespace Karin
             if (currentTurn == Turn.Player)
             {
                 currentTurn = Turn.Enemy;
-                _turnChangeBtn.interactable = false;
+                turnChangeBtn.interactable = false;
                 GameManager.Instance.EnemyCardHolder.AutoRun();
                 GameManager.Instance.PlayerCardHolder.CardDrag(false);
             }
             else if (currentTurn == Turn.Enemy)
             {
                 currentTurn = Turn.Player;
-                _turnChangeBtn.interactable = true;
+                turnChangeBtn.interactable = true;
                 GameManager.Instance.PlayerCardHolder.CardDrag(true);
             }
 
