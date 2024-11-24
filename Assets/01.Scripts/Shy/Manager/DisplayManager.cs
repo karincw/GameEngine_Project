@@ -33,5 +33,23 @@ namespace Shy
                 seq.Append(boardMes.DOColor(shineColor, delay));
             }
         }
+
+        public void DieSign()
+        {
+            boardMes.text = "YOU LOSE";
+
+            boardMes.color = Color.black;
+            Color shineColor = baseColor + new Color(1, 1, 0);
+
+            Sequence seq = DOTween.Sequence();
+
+            for (int i = 0; i < roopCnt; i++)
+            {
+                seq.Append(boardMes.DOColor(baseColor, delay));
+                seq.Append(boardMes.DOColor(shineColor, delay))
+                    //.OnComplete(()=>타이틀 화면 함수)
+                    ;
+            }
+        }
     }
 }

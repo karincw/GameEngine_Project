@@ -52,13 +52,13 @@ namespace Shy
                 yield return new WaitForSeconds(0.01f);
             }
 
-            //작동 풀기
-            Coin_Turn.Instance.CoinToss(Karin.TurnManager.Instance.currentTurn, Karin.TurnManager.Instance.turnChangeBtn);
 
             if(_target.health <= 0)
             {
                 StageManager.Instance.GameFin();
             }
+            else
+                Coin_Turn.Instance.CoinToss(Karin.TurnManager.Instance.currentTurn, Karin.TurnManager.Instance.turnChangeBtn);
         }
     }
 }

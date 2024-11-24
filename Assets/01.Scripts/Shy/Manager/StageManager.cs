@@ -119,17 +119,44 @@ namespace Shy
                         {
                             enemyHaveCards[i].gameObject.SetActive(true);
                             enemyHaveCards[i].cardData = item.data.cardDeck[i];
+                            CardDataSO so = enemyHaveCards[i].cardData;
 
                             Transform visual = enemyHaveCards[i].transform.GetChild(0);
+                            Color32 color;
 
+                            if (so.specialShape == (SpecialShapeType)so.shape)
+                                color = CardManager.Instance.ShapeToColorDictionary[(SpecialShapeType)so.shape];
+                            else
+                                color = Color.white;
+
+                            visual.GetChild(0).GetComponent<Image>().color = color;
                             visual.GetChild(0).GetComponent<Image>().sprite = CardManager.Instance.ShapeToSpriteDictionary[enemyHaveCards[i].cardData.specialShape];
 
-                            visual.GetChild(1).GetComponent<Image>().sprite = 
-                                CardManager.Instance.ShapeToSpriteDictionary[(SpecialShapeType)enemyHaveCards[i].cardData.shape];
-                            visual.GetChild(2).GetComponent<Image>().sprite =
-                                CardManager.Instance.ShapeToSpriteDictionary[(SpecialShapeType)enemyHaveCards[i].cardData.shape];
-                            //visual.GetChild(3).GetComponent<TextMeshProUGUI>().font = CardManager.Instance.font
+                            TMP_FontAsset font;
+                            Sprite sprite;
 
+                            if (so.shape == BaseShapeType.Diamond || so.shape == BaseShapeType.Heart)
+                            {
+                                font = CardManager.Instance.PinkFont;
+                                color = Color.red;
+                                sprite = CardManager.Instance.ShapeToSpriteDictionary[(SpecialShapeType)so.shape];
+                            }
+                            else
+                            {
+                                font = CardManager.Instance.BlackFont;
+                                color = Color.black;
+                                sprite = CardManager.Instance.ShapeToSpriteDictionary[(SpecialShapeType)so.shape];
+                            }
+
+                            visual.GetChild(1).GetComponent<Image>().sprite = sprite;
+                            visual.GetChild(1).GetComponent<Image>().color = color;
+                            visual.GetChild(2).GetComponent<Image>().sprite = sprite;
+                            visual.GetChild(2).GetComponent<Image>().color = color;
+
+                            visual.GetChild(3).GetComponent<TextMeshProUGUI>().text = CardManager.Instance.GetCountText(so.count);
+                            visual.GetChild(3).GetComponent<TextMeshProUGUI>().font = font;
+                            visual.GetChild(4).GetComponent<TextMeshProUGUI>().text = CardManager.Instance.GetCountText(so.count);
+                            visual.GetChild(4).GetComponent<TextMeshProUGUI>().font = font;
                         }
                         else
                             enemyHaveCards[i].gameObject.SetActive(false);
@@ -229,23 +256,24 @@ namespace Shy
 
         public void GameFin()
         {
-            if(playerNameCard.health <= 0)
+            Sequence seq = DOTween.Sequence();
+            seq.Append(enemyNameCard.transform.GetChild(0).DOMoveY(8, 1.5f).OnComplete(() =>
+            {
+                enemyNameCard.gameObject.SetActive(false);
+                enemyNameCard.transform.GetChild(0).position = enemyNameCard.transform.position;
+            }));
+            battleUI.SetActive(false);
+
+            if (playerNameCard.health <= 0)
             {
                 Debug.Log("enemy win");
                 //플레이어 죽는 거
+                DisplayManager.Instance.DieSign();
             }
             else if (enemyNameCard.health <= 0)
             {
                 Debug.Log("player win");
 
-                Sequence seq = DOTween.Sequence();
-
-                seq.Append(enemyNameCard.transform.GetChild(0).DOMoveY(8, 1.5f).OnComplete(()=>
-                {
-                    enemyNameCard.gameObject.SetActive(false);
-                    enemyNameCard.transform.GetChild(0).position = enemyNameCard.transform.position;
-                }));
-                battleUI.SetActive(false);
                 seq.OnComplete(() => StageClear());
             }
         }

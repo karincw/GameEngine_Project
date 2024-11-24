@@ -9,13 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1feecbaac094d3e4189db3c3296500d0, type: 3}
-  m_Name: Player
+  m_Script: {fileID: 11500000, guid: 095b68e74ec791247805e3629ecdfa14, type: 3}
+  m_Name: Card 2
   m_EditorClassIdentifier: 
-  iType: 0
-  itemName: "\uB2F9\uC2E0"
-  itemExplain: 
-  life: 1
-  cardDeck: []
-  artifacts: []
-  audio: {fileID: 0}
+  cardType: 3
+  count: 4
+  shape: 2
+  specialShape: 5
