@@ -31,22 +31,34 @@ namespace Shy
 
             Sequence seq = DOTween.Sequence();
 
-            seq.Append(damageTxt.transform.DOMove(_target.transform.GetChild(0).Find("Coin_Img").GetChild(0).position, 3f));
-            seq.Insert(0, damageTxt.transform.DOScale(0.5f, 2.5f)).OnComplete(
-                () => {
+            seq.Append(damageTxt.transform.DOMove(_target.transform.GetChild(0).Find("Coin_Img").GetChild(0).position, 1.75f)
+                .OnComplete(()=>
+                {
                     particle.transform.position = damageTxt.transform.position;
-                    if(_value < 0) particle.Play();
+                    if (_value < 0) particle.Play();
                     damageTxt.gameObject.SetActive(false);
                     StartCoroutine(HealthAnime(_value, _target));
-                });
+                }));
+            seq.Insert(0, damageTxt.transform.DOScale(0.5f, 1.4f));
         }
 
         private IEnumerator HealthAnime(int _value, Selector_Enemy _target)
         {
+            //작동 막기
+            Karin.GameManager.Instance.PlayerCardHolder.CardDrag(false);
+
             for (int i = 0; i < Mathf.Abs(_value); i++)
             {
                 _target.health += _value >= 0 ? 1 : -1;
                 yield return new WaitForSeconds(0.01f);
+            }
+
+            //작동 풀기
+            Karin.GameManager.Instance.PlayerCardHolder.CardDrag(true);
+
+            if(_target.health <= 0)
+            {
+                StageManager.Instance.StageClear();
             }
         }
     }

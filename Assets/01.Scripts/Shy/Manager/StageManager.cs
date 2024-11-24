@@ -227,12 +227,30 @@ namespace Shy
             StageInit();
         }
 
-        public void Damage(int _value, Turn _turn, ATTACK_TYPE _atkType = ATTACK_TYPE.ATTACK)
+        public void GameFin()
+        {
+            if(playerNameCard.health <= 0)
+            {
+                Debug.Log("enemy win");
+                StageUpdate();
+            }
+            else if (enemyNameCard.health <= 0)
+            {
+                Debug.Log("player win");
+                StageUpdate();
+            }
+        }
+
+        public bool Damage(int _value, Turn _turn, ATTACK_TYPE _atkType = ATTACK_TYPE.ATTACK)
         {
             _value *= (_atkType == ATTACK_TYPE.ATTACK) ? -1 : 1;
 
             if (_turn == Turn.Player) DamageEffect.Instance.Damage(_value, playerNameCard);
             else if (_turn == Turn.Enemy) DamageEffect.Instance.Damage(_value, enemyNameCard);
+
+            if (playerNameCard.health - _value <= 0 || enemyNameCard.health - _value <= 0)
+                return true;
+            return false;
         }
     }
 }

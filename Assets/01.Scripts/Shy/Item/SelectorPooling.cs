@@ -42,6 +42,8 @@ namespace Shy
         }
         public void ReturnPool(SelectorItem[] _item)
         {
+            if (_item == null) return;
+
             foreach (SelectorItem item in _item)
             {
                 item.transform.parent = transform;

@@ -48,7 +48,7 @@ namespace Karin
             {
                 Debug.Log($"{currentTurn} <- hit / damage:{GetHitText().Count}");
                 AttackText at = GetHitText();
-                Shy.StageManager.Instance.Damage(at.Count, currentTurn);
+                if (Shy.StageManager.Instance.Damage(at.Count, currentTurn)) return;
                 at.Count = 0;
                 at.Fade(false);
                 hitInfo.hit = false;
@@ -68,6 +68,8 @@ namespace Karin
                 turnChangeBtn.interactable = true;
                 GameManager.Instance.PlayerCardHolder.CardDrag(true);
             }
+
+            
 
             useCard = false;
             TurnChangedEvent?.Invoke(currentTurn);

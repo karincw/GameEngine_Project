@@ -11,5 +11,6 @@ namespace Shy
         public int life;
         public List<CardDataSO> cardDeck;
         public List<ArtifactData> artifacts;
+        public AudioClip audio;
     }
 }

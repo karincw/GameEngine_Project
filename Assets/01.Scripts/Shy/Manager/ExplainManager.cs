@@ -50,7 +50,7 @@ namespace Shy
             {
                 panel.position = _pos.position;
                 panel.localPosition += new Vector3(_pos.rect.width / 2 + 210, 0) 
-                    * (_pos.position.x <= 0 ? 1 : -1);
+                    * (_pos.position.x <= 3 ? 1 : -1);
             }
         }
 
