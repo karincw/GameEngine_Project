@@ -1,5 +1,4 @@
 using DG.Tweening;
-using JetBrains.Annotations;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -306,6 +305,12 @@ namespace Karin
 
         }
 
+        public void Release()
+        {
+            cards.ForEach(c => Destroy(c));
+            cards.Clear();
+            layouts.Clear();
+        }
     }
 
 }

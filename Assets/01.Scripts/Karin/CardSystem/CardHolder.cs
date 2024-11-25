@@ -205,6 +205,12 @@ namespace Karin
             CardDrag(true);
         }
 
+        public void Release()
+        {
+            cards.ForEach(c => Destroy(c));
+            cards.Clear();
+            layouts.Clear();
+        }
     }
 
 }
