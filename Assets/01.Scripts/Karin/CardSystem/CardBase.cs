@@ -116,7 +116,6 @@ namespace Karin
         public void OnPointerEnter(PointerEventData eventData)
         {
             Explain.Instance.ShowExplain(cardData.specialShape, gameObject);
-            if (!canDrag) return;
             PointerEnterEvent?.Invoke();
         }
         public void OnPointerExit(PointerEventData eventData)

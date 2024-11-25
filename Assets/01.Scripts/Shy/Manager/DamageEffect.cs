@@ -18,7 +18,7 @@ namespace Shy
 
        
 
-        public void Damage(int _value, Selector_Enemy _target)
+        public void Damage(int _value, Selector_Enemy _target, bool cardEffect = true)
         {
             damageTxt.gameObject.SetActive(true);
 
@@ -26,25 +26,29 @@ namespace Shy
             damageTxt.color = _value < 0 ? minusColor : plusColor;
 
             damageTxt.transform.localScale = Vector3.one;
-            
-            damageTxt.transform.position = _target.name.Contains("Player") ? pStackPos.position : eStackPos.position;
+
+            if (cardEffect)
+                damageTxt.transform.position = _target.name.Contains("Player") ? pStackPos.position : eStackPos.position;
+            else
+                damageTxt.transform.position = Vector3.zero;
 
             Karin.GameManager.Instance.PlayerCardHolder.CardDrag(false);
 
             Sequence seq = DOTween.Sequence();
 
-            seq.Append(damageTxt.transform.DOMove(_target.transform.GetChild(0).Find("Coin_Img").GetChild(0).position, 1.75f)
+            seq.Append(damageTxt.transform.DOMove(_target.transform.GetChild(0).Find("Coin_Img").GetChild(0).position, 1.3f)
                 .OnComplete(()=>
                 {
                     particle.transform.position = damageTxt.transform.position;
                     if (_value < 0) particle.Play();
-                    damageTxt.gameObject.SetActive(false);
-                    StartCoroutine(HealthAnime(_value, _target));
+                        damageTxt.gameObject.SetActive(false);
+
+                    StartCoroutine(HealthAnime(_value, _target, cardEffect));
                 }));
-            seq.Insert(0, damageTxt.transform.DOScale(0.5f, 1.4f));
+            seq.Insert(0, damageTxt.transform.DOScale(0.5f, 1f));
         }
 
-        private IEnumerator HealthAnime(int _value, Selector_Enemy _target)
+        private IEnumerator HealthAnime(int _value, Selector_Enemy _target, bool _turnChange)
         {
             for (int i = 0; i < Mathf.Abs(_value); i++)
             {
@@ -53,13 +57,17 @@ namespace Shy
             }
 
 
-            if(_target.health <= 0)
+            if(_turnChange)
             {
-                yield return new WaitForSeconds(1.2f);
-                StageManager.Instance.GameFin();
+                if (_target.health <= 0)
+                {
+                    yield return new WaitForSeconds(1.2f);
+                    StageManager.Instance.GameFin();
+                }
+                else
+                    Coin_Turn.Instance.CoinToss(Karin.TurnManager.Instance.currentTurn, Karin.TurnManager.Instance.turnChangeBtn);
             }
-            else
-                Coin_Turn.Instance.CoinToss(Karin.TurnManager.Instance.currentTurn, Karin.TurnManager.Instance.turnChangeBtn);
+            
         }
     }
 }

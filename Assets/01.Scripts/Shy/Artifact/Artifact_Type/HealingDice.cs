@@ -7,7 +7,7 @@ public class HealingDice : ArtifactEffect
 {
     public override void Effect(Selector_Enemy _opponent)
     {
-        transform.parent.GetComponentInParent<Selector_Enemy>().health += Random.Range(1, 7) * 2;
+        DamageEffect.Instance.Damage(Random.Range(1, 7) * 2, transform.parent.GetComponentInParent<Selector_Enemy>(), false);
     }
 
     public override void Init(){}

@@ -189,12 +189,13 @@ namespace Shy
 
         private IEnumerator StartGameCoroutine()
         {
+            DisplayManager.Instance.SignUpdate("");
             battleUI.SetActive(true);
-            display.DOMoveY(displayAnime.position.y, 1.2f);
+            display.DOMoveY(displayAnime.position.y, 0.8f);
 
-            yield return new WaitForSeconds(1.5f);
+            yield return new WaitForSeconds(1f);
 
-            Karin.GameManager.Instance.GameStart();
+            ArtifactManager.Instance.OnEvent(EVENT_TYPE.STAGE_START, EVENT_TYPE.STAGE_START);
         }
 
         public void EnemyCancel()
@@ -249,6 +250,7 @@ namespace Shy
         private void Start()
         {
             playerNameCard.Init(playerNormalSO);
+            DisplayManager.Instance.SignUpdate("");
             for (int i = 0; i < 30; i++)
             {
                 Instantiate(enemyCardPrefab, enemyCardUi.GetChild(1));
@@ -279,7 +281,7 @@ namespace Shy
             {
                 Debug.Log("enemy win");
                 //플레이어 죽는 거
-                DisplayManager.Instance.SignUpdate("");
+                
                 seq.Append(display.DOMoveY(displayPos.position.y, 0.7f));
                 seq.OnComplete(()=>DisplayManager.Instance.DieSign());
             }
@@ -292,15 +294,22 @@ namespace Shy
             }
         }
 
-        public bool Damage(int _value, Turn _turn, ATTACK_TYPE _atkType = ATTACK_TYPE.ATTACK)
+
+        public bool Damage(int _value, Turn _turn, ATTACK_TYPE _atkType = ATTACK_TYPE.ATTACK, bool cardEffect = true)
         {
             _value *= (_atkType == ATTACK_TYPE.ATTACK) ? -1 : 1;
 
-            if (_turn == Turn.Player) DamageEffect.Instance.Damage(_value, playerNameCard);
-            else if (_turn == Turn.Enemy) DamageEffect.Instance.Damage(_value, enemyNameCard);
+            if (_turn == Turn.Player)
+            {
+                DamageEffect.Instance.Damage(_value, playerNameCard, cardEffect);
+                if (playerNameCard.health - _value <= 0) return true;
+            }
+            else if (_turn == Turn.Enemy)
+            {
+                DamageEffect.Instance.Damage(_value, enemyNameCard, cardEffect);
+                if (enemyNameCard.health - _value <= 0) return true;
+            }
 
-            if (playerNameCard.health - _value <= 0 || enemyNameCard.health - _value <= 0)
-                return true;
             return false;
         }
     }
