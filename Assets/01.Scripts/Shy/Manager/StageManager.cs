@@ -197,10 +197,7 @@ namespace Shy
 
             yield return new WaitForSeconds(1f);
 
-            ArtifactManager.Instance.OnEvent(EVENT_TYPE.STAGE_START, EVENT_TYPE.STAGE_START);
-            yield return new WaitForSeconds(1f);
-
-            ArtifactManager.Instance.GameStart((curSelectItem as Selector_Enemy).data);
+            ArtifactManager.Instance.OnEvent(EVENT_TYPE.STAGE_START, EVENT_TYPE.STAGE_START, (curSelectItem as Selector_Enemy).data);
         }
 
         public void EnemyCancel()
@@ -244,8 +241,10 @@ namespace Shy
 
         public void StageInit()
         {
-            enemyNameCard.gameObject.SetActive(false);
+            DisplayManager.Instance.SignUpdate("");
+            playerNameCard.Init(playerNormalSO);
             playerNameCard.transform.GetChild(0).transform.DOMoveY(-10, 0);
+            enemyNameCard.gameObject.SetActive(false);
             nowMap = new List<Stage>(stageSO.stageList);
             battleUI.SetActive(false);
             _startBt.interactable = true;
@@ -254,7 +253,6 @@ namespace Shy
 
         private void Start()
         {
-            playerNameCard.Init(playerNormalSO);
             DisplayManager.Instance.SignUpdate("");
             for (int i = 0; i < 30; i++)
             {
