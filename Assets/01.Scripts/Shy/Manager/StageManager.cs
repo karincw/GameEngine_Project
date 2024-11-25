@@ -31,6 +31,7 @@ namespace Shy
         [SerializeField] private EnemyData playerNormalSO;
         public Selector_Enemy playerNameCard;
         public Selector_Enemy enemyNameCard;
+        [SerializeField] private Button _startBt;
 
         private bool canUseItem = false;
         private CardBase[] enemyHaveCards = new CardBase[31];
@@ -179,7 +180,7 @@ namespace Shy
             enemyNameCard.Init((curSelectItem as Selector_Enemy).data);
             //여기서 전투 시작 함수
             StartCoroutine(StartGameCoroutine());
-            StartBattle();
+            battleUI.SetActive(true);
         }
 
         private IEnumerator StartGameCoroutine()
@@ -195,12 +196,6 @@ namespace Shy
             enemyCardUi.gameObject.SetActive(false);
         }
         #endregion
-
-
-        public void StartBattle()
-        {
-            battleUI.SetActive(true);
-        }
 
         public void StageUpdate()
         {
@@ -237,10 +232,12 @@ namespace Shy
         private void StageInit()
         {
             enemyNameCard.gameObject.SetActive(false);
+            playerNameCard.transform.GetChild(0).transform.DOMoveY(-10, 0);
             nowMap = new List<Stage>(stageSO.stageList);
             battleUI.SetActive(false);
+            _startBt.interactable = true;
 
-            StartCoroutine(Updating());
+            DisplayManager.Instance.SignUpdate("Own Card");
         }
 
         private void Start()
@@ -252,6 +249,15 @@ namespace Shy
             }
             enemyHaveCards = enemyCardUi.GetChild(1).GetComponentsInChildren<CardBase>();
             StageInit();
+        }
+
+        public void GameStart()
+        {
+            _startBt.interactable = false;
+
+            playerNameCard.transform.GetChild(0).gameObject.SetActive(true);
+            playerNameCard.transform.GetChild(0).DOLocalMoveY(100, 1f).OnComplete(()=> StartCoroutine(Updating()));
+            
         }
 
         public void GameFin()
