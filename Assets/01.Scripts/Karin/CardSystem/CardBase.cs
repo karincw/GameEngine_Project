@@ -15,6 +15,7 @@ namespace Karin
         [HideInInspector] public CardVisual CardVisual;
         [HideInInspector] public ChangeSprite ChangeSprite;
         private CardPlace _place;
+        [SerializeField] private AudioClip _useCardClip;
 
         [Header("States")]
         public bool isDragging;
@@ -86,6 +87,8 @@ namespace Karin
 
             _cardHolder.UseCard(this);
             _place.UseCard(this);
+
+            SoundManager.Instance.PlayEffect(_useCardClip);
         }
 
         public void Flip(bool front)

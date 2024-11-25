@@ -63,6 +63,7 @@ MonoBehaviour:
   cardData: {fileID: 11400000, guid: 9837fb294e3aa1447ae20bef24b7c91d, type: 2}
   CardVisual: {fileID: 0}
   ChangeSprite: {fileID: 0}
+  _useCardClip: {fileID: 8300000, guid: 59958f2d66e808c4a9e2ea11fc59c8b0, type: 3}
   isDragging: 0
   indexChange: 0
   canDrag: 0

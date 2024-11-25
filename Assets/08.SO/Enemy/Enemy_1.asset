@@ -22,3 +22,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 9837fb294e3aa1447ae20bef24b7c91d, type: 2}
   artifacts:
   - {fileID: 11400000, guid: 06d3335f7e859d74689cc2da4e37173d, type: 2}
+  audio: {fileID: 8300000, guid: ed5ebcdf9c0fb5e48a0e0fdc7adbc59b, type: 3}

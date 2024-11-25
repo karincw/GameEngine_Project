@@ -153,6 +153,7 @@ namespace Shy
             //여기서 전투 시작 함수
             StartCoroutine(StartGameCoroutine());
             StartBattle();
+            SoundManager.Instance.PlayBGM((curSelectItem as Selector_Enemy).data.audio);
         }
 
         private IEnumerator StartGameCoroutine()
@@ -207,7 +208,7 @@ namespace Shy
             StartCoroutine(Updating());
         }
 
-        private void StageInit()
+        public void StageInit()
         {
             enemyNameCard.gameObject.SetActive(false);
             nowMap = new List<Stage>(stageSO.stageList);

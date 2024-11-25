@@ -1,6 +1,4 @@
 using AYellowpaper.SerializedCollections;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -13,6 +11,10 @@ namespace Karin
         public SerializedDictionary<SpecialShapeType, Sprite> ShapeToSpriteDictionary = new();
         [SerializedDictionary("ShapeType", "TargetColor")]
         public SerializedDictionary<SpecialShapeType, Color> ShapeToColorDictionary = new();
+
+        [SerializeField] private AudioClip _swordClip;
+        [SerializeField] private AudioClip _shieldClip;
+        [SerializeField] private AudioClip _diceClip;
 
         public TMP_FontAsset BlackFont, PinkFont;
 
@@ -60,18 +62,23 @@ namespace Karin
 
                 case SpecialShapeType.Shield:
                     TurnManager.Instance.Defence(-1);
+                    SoundManager.Instance.PlayEffect(_shieldClip);
                     return;
                 case SpecialShapeType.Sword2:
                     TurnManager.Instance.Attack(2);
+                    SoundManager.Instance.PlayEffect(_swordClip);
                     return;
                 case SpecialShapeType.Sword3:
                     TurnManager.Instance.Attack(3);
+                    SoundManager.Instance.PlayEffect(_swordClip);
                     return;
                 case SpecialShapeType.Sword5:
                     TurnManager.Instance.Attack(5);
+                    SoundManager.Instance.PlayEffect(_swordClip);
                     return;
                 case SpecialShapeType.Sword7:
                     TurnManager.Instance.Attack(7);
+                    SoundManager.Instance.PlayEffect(_swordClip);
                     return;
                 case SpecialShapeType.Give2:
                     TurnManager.Instance.GiveCard(2);
@@ -94,6 +101,8 @@ namespace Karin
                     TurnManager.Instance.Reflect();
                     return;
                 case SpecialShapeType.Dice:
+                    TurnManager.Instance.Dice();
+                    SoundManager.Instance.PlayEffect(_diceClip);
                     return;
                 case SpecialShapeType.ChangeShape:
                     return;
