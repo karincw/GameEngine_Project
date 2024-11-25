@@ -82,7 +82,7 @@ namespace Karin
 
         public void UseCard()
         {
-            if (!_place.CanUse(cardData)) return;
+            if (TurnManager.Instance.firstUse ? !_place.CanUseOther(cardData) : !_place.CanUse(cardData)) return;
             canDrag = false;
 
             _cardHolder.UseCard(this);

@@ -1,4 +1,5 @@
 using Shy;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,14 +33,19 @@ namespace Karin
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.F9))
-            {
-                TurnManager.Instance.ChangeTurn();
-            }
             if (Input.GetKeyDown(KeyCode.F10))
             {
                 DebugCardView();
             }
+        }
+
+        [ContextMenu("DebugCardView")]
+        public void DebugCardView()
+        {
+            FindObjectsOfType<CardVisual>().ToList().ForEach(c =>
+            {
+                c.SetVisual(true);
+            });
         }
 
 #endif
@@ -63,15 +69,6 @@ namespace Karin
             EnemyCardHolder.Release();
             PlayerCardHolder.Release();
             cardPack.Release();
-        }
-
-        [ContextMenu("DebugCardView")]
-        public void DebugCardView()
-        {
-            FindObjectsOfType<CardVisual>().ToList().ForEach(c =>
-            {
-                c.SetVisual(true);
-            });
         }
 
         public void StartSettings()

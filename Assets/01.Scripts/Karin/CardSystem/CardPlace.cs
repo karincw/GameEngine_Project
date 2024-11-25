@@ -17,7 +17,6 @@ namespace Karin
 
         private ChangeSprite _current;
 
-
         public bool CanUse(CardDataSO c)
         {
             if (c == null) return false;
@@ -32,6 +31,17 @@ namespace Karin
                 }
             }
             else if (c.count == firstCardData.count || ((int)c.shape == (int)firstCardData.shape))
+            {
+                return true;
+            }
+
+            return false;
+        }
+        public bool CanUseOther(CardDataSO c)
+        {
+            if (c == null) return false;
+
+            if (c.count == firstCardData.count)
             {
                 return true;
             }
