@@ -32,6 +32,20 @@ namespace Shy
             StartCoroutine(EventRoutine(_pType, _eType));
         }
 
+        public void ArtifactsInit()
+        {
+            foreach (Artifact item in StageManager.Instance.playerNameCard.artifacts)
+            {
+                for (int i = 0; i < item.effects.Length; i++)
+                    item.effects[i].Init();
+            }
+            foreach (Artifact item in StageManager.Instance.enemyNameCard.artifacts)
+            {
+                for (int i = 0; i < item.effects.Length; i++)
+                    item.effects[i].Init();
+            }
+        }
+
         private IEnumerator EventRoutine(EVENT_TYPE _pType, EVENT_TYPE _eType)
         {
             if (_pType != EVENT_TYPE.NONE)

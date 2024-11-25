@@ -193,6 +193,8 @@ namespace Shy
             battleUI.SetActive(true);
             display.DOMoveY(displayAnime.position.y, 0.8f);
 
+            ArtifactManager.Instance.ArtifactsInit();
+
             yield return new WaitForSeconds(1f);
 
             ArtifactManager.Instance.OnEvent(EVENT_TYPE.STAGE_START, EVENT_TYPE.STAGE_START);
