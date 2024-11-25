@@ -182,8 +182,8 @@ namespace Shy
 
             enemyNameCard.Init((curSelectItem as Selector_Enemy).data);
             //여기서 전투 시작 함수
-            
 
+            SoundManager.Instance.PlayBGM((curSelectItem as Selector_Enemy).data.audio);
             StartCoroutine(StartGameCoroutine());
         }
 
