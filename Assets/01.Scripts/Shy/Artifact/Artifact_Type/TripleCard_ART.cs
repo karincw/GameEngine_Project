@@ -14,7 +14,6 @@ namespace Shy
             if(++cnt == 3)
             {
                 DamageEffect.Instance.Damage(-3, _opponent, false);
-                _opponent.health -= 3;
                 cnt = 0;
                 Debug.Log("적에게 3의 피해");
             }

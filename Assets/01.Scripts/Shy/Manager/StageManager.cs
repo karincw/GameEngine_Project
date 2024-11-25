@@ -42,6 +42,19 @@ namespace Shy
         [SerializeField, Header("BATTLE")] private GameObject battleUI;
 
 
+        public void ResetArtifact(Selector_Enemy _nameCard = null)
+        {
+            if (_nameCard == null) _nameCard = playerNameCard;
+
+            Transform pos = _nameCard.transform.GetChild(0).Find("Artifact");
+
+            for (int i = pos.childCount; i > 0; i--)
+            {
+                Destroy(pos.GetChild(0).gameObject);
+            }
+
+            _nameCard.artifacts.RemoveRange(0, _nameCard.artifacts.Count);
+        }
 
         public void AddArtifact(ArtifactData _art, Selector_Enemy _nameCardPos = null)
         {
@@ -241,13 +254,23 @@ namespace Shy
 
         public void StageInit()
         {
+            //display
             DisplayManager.Instance.SignUpdate("");
+
+            //playerCard
             playerNameCard.Init(playerNormalSO);
             playerNameCard.transform.GetChild(0).transform.DOMoveY(-10, 0);
+
+            //enemyCard
             enemyNameCard.gameObject.SetActive(false);
+
+            //Map
             nowMap = new List<Stage>(stageSO.stageList);
+
             battleUI.SetActive(false);
             _startBt.interactable = true;
+            
+            //display
             display.DOMoveY(displayPos.position.y, 0.7f).OnComplete(() => DisplayManager.Instance.SignUpdate("Own Card"));
         }
 
@@ -276,7 +299,7 @@ namespace Shy
             seq.Append(enemyNameCard.transform.GetChild(0).DOMoveY(8, 1.5f).OnComplete(() =>
             {
                 enemyNameCard.gameObject.SetActive(false);
-                enemyNameCard.transform.GetChild(0).position = enemyNameCard.transform.position;
+                enemyNameCard.transform.GetChild(0).DOLocalMoveY(-100, 0);
             }));
 
             battleUI.SetActive(false);
