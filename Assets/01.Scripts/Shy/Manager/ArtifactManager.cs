@@ -29,7 +29,12 @@ namespace Shy
         }
         public void OnEvent(EVENT_TYPE _pType, EVENT_TYPE _eType = EVENT_TYPE.NONE)
         {
-            if(_pType != EVENT_TYPE.NONE)
+            StartCoroutine(EventRoutine(_pType, _eType));
+        }
+
+        private IEnumerator EventRoutine(EVENT_TYPE _pType, EVENT_TYPE _eType)
+        {
+            if (_pType != EVENT_TYPE.NONE)
             {
                 foreach (Artifact item in StageManager.Instance.playerNameCard.artifacts)
                 {
@@ -37,6 +42,7 @@ namespace Shy
                         if (item.effects[i].eType == _pType)
                         {
                             item.effects[i].Effect(StageManager.Instance.enemyNameCard);
+                            yield return new WaitForSeconds(1.75f);
                             break;
                         }
                 }
@@ -50,10 +56,13 @@ namespace Shy
                         if (item.effects[i].eType == _eType)
                         {
                             item.effects[i].Effect(StageManager.Instance.playerNameCard);
+                            yield return new WaitForSeconds(0.1f);
                             break;
                         }
                 }
             }
+
+            if(_pType == EVENT_TYPE.STAGE_START) Karin.GameManager.Instance.GameStart();
         }
     }
 }

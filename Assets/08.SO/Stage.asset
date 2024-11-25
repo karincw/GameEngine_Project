@@ -17,10 +17,19 @@ MonoBehaviour:
     spawnItem:
     - {fileID: 11400000, guid: 88287f86d565bc144b0d2be479da6232, type: 2}
     spawnCnt: {x: 1, y: 1}
+  - mapType: 0
+    spawnItem:
+    - {fileID: 11400000, guid: 88287f86d565bc144b0d2be479da6232, type: 2}
+    spawnCnt: {x: 1, y: 1}
   - mapType: 2
     spawnItem:
     - {fileID: 11400000, guid: 1e142c53695316b4198af12d76785c28, type: 2}
     - {fileID: 11400000, guid: 30afb8e6f5ca49141b06da764e4228e3, type: 2}
+    spawnCnt: {x: 2, y: 2}
+  - mapType: 2
+    spawnItem:
+    - {fileID: 11400000, guid: 30afb8e6f5ca49141b06da764e4228e3, type: 2}
+    - {fileID: 11400000, guid: 1e142c53695316b4198af12d76785c28, type: 2}
     spawnCnt: {x: 2, y: 2}
   - mapType: 2
     spawnItem:
@@ -38,12 +47,6 @@ MonoBehaviour:
     - {fileID: 11400000, guid: a795047f5c219274f9e7f9dfba9bdd66, type: 2}
     - {fileID: 11400000, guid: 1b9c67e5e7e01744582502b7cd89914d, type: 2}
     spawnCnt: {x: 4, y: 4}
-  - mapType: 0
-    spawnItem: []
-    spawnCnt: {x: 0, y: 0}
-  - mapType: 0
-    spawnItem: []
-    spawnCnt: {x: 0, y: 0}
   - mapType: 0
     spawnItem: []
     spawnCnt: {x: 0, y: 0}
