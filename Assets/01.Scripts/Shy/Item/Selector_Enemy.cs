@@ -29,9 +29,10 @@ namespace Shy
             health = data.life;
             namePos.text = data.itemName;
 
+            StageManager.Instance.ResetArtifact(this);
+
             gameObject.SetActive(true);
 
-            Debug.Log("Enemy init");
             for (int i = 0; i < data.artifacts.Count; i++)
                 StageManager.Instance.AddArtifact(data.artifacts[i], this);
         }

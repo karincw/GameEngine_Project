@@ -21,23 +21,43 @@ namespace Shy
     public class ArtifactManager : MonoSingleton<ArtifactManager>
     {
         public BaseShapeType currentUseType;
-        
+
+        public void OnEvent(EVENT_TYPE _pType, EVENT_TYPE _eType = EVENT_TYPE.NONE)
+        {
+            StartCoroutine(EventRoutine(_pType, _eType));
+        }
+
         public void OnEvent(BaseShapeType _type, EVENT_TYPE _pType, EVENT_TYPE _eType = EVENT_TYPE.NONE)
         {
             currentUseType = _type;
             OnEvent(_pType, _eType);
         }
-        public void OnEvent(EVENT_TYPE _pType, EVENT_TYPE _eType = EVENT_TYPE.NONE)
+        public void OnEvent(EVENT_TYPE _pType, EVENT_TYPE _eType, EnemyData _edata)
         {
-            StartCoroutine(EventRoutine(_pType, _eType));
+            StartCoroutine(EventRoutine(_pType, _eType, _edata));
         }
+
 
         public void GameStart(EnemyData eData)
         {
             Karin.GameManager.Instance.GameStart(eData);
         }
 
-        private IEnumerator EventRoutine(EVENT_TYPE _pType, EVENT_TYPE _eType)
+        public void ArtifactsInit()
+        {
+            foreach (Artifact item in StageManager.Instance.playerNameCard.artifacts)
+            {
+                for (int i = 0; i < item.effects.Length; i++)
+                    item.effects[i].Init();
+            }
+            foreach (Artifact item in StageManager.Instance.enemyNameCard.artifacts)
+            {
+                for (int i = 0; i < item.effects.Length; i++)
+                    item.effects[i].Init();
+            }
+        }
+
+        private IEnumerator EventRoutine(EVENT_TYPE _pType, EVENT_TYPE _eType, EnemyData _edata = null)
         {
             if (_pType != EVENT_TYPE.NONE)
             {
@@ -66,6 +86,8 @@ namespace Shy
                         }
                 }
             }
+
+            if(_pType == EVENT_TYPE.STAGE_START) Karin.GameManager.Instance.GameStart(_edata);
         }
     }
 }

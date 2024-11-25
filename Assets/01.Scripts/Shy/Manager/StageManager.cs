@@ -42,6 +42,19 @@ namespace Shy
         [SerializeField, Header("BATTLE")] private GameObject battleUI;
 
 
+        public void ResetArtifact(Selector_Enemy _nameCard = null)
+        {
+            if (_nameCard == null) _nameCard = playerNameCard;
+
+            Transform pos = _nameCard.transform.GetChild(0).Find("Artifact");
+
+            for (int i = pos.childCount; i > 0; i--)
+            {
+                Destroy(pos.GetChild(0).gameObject);
+            }
+
+            _nameCard.artifacts.RemoveRange(0, _nameCard.artifacts.Count);
+        }
 
         public void AddArtifact(ArtifactData _art, Selector_Enemy _nameCardPos = null)
         {
@@ -193,9 +206,11 @@ namespace Shy
             battleUI.SetActive(true);
             display.DOMoveY(displayAnime.position.y, 0.8f);
 
+            ArtifactManager.Instance.ArtifactsInit();
+
             yield return new WaitForSeconds(1f);
 
-            ArtifactManager.Instance.GameStart((curSelectItem as Selector_Enemy).data);
+            ArtifactManager.Instance.OnEvent(EVENT_TYPE.STAGE_START, EVENT_TYPE.STAGE_START, (curSelectItem as Selector_Enemy).data);
         }
 
         public void EnemyCancel()
@@ -239,17 +254,28 @@ namespace Shy
 
         public void StageInit()
         {
-            enemyNameCard.gameObject.SetActive(false);
+            //display
+            DisplayManager.Instance.SignUpdate("");
+
+            //playerCard
+            playerNameCard.Init(playerNormalSO);
             playerNameCard.transform.GetChild(0).transform.DOMoveY(-10, 0);
+
+            //enemyCard
+            enemyNameCard.gameObject.SetActive(false);
+
+            //Map
             nowMap = new List<Stage>(stageSO.stageList);
+
             battleUI.SetActive(false);
             _startBt.interactable = true;
+            
+            //display
             display.DOMoveY(displayPos.position.y, 0.7f).OnComplete(() => DisplayManager.Instance.SignUpdate("Own Card"));
         }
 
         private void Start()
         {
-            playerNameCard.Init(playerNormalSO);
             DisplayManager.Instance.SignUpdate("");
             for (int i = 0; i < 30; i++)
             {
@@ -273,15 +299,17 @@ namespace Shy
             seq.Append(enemyNameCard.transform.GetChild(0).DOMoveY(8, 1.5f).OnComplete(() =>
             {
                 enemyNameCard.gameObject.SetActive(false);
-                enemyNameCard.transform.GetChild(0).position = enemyNameCard.transform.position;
+                enemyNameCard.transform.GetChild(0).DOLocalMoveY(-100, 0);
             }));
+
             battleUI.SetActive(false);
+            Karin.GameManager.Instance.ReleaseGame();
 
             if (playerNameCard.health <= 0)
             {
                 Debug.Log("enemy win");
                 //플레이어 죽는 거
-
+                
                 seq.Append(display.DOMoveY(displayPos.position.y, 0.7f));
                 seq.OnComplete(() => DisplayManager.Instance.DieSign());
             }
