@@ -91,12 +91,12 @@ namespace Karin
             if (card.cardData.count != CountType.King)
             {
                 TurnManager.Instance.useCard = true;
+                TurnManager.Instance.firstUse = true;
                 //CardDrag(false);
             }
             else
             {
                 TurnManager.Instance.useCard = false;
-                TurnManager.Instance.firstUse = true;
             }
 
             if (cards.Count <= 0)

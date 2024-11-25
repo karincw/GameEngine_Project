@@ -32,6 +32,14 @@ namespace Karin
         public event Action<Turn> OnLensEvent;
         public event Action<Turn> OnReflectEvent;
 
+        public void ReleaseTexts()
+        {
+            _playerText.Count = 0;
+            _playerText.Fade(false);
+            _enemyText.Count = 0;
+            _enemyText.Fade(false);
+        }
+
         public void ChangeTurn()
         {
             firstUse = false;

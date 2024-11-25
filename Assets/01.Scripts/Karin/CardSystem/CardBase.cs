@@ -80,9 +80,9 @@ namespace Karin
             DragFollow();
         }
 
-        public void UseCard()
+        public bool UseCard()
         {
-            if (TurnManager.Instance.firstUse ? !_place.CanUseOther(cardData) : !_place.CanUse(cardData)) return;
+            if (TurnManager.Instance.firstUse ? !_place.CanUseOther(cardData) : !_place.CanUse(cardData)) return false;
             canDrag = false;
 
             _cardHolder.UseCard(this);
@@ -90,6 +90,7 @@ namespace Karin
             Shy.ArtifactManager.Instance.OnEvent(Shy.EVENT_TYPE.USE_CARD);
 
             SoundManager.Instance.PlayEffect(_useCardClip);
+            return true;
         }
 
         public void Flip(bool front)
@@ -174,7 +175,16 @@ namespace Karin
 
             if ((_place.transform.position - transform.position).sqrMagnitude <= 1.5f && _place.CanUse(cardData))
             {
-                UseCard();
+                if(!UseCard())
+                {
+                    CardVisual.isSelected = false;
+                    if (!indexChange)
+                        transform.SetSiblingIndex(_slibingIndex);
+                    else
+                        _cardHolder.SortingLayerOrder();
+                    _cardHolder.ApplyLayoutWithTween(0.3f);
+                    _rectTrm.DOLocalMoveY(originPos.y, 0.3f);
+                }
             }
             else
             {
@@ -185,8 +195,8 @@ namespace Karin
                     _cardHolder.SortingLayerOrder();
                 _cardHolder.ApplyLayoutWithTween(0.3f);
                 _rectTrm.DOLocalMoveY(originPos.y, 0.3f);
-                _imageCompo.raycastTarget = true;
             }
+            _imageCompo.raycastTarget = true;
             Explain.Instance.HideExplain();
         }
         public void OnDrag(PointerEventData eventData)

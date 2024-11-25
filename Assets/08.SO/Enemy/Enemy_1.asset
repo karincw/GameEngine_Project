@@ -15,7 +15,7 @@ MonoBehaviour:
   iType: 1
   itemName: "\uC624\uC724\uC131"
   itemExplain: 
-  life: 2
+  life: 10
   cardDeck:
   - {fileID: 11400000, guid: 9837fb294e3aa1447ae20bef24b7c91d, type: 2}
   - {fileID: 11400000, guid: face458ac518709459105ca8c844c885, type: 2}

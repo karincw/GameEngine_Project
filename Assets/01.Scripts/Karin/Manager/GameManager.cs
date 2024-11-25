@@ -71,6 +71,7 @@ namespace Karin
             cardPack.Release();
             TurnManager.Instance.ChangeTurn(Turn.Player);
             TurnManager.Instance.turnChangeBtn.interactable = true;
+            TurnManager.Instance.ReleaseTexts();
         }
 
         public void StartSettings()
