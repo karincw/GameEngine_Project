@@ -47,7 +47,7 @@ namespace Shy
             {
                 seq.Append(boardMes.DOColor(baseColor, delay));
                 seq.Append(boardMes.DOColor(shineColor, delay))
-                    //.OnComplete(()=>타이틀 화면 함수)
+                    .OnComplete(() => StageManager.Instance.StageInit())
                     ;
             }
         }

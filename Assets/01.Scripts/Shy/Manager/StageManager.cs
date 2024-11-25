@@ -25,10 +25,13 @@ namespace Shy
         private SelectorItem curSelectItem;
 
         [SerializeField] private CardBase enemyCardPrefab;
-        [SerializeField] private Transform enemyCardUi; 
+        [SerializeField] private Transform enemyCardUi;
 
+        [SerializeField, Header("DISPLAY")] private Transform displayAnime;
+        [SerializeField] private Transform display;
+        [SerializeField] private Transform displayPos;
 
-        [SerializeField] private EnemyData playerNormalSO;
+        [SerializeField, Header("NAMECARD")] private EnemyData playerNormalSO;
         public Selector_Enemy playerNameCard;
         public Selector_Enemy enemyNameCard;
         [SerializeField] private Button _startBt;
@@ -80,10 +83,10 @@ namespace Shy
                 nowMap[0].spawnItem.Add(cList[i]);
 
             canUseItem = false;
-            StartCoroutine(Anime());
+            StartCoroutine(ItemAnime());
         }
 
-        public IEnumerator Anime()
+        public IEnumerator ItemAnime()
         {
             yield return new WaitForEndOfFrame();
 
@@ -179,12 +182,16 @@ namespace Shy
 
             enemyNameCard.Init((curSelectItem as Selector_Enemy).data);
             //여기서 전투 시작 함수
+            
+
             StartCoroutine(StartGameCoroutine());
-            battleUI.SetActive(true);
         }
 
         private IEnumerator StartGameCoroutine()
         {
+            battleUI.SetActive(true);
+            display.DOMoveY(displayAnime.position.y, 1.2f);
+
             yield return new WaitForSeconds(1.5f);
 
             Karin.GameManager.Instance.GameStart();
@@ -229,15 +236,14 @@ namespace Shy
             StartCoroutine(Updating());
         }
 
-        private void StageInit()
+        public void StageInit()
         {
             enemyNameCard.gameObject.SetActive(false);
             playerNameCard.transform.GetChild(0).transform.DOMoveY(-10, 0);
             nowMap = new List<Stage>(stageSO.stageList);
             battleUI.SetActive(false);
             _startBt.interactable = true;
-
-            DisplayManager.Instance.SignUpdate("Own Card");
+            display.DOMoveY(displayPos.position.y, 0.7f).OnComplete(()=> DisplayManager.Instance.SignUpdate("Own Card"));
         }
 
         private void Start()
@@ -257,7 +263,6 @@ namespace Shy
 
             playerNameCard.transform.GetChild(0).gameObject.SetActive(true);
             playerNameCard.transform.GetChild(0).DOLocalMoveY(100, 1f).OnComplete(()=> StartCoroutine(Updating()));
-            
         }
 
         public void GameFin()
@@ -274,12 +279,15 @@ namespace Shy
             {
                 Debug.Log("enemy win");
                 //플레이어 죽는 거
-                DisplayManager.Instance.DieSign();
+                DisplayManager.Instance.SignUpdate("");
+                seq.Append(display.DOMoveY(displayPos.position.y, 0.7f));
+                seq.OnComplete(()=>DisplayManager.Instance.DieSign());
             }
             else if (enemyNameCard.health <= 0)
             {
                 Debug.Log("player win");
 
+                seq.Append(display.DOMoveY(displayPos.position.y, 0.7f));
                 seq.OnComplete(() => StageClear());
             }
         }
