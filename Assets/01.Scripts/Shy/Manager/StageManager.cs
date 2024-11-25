@@ -59,7 +59,7 @@ namespace Shy
         {
             selectorPos.gameObject.SetActive(true);
 
-            int rand = (int)Random.Range(Mathf.Min(nowMap[0].spawnCnt.x, nowMap[0].spawnCnt.y), 
+            int rand = (int)Random.Range(Mathf.Min(nowMap[0].spawnCnt.x, nowMap[0].spawnCnt.y),
                 Mathf.Max(nowMap[0].spawnCnt.x, nowMap[0].spawnCnt.y) + 1);
 
             //Pool
@@ -73,7 +73,7 @@ namespace Shy
 
                 item.transform.parent = selectorPos;
                 item.transform.GetChild(0).gameObject.SetActive(false);
-                
+
                 item.Init(c);
                 nowMap[0].spawnItem.Remove(c);
                 cList.Add(c);
@@ -109,7 +109,7 @@ namespace Shy
             curSelectItem = _item;
             enemyCardUi.gameObject.SetActive(true);
 
-            if(_item is Selector_Enemy)
+            if (_item is Selector_Enemy)
             {
                 Selector_Enemy item = _item as Selector_Enemy;
                 if (item.data.cardDeck.Count != 0)
@@ -119,7 +119,7 @@ namespace Shy
 
                     for (int i = 0; i < 30; i++)
                     {
-                        if(i < item.data.cardDeck.Count)
+                        if (i < item.data.cardDeck.Count)
                         {
                             enemyHaveCards[i].gameObject.SetActive(true);
                             enemyHaveCards[i].cardData = item.data.cardDeck[i];
@@ -198,6 +198,9 @@ namespace Shy
             yield return new WaitForSeconds(1f);
 
             ArtifactManager.Instance.OnEvent(EVENT_TYPE.STAGE_START, EVENT_TYPE.STAGE_START);
+            yield return new WaitForSeconds(1f);
+
+            ArtifactManager.Instance.GameStart((curSelectItem as Selector_Enemy).data);
         }
 
         public void EnemyCancel()
@@ -220,12 +223,12 @@ namespace Shy
 
             yield return new WaitForSeconds(0.7f);
 
-            if(nowMap[0].mapType != MAP_TYPE.EVENT) SetItem();
+            if (nowMap[0].mapType != MAP_TYPE.EVENT) SetItem();
         }
 
         public void StageClear()
         {
-            if(nowMap.Count == 1)
+            if (nowMap.Count == 1)
             {
                 Debug.Log("�� �̻� ���� �����ϴ�. ��");
                 return;
@@ -246,7 +249,7 @@ namespace Shy
             nowMap = new List<Stage>(stageSO.stageList);
             battleUI.SetActive(false);
             _startBt.interactable = true;
-            display.DOMoveY(displayPos.position.y, 0.7f).OnComplete(()=> DisplayManager.Instance.SignUpdate("Own Card"));
+            display.DOMoveY(displayPos.position.y, 0.7f).OnComplete(() => DisplayManager.Instance.SignUpdate("Own Card"));
         }
 
         private void Start()
@@ -266,7 +269,7 @@ namespace Shy
             _startBt.interactable = false;
 
             playerNameCard.transform.GetChild(0).gameObject.SetActive(true);
-            playerNameCard.transform.GetChild(0).DOLocalMoveY(100, 1f).OnComplete(()=> StartCoroutine(Updating()));
+            playerNameCard.transform.GetChild(0).DOLocalMoveY(100, 1f).OnComplete(() => StartCoroutine(Updating()));
         }
 
         public void GameFin()
@@ -285,7 +288,7 @@ namespace Shy
                 //플레이어 죽는 거
                 
                 seq.Append(display.DOMoveY(displayPos.position.y, 0.7f));
-                seq.OnComplete(()=>DisplayManager.Instance.DieSign());
+                seq.OnComplete(() => DisplayManager.Instance.DieSign());
             }
             else if (enemyNameCard.health <= 0)
             {

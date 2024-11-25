@@ -34,6 +34,11 @@ namespace Karin
             return rcard;
         }
 
+        public void Release()
+        {
+            cards.Clear();
+        }
+
         [ContextMenu("Shuffle")]
         private void Shuffle()
         {

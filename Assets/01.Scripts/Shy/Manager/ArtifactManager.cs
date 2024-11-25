@@ -32,6 +32,9 @@ namespace Shy
             StartCoroutine(EventRoutine(_pType, _eType));
         }
 
+        public void GameStart(EnemyData eData)
+        {
+            Karin.GameManager.Instance.GameStart(eData);
         public void ArtifactsInit()
         {
             foreach (Artifact item in StageManager.Instance.playerNameCard.artifacts)

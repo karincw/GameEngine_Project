@@ -121,7 +121,6 @@ namespace Karin
         public void OnPointerExit(PointerEventData eventData)
         {
             Explain.Instance.HideExplain();
-            if (!canDrag) return;
             PointerExitEvent?.Invoke();
         }
         public void OnPointerDown(PointerEventData eventData)

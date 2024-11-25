@@ -85,6 +85,12 @@ namespace Karin
 
             cards.Add(card);
         }
+
+        public void Release()
+        {
+            cards.ForEach(c => Destroy(c.gameObject));
+            cards.Clear();
+        }
     }
 
 }
