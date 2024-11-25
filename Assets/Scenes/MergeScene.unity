@@ -2037,7 +2037,7 @@ AudioSource:
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -12958,13 +12958,13 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3836298452139437662}
-  - {fileID: 3408658301034381229}
-  - {fileID: 2781521400108139649}
   - {fileID: 9051469645628527043}
   - {fileID: 5799457007761705744}
   - {fileID: 7727988476946753363}
-  - {fileID: 4573857911568716011}
   - {fileID: 5563551326125327468}
+  - {fileID: 3408658301034381229}
+  - {fileID: 2781521400108139649}
+  - {fileID: 4573857911568716011}
   m_Father: {fileID: 4884024606344643966}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
