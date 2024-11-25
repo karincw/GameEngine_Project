@@ -21,16 +21,22 @@ namespace Shy
     public class ArtifactManager : MonoSingleton<ArtifactManager>
     {
         public BaseShapeType currentUseType;
-        
+
+        public void OnEvent(EVENT_TYPE _pType, EVENT_TYPE _eType = EVENT_TYPE.NONE)
+        {
+            StartCoroutine(EventRoutine(_pType, _eType));
+        }
+
         public void OnEvent(BaseShapeType _type, EVENT_TYPE _pType, EVENT_TYPE _eType = EVENT_TYPE.NONE)
         {
             currentUseType = _type;
             OnEvent(_pType, _eType);
         }
-        public void OnEvent(EVENT_TYPE _pType, EVENT_TYPE _eType = EVENT_TYPE.NONE, EnemyData _edata = null)
+        public void OnEvent(EVENT_TYPE _pType, EVENT_TYPE _eType, EnemyData _edata)
         {
             StartCoroutine(EventRoutine(_pType, _eType, _edata));
         }
+
 
         public void GameStart(EnemyData eData)
         {

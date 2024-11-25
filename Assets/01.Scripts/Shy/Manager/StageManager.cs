@@ -278,7 +278,9 @@ namespace Shy
                 enemyNameCard.gameObject.SetActive(false);
                 enemyNameCard.transform.GetChild(0).position = enemyNameCard.transform.position;
             }));
+
             battleUI.SetActive(false);
+            Karin.GameManager.Instance.ReleaseGame();
 
             if (playerNameCard.health <= 0)
             {

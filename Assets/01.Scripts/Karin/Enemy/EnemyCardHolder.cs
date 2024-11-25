@@ -223,6 +223,7 @@ namespace Karin
             selectedCard.Flip(true);
             UseCard(selectedCard);
             _cardPlace.UseCard(selectedCard);
+            Shy.ArtifactManager.Instance.OnEvent(Shy.EVENT_TYPE.NONE, Shy.EVENT_TYPE.USE_CARD);
 
             if (selectedCard.cardData.count == CountType.King)
             {

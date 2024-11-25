@@ -56,15 +56,14 @@ namespace Shy
                 yield return new WaitForSeconds(0.01f);
             }
 
-
-            if(_turnChange)
+            if (_target.health <= 0)
             {
-                if (_target.health <= 0)
-                {
-                    yield return new WaitForSeconds(1.2f);
-                    StageManager.Instance.GameFin();
-                }
-                else
+                yield return new WaitForSeconds(1.2f);
+                StageManager.Instance.GameFin();
+            }
+            else if (_turnChange)
+            {
+                if(_target.health > 0)
                     Coin_Turn.Instance.CoinToss(Karin.TurnManager.Instance.currentTurn, Karin.TurnManager.Instance.turnChangeBtn);
             }
             
