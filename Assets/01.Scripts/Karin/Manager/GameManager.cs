@@ -1,3 +1,4 @@
+using Shy;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,17 +45,20 @@ namespace Karin
 #endif
 
         [ContextMenu("GameStart")]
-        public void GameStart()
+        public void GameStart(EnemyData eData)
         {
+            //ReleaseGame();
             Debug.Log("GameStart");
             cardPack.SetCards(PlayerCardHolder.myCards);
+            cardPack.SetCards(eData.cardDeck);
             cardPlace.CardSetting();
-            PlayerCardHolder.StartSettings();
+            PlayerCardHolder.StartSettings(null);
             EnemyCardHolder.StartSettings();
         }
 
         public void ReleaseGame()
         {
+            Debug.Log("ReleaseGame");
             cardPlace.Release();
             EnemyCardHolder.Release();
             PlayerCardHolder.Release();

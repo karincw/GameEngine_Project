@@ -32,6 +32,11 @@ namespace Shy
             StartCoroutine(EventRoutine(_pType, _eType));
         }
 
+        public void GameStart(EnemyData eData)
+        {
+            Karin.GameManager.Instance.GameStart(eData);
+        }
+
         private IEnumerator EventRoutine(EVENT_TYPE _pType, EVENT_TYPE _eType)
         {
             if (_pType != EVENT_TYPE.NONE)
@@ -61,8 +66,6 @@ namespace Shy
                         }
                 }
             }
-
-            if(_pType == EVENT_TYPE.STAGE_START) Karin.GameManager.Instance.GameStart();
         }
     }
 }

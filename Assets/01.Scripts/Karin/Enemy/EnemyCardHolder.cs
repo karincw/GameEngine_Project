@@ -307,7 +307,7 @@ namespace Karin
 
         public void Release()
         {
-            cards.ForEach(c => Destroy(c));
+            cards.ForEach(c => Destroy(c.gameObject));
             cards.Clear();
             layouts.Clear();
         }

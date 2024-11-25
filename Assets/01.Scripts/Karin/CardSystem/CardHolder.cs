@@ -1,4 +1,5 @@
 using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -102,7 +103,7 @@ namespace Karin
 
             if (cards.Count <= 0)
             {
-                StartSettings();
+                StartSettings(() => CardDrag(false));
                 TurnManager.Instance.Attack(10);
             }
 
@@ -190,12 +191,12 @@ namespace Karin
                 c.canDrag = state;
             }
         }
-        public void StartSettings()
+        public void StartSettings(Action callback)
         {
-            StartCoroutine(StartSettingCoroutine());
+            StartCoroutine(StartSettingCoroutine(callback));
         }
 
-        private IEnumerator StartSettingCoroutine()
+        private IEnumerator StartSettingCoroutine(Action callback)
         {
             for (int i = 0; i < 5; i++)
             {
@@ -203,11 +204,12 @@ namespace Karin
                 yield return new WaitForSeconds(0.2f);
             }
             CardDrag(true);
+            if (callback != null) callback?.Invoke();
         }
 
         public void Release()
         {
-            cards.ForEach(c => Destroy(c));
+            cards.ForEach(c => Destroy(c.gameObject));
             cards.Clear();
             layouts.Clear();
         }
