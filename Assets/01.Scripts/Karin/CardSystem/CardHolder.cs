@@ -37,6 +37,7 @@ namespace Karin
 
         private RectTransform _rectTrm;
         private float holderWidth;
+        private bool _firstUse = false;
 
         private void Awake()
         {
@@ -47,10 +48,6 @@ namespace Karin
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.F11))
-            {
-                AddCard(GameManager.Instance.cardPack.GetCardData());
-            }
             MoveLayout();
         }
 
@@ -94,11 +91,12 @@ namespace Karin
             if (card.cardData.count != CountType.King)
             {
                 TurnManager.Instance.useCard = true;
-                CardDrag(false);
+                //CardDrag(false);
             }
             else
             {
                 TurnManager.Instance.useCard = false;
+                TurnManager.Instance.firstUse = true;
             }
 
             if (cards.Count <= 0)

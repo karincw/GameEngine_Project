@@ -23,6 +23,7 @@ namespace Karin
         public bool useCard;
         public AttackInfo hitInfo;
         private bool attack;
+        public bool firstUse;
 
         public event Action<Turn> TurnChangedEvent;
         public event Action<Turn> OnAttackEvent;
@@ -33,6 +34,7 @@ namespace Karin
 
         public void ChangeTurn()
         {
+            firstUse = false;
             if (!useCard) // useCard == false
             {
                 if (currentTurn == Turn.Player)
@@ -81,6 +83,7 @@ namespace Karin
             GameManager.Instance.PlayerCardHolder.CardDrag(who == Turn.Player);
             TurnChangedEvent?.Invoke(currentTurn);
             useCard = false;
+            firstUse = false;
         }
 
         public void Attack(int damage)
