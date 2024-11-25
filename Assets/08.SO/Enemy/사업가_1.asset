@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1feecbaac094d3e4189db3c3296500d0, type: 3}
+  m_Name: "\uC0AC\uC5C5\uAC00_1"
+  m_EditorClassIdentifier: 
+  iType: 1
+  itemName: "\uC0AC\uC5C5\uAC00"
+  itemExplain: 
+  life: 55
+  cardDeck:
+  - {fileID: 11400000, guid: 9837fb294e3aa1447ae20bef24b7c91d, type: 2}
+  - {fileID: 11400000, guid: face458ac518709459105ca8c844c885, type: 2}
+  - {fileID: 11400000, guid: 9837fb294e3aa1447ae20bef24b7c91d, type: 2}
+  artifacts:
+  - {fileID: 11400000, guid: 30afb8e6f5ca49141b06da764e4228e3, type: 2}
+  audio: {fileID: 8300000, guid: 4852c8aaaa8627f4eb8de7168a62bd89, type: 3}

@@ -236,11 +236,13 @@ namespace Shy
             if (nowMap[0].mapType != MAP_TYPE.EVENT) SetItem();
         }
 
+        [SerializeField] private GameObject End;
         public void StageClear()
         {
             if (nowMap.Count == 1)
             {
-                Debug.Log("�� �̻� ���� �����ϴ�. ��");
+                Debug.Log("clear");
+                End.SetActive(true);
                 return;
             }
 
@@ -256,6 +258,8 @@ namespace Shy
         {
             //display
             DisplayManager.Instance.SignUpdate("");
+
+            End.SetActive(false);
 
             //playerCard
             playerNameCard.Init(playerNormalSO);
@@ -302,13 +306,15 @@ namespace Shy
                 enemyNameCard.transform.GetChild(0).DOLocalMoveY(-100, 0);
             }));
 
+            SoundManager.Instance.StopBGM();
+
             battleUI.SetActive(false);
             Karin.GameManager.Instance.ReleaseGame();
 
             if (playerNameCard.health <= 0)
             {
-                Debug.Log("enemy win");
                 //플레이어 죽는 거
+                Debug.Log("enemy win");
                 
                 seq.Append(display.DOMoveY(displayPos.position.y, 0.7f));
                 seq.OnComplete(() => DisplayManager.Instance.DieSign());
@@ -316,8 +322,10 @@ namespace Shy
             else if (enemyNameCard.health <= 0)
             {
                 Debug.Log("player win");
+                int vlu = (curSelectItem as Selector_Enemy).data.life - 5;
 
-                seq.Append(display.DOMoveY(displayPos.position.y, 0.7f));
+                seq.Append(display.DOMoveY(displayPos.position.y, 0.7f).OnStart(()=>
+                Damage((vlu >= 5 ? vlu : 5), Turn.Player, ATTACK_TYPE.HEAL, false)));
                 seq.OnComplete(() => StageClear());
             }
         }

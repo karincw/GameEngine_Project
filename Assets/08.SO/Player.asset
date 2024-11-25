@@ -15,7 +15,7 @@ MonoBehaviour:
   iType: 0
   itemName: "\uB2F9\uC2E0"
   itemExplain: 
-  life: 1
+  life: 20
   cardDeck: []
   artifacts: []
   audio: {fileID: 0}

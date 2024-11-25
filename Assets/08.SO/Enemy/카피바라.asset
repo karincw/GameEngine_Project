@@ -10,16 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1feecbaac094d3e4189db3c3296500d0, type: 3}
-  m_Name: Enemy_1
+  m_Name: "\uCE74\uD53C\uBC14\uB77C"
   m_EditorClassIdentifier: 
   iType: 1
-  itemName: "\uC624\uC724\uC131"
+  itemName: "\uCE74\uD53C\uBC14\uB77C"
   itemExplain: 
-  life: 2
+  life: 44
   cardDeck:
-  - {fileID: 11400000, guid: 9837fb294e3aa1447ae20bef24b7c91d, type: 2}
-  - {fileID: 11400000, guid: face458ac518709459105ca8c844c885, type: 2}
-  - {fileID: 11400000, guid: 9837fb294e3aa1447ae20bef24b7c91d, type: 2}
+  - {fileID: 11400000, guid: cfbf9e9d50149264db77b4ba1abe288a, type: 2}
+  - {fileID: 11400000, guid: cfbf9e9d50149264db77b4ba1abe288a, type: 2}
+  - {fileID: 11400000, guid: cfbf9e9d50149264db77b4ba1abe288a, type: 2}
+  - {fileID: 11400000, guid: cfbf9e9d50149264db77b4ba1abe288a, type: 2}
   artifacts:
+  - {fileID: 11400000, guid: 30afb8e6f5ca49141b06da764e4228e3, type: 2}
   - {fileID: 11400000, guid: 06d3335f7e859d74689cc2da4e37173d, type: 2}
+  - {fileID: 11400000, guid: 1e142c53695316b4198af12d76785c28, type: 2}
   audio: {fileID: 8300000, guid: d4977348b4b8a1e40a0f40de9a93fa39, type: 3}

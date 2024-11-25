@@ -10,10 +10,12 @@ public class SoundManager : MonoSingleton<SoundManager>
     [Header("Panel")]
     [SerializeField] private RectTransform _panelTrm;
     [SerializeField] private bool _panelOpenState;
+    public GameObject rule;
 
     private void Awake()
     {
         ClosePanel();
+        CloseBt();
     }
 
     private void Update()
@@ -25,6 +27,11 @@ public class SoundManager : MonoSingleton<SoundManager>
             else
                 OpenPanel();
         }
+    }
+    
+    public void CloseBt()
+    {
+        rule.SetActive(false);
     }
 
     public void PlayBGM(AudioClip clip)
@@ -54,11 +61,13 @@ public class SoundManager : MonoSingleton<SoundManager>
     public void OpenPanel()
     {
         _panelOpenState = true;
+        CloseBt();
         _panelTrm.gameObject.SetActive(true);
     }
     public void ClosePanel()
     {
         _panelOpenState = false;
+        CloseBt();
         _panelTrm.gameObject.SetActive(false);
     }
 

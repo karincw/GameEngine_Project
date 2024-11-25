@@ -11,11 +11,11 @@ namespace Shy
 
         public override void Effect(Selector_Enemy _opponent)
         {
-            if(++cnt == 3)
+            if(++cnt == 12)
             {
-                DamageEffect.Instance.Damage(-3, _opponent, false);
+                DamageEffect.Instance.Damage(3, transform.parent.GetComponentInParent<Selector_Enemy>(), false);
                 cnt = 0;
-                Debug.Log("적에게 3의 피해");
+                Debug.Log("자신 3 회복");
             }
         }
 

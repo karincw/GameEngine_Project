@@ -10,7 +10,7 @@ namespace Karin
 
         public void Help()
         {
-
+            SoundManager.Instance.rule.SetActive(true);
         }
 
         public void GoToTitle()
