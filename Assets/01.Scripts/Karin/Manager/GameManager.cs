@@ -69,6 +69,8 @@ namespace Karin
             EnemyCardHolder.Release();
             PlayerCardHolder.Release();
             cardPack.Release();
+            TurnManager.Instance.ChangeTurn(Turn.Player);
+            TurnManager.Instance.turnChangeBtn.interactable = true;
         }
 
         public void StartSettings()
