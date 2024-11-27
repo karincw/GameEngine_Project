@@ -15,7 +15,7 @@ MonoBehaviour:
   stageList:
   - mapType: 0
     spawnItem:
-    - {fileID: 11400000, guid: f290fce500f62a44c88ce909f472a72f, type: 2}
+    - {fileID: 11400000, guid: a423a2cd158bf96408e412b2b30b8d5f, type: 2}
     spawnCnt: {x: 1, y: 1}
   - mapType: 2
     spawnItem:

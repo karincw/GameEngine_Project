@@ -27,7 +27,6 @@ public class Coin_Turn : MonoSingleton<Coin_Turn>
             {
                 if (_cur == Turn.Player)
                 {
-                    _bt.interactable = false;
                     GameManager.Instance.EnemyCardHolder.AutoRun();
                     GameManager.Instance.PlayerCardHolder.CardDrag(false);
                 }

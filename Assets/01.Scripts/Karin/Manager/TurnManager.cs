@@ -43,6 +43,8 @@ namespace Karin
         public void ChangeTurn()
         {
             firstUse = false;
+
+            turnChangeBtn.interactable = false;
             if (!useCard) // useCard == false
             {
                 if (currentTurn == Turn.Player)
