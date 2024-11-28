@@ -332,12 +332,12 @@ namespace Shy
         {
             _value *= (_atkType == ATTACK_TYPE.ATTACK) ? -1 : 1;
 
-            if (_turn == Turn.Player)
+            if (_turn == Turn.Enemy)
             {
                 DamageEffect.Instance.Damage(_value, playerNameCard, cardEffect);
                 return playerNameCard.health - _value <= 0;
             }
-            else if (_turn == Turn.Enemy)
+            else if (_turn == Turn.Player)
             {
                 DamageEffect.Instance.Damage(_value, enemyNameCard, cardEffect);
                 return enemyNameCard.health - _value <= 0;

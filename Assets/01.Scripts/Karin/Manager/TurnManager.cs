@@ -43,11 +43,11 @@ namespace Karin
 
         public void ChangeTurn()
         {
-            Debug.Log("Turn Change!!!");
+            Debug.Log("Turn Change!!!" + " / curTurn = " + _currentTurn.ToString());
             if (_currentTurn == Turn.Player) turnChangeBtn.interactable = false;
             firstUse = false;
-
             turnChangeBtn.interactable = false;
+
 
             if (!useCard) // useCard == false
             {
@@ -61,25 +61,26 @@ namespace Karin
                 }
             }
 
-            if (hitInfo.hit && _currentTurn != hitInfo.who)
+            _currentTurn = _currentTurn == Turn.Player ? Turn.Enemy : Turn.Player;
+
+            if (hitInfo.hit && _currentTurn == hitInfo.who)
             {
                 Debug.Log($"{_currentTurn} <- hit / damage:{GetHitText().Count}");
                 AttackText at = GetHitText();
                 attack = true;
+                
                 if (Shy.StageManager.Instance.Damage(at.Count, _currentTurn)) return;
+
                 at.Count = 0;
                 at.Fade(false);
                 hitInfo.hit = false;
                 hitInfo.nowhit = false;
             }
-
-            if (attack == false)
+            else
             {
                 Coin_Turn.Instance.CoinToss(_currentTurn, turnChangeBtn);
-                _currentTurn = _currentTurn == Turn.Player ? Turn.Enemy : Turn.Player;
             }
-
-
+            
             useCard = false;
             attack = false;
             TurnChangedEvent?.Invoke(_currentTurn);
@@ -88,7 +89,7 @@ namespace Karin
 
         private AttackText GetHitText()
         {
-            return _currentTurn != Turn.Player ? _enemyText : _playerText;
+            return _currentTurn == Turn.Player ? _enemyText : _playerText;
         }
 
         public void ChangeTurn(Turn who)
@@ -110,13 +111,13 @@ namespace Karin
 
             if (_currentTurn == Turn.Player)
             {
-                _enemyText.Count += nowDamage + damage;
+                _enemyText.Count = nowDamage + damage;
                 _playerText.Count = 0;
                 _playerText.Fade(false);
             }
             else if (_currentTurn == Turn.Enemy)
             {
-                _playerText.Count += nowDamage + damage;
+                _playerText.Count = nowDamage + damage;
                 _enemyText.Count = 0;
                 _enemyText.Fade(false);
             }

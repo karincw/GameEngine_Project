@@ -22,15 +22,15 @@ public class Coin_Turn : MonoSingleton<Coin_Turn>
 
         seq.Append(transform.DORotate(new Vector3(179, 179, 179f), 0.4f).OnComplete(() => transform.rotation = Quaternion.Euler(Vector3.zero)));
         seq.Insert(0.2f, tmp.transform.DOLocalMove(Vector3.zero, 0)
-            .OnComplete(() => tmp.text = (_cur == Turn.Player ? "E" : "Y")))
+            .OnComplete(() => tmp.text = (_cur != Turn.Player ? "E" : "Y")))
             .OnComplete(()=>
             {
-                if (_cur == Turn.Player)
+                if (_cur == Turn.Enemy)
                 {
                     GameManager.Instance.EnemyCardHolder.AutoRun();
                     GameManager.Instance.PlayerCardHolder.CardDrag(false);
                 }
-                else if (_cur == Turn.Enemy)
+                else if (_cur == Turn.Player)
                 {
                     _bt.interactable = true;
                     GameManager.Instance.PlayerCardHolder.CardDrag(true);
