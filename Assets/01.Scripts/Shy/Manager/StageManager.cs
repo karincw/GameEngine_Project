@@ -322,7 +322,7 @@ namespace Shy
                 int vlu = (curSelectItem as Selector_Enemy).data.life - 5;
 
                 seq.Append(display.DOMoveY(displayPos.position.y, 0.7f).OnStart(()=>
-                Damage((vlu >= 5 ? vlu : 5), Turn.Player, ATTACK_TYPE.HEAL, false)));
+                Damage((vlu >= 5 ? vlu : 5), Turn.Enemy, ATTACK_TYPE.HEAL, false)));
                 seq.OnComplete(() => StageClear());
             }
         }
@@ -332,12 +332,12 @@ namespace Shy
         {
             _value *= (_atkType == ATTACK_TYPE.ATTACK) ? -1 : 1;
 
-            if (_turn == Turn.Player)
+            if (_turn == Turn.Enemy)
             {
                 DamageEffect.Instance.Damage(_value, playerNameCard, cardEffect);
                 return playerNameCard.health - _value <= 0;
             }
-            else if (_turn == Turn.Enemy)
+            else if (_turn == Turn.Player)
             {
                 DamageEffect.Instance.Damage(_value, enemyNameCard, cardEffect);
                 return enemyNameCard.health - _value <= 0;

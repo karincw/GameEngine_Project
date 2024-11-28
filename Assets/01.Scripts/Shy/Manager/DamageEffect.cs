@@ -36,7 +36,7 @@ namespace Shy
 
             Sequence seq = DOTween.Sequence();
 
-            seq.Append(damageTxt.transform.DOMove(_target.transform.GetChild(0).Find("Coin_Img").GetChild(0).position, 1.3f)
+            seq.Append(damageTxt.transform.DOMove(_target.transform.GetChild(0).Find("Coin_Img").GetChild(0).position, 0.8f)
                 .OnComplete(()=>
                 {
                     particle.transform.position = damageTxt.transform.position;
@@ -45,7 +45,7 @@ namespace Shy
 
                     StartCoroutine(HealthAnime(_value, _target, cardEffect));
                 }));
-            seq.Insert(0, damageTxt.transform.DOScale(0.5f, 1f));
+            seq.Insert(0, damageTxt.transform.DOScale(0.5f, 0.5f));
         }
 
         private IEnumerator HealthAnime(int _value, Selector_Enemy _target, bool _turnChange)
