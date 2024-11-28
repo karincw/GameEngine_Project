@@ -14,7 +14,8 @@ namespace Karin
 
     public class TurnManager : MonoSingleton<TurnManager>
     {
-        public Turn currentTurn;
+        public Turn CurrentTurn { get => _currentTurn; }
+        private Turn _currentTurn;
 
         [SerializeField] private AttackText _playerText;
         [SerializeField] private AttackText _enemyText;
@@ -42,71 +43,75 @@ namespace Karin
 
         public void ChangeTurn()
         {
+            Debug.Log("Turn Change!!!");
+            if (_currentTurn == Turn.Player) turnChangeBtn.interactable = false;
             firstUse = false;
             if (!useCard) // useCard == false
             {
-                if (currentTurn == Turn.Player)
+                if (_currentTurn == Turn.Player)
                 {
                     GameManager.Instance.PlayerCardHolder.AddCard();
                 }
-                else if (currentTurn == Turn.Enemy)
+                else if (_currentTurn == Turn.Enemy)
                 {
                     GameManager.Instance.EnemyCardHolder.AddCard();
                 }
             }
 
-            if (hitInfo.hit && currentTurn != hitInfo.who)
+            if (hitInfo.hit && _currentTurn != hitInfo.who)
             {
-                Debug.Log($"{currentTurn} <- hit / damage:{GetHitText().Count}");
+                Debug.Log($"{_currentTurn} <- hit / damage:{GetHitText().Count}");
                 AttackText at = GetHitText();
                 attack = true;
-                if (Shy.StageManager.Instance.Damage(at.Count, currentTurn)) return;
+                if (Shy.StageManager.Instance.Damage(at.Count, _currentTurn)) return;
                 at.Count = 0;
                 at.Fade(false);
                 hitInfo.hit = false;
                 hitInfo.nowhit = false;
             }
 
-            if(attack == false)
+            if (attack == false)
             {
-                Coin_Turn.Instance.CoinToss(currentTurn, turnChangeBtn);
-                currentTurn = currentTurn == Turn.Player ? Turn.Enemy : Turn.Player;
+                Coin_Turn.Instance.CoinToss(_currentTurn, turnChangeBtn);
+                _currentTurn = _currentTurn == Turn.Player ? Turn.Enemy : Turn.Player;
             }
-            
+
 
             useCard = false;
             attack = false;
-            TurnChangedEvent?.Invoke(currentTurn);
+            TurnChangedEvent?.Invoke(_currentTurn);
 
         }
 
         private AttackText GetHitText()
         {
-            return currentTurn != Turn.Player ? _enemyText : _playerText;
+            return _currentTurn != Turn.Player ? _enemyText : _playerText;
         }
 
         public void ChangeTurn(Turn who)
         {
-            currentTurn = who;
+            Debug.Log("Turn Change!!!");
+            _currentTurn = who;
             GameManager.Instance.PlayerCardHolder.CardDrag(who == Turn.Player);
-            TurnChangedEvent?.Invoke(currentTurn);
+            TurnChangedEvent?.Invoke(_currentTurn);
             useCard = false;
             firstUse = false;
         }
 
         public void Attack(int damage)
         {
+            Debug.Log("Attack Him!!!");
             if (damage <= 0) return;
 
             var nowDamage = Mathf.Max(_enemyText.Count, _playerText.Count);
 
-            if (currentTurn == Turn.Player)
+            if (_currentTurn == Turn.Player)
             {
                 _enemyText.Count += nowDamage + damage;
                 _playerText.Count = 0;
                 _playerText.Fade(false);
             }
-            else if (currentTurn == Turn.Enemy)
+            else if (_currentTurn == Turn.Enemy)
             {
                 _playerText.Count += nowDamage + damage;
                 _enemyText.Count = 0;
@@ -114,8 +119,8 @@ namespace Karin
             }
             hitInfo.hit = true;
             hitInfo.nowhit = true;
-            hitInfo.who = currentTurn;
-            OnAttackEvent?.Invoke(currentTurn);
+            hitInfo.who = _currentTurn;
+            OnAttackEvent?.Invoke(_currentTurn);
         }
 
         public void Defence(int defence)
@@ -125,7 +130,7 @@ namespace Karin
                 defence = Mathf.Max(_enemyText.Count, _playerText.Count);
             }
 
-            if (currentTurn == Turn.Player)
+            if (_currentTurn == Turn.Player)
             {
                 _playerText.Count -= defence;
                 _playerText.Fade(false);
@@ -135,7 +140,7 @@ namespace Karin
                     hitInfo.nowhit = false;
                 }
             }
-            else if (currentTurn == Turn.Enemy)
+            else if (_currentTurn == Turn.Enemy)
             {
                 _enemyText.Count -= defence;
                 _enemyText.Fade(false);
@@ -147,43 +152,43 @@ namespace Karin
             }
 
 
-            OnDefenceEvent?.Invoke(currentTurn);
+            OnDefenceEvent?.Invoke(_currentTurn);
         }
 
         public void GiveCard(int count)
         {
-            if (currentTurn == Turn.Player)
+            if (_currentTurn == Turn.Player)
             {
                 for (int i = 0; i < count; i++)
                     GameManager.Instance.EnemyCardHolder.AddCard();
             }
-            else if (currentTurn == Turn.Enemy)
+            else if (_currentTurn == Turn.Enemy)
             {
                 for (int i = 0; i < count; i++)
                     GameManager.Instance.PlayerCardHolder.AddCard();
             }
-            OnGiveEvent?.Invoke(currentTurn);
+            OnGiveEvent?.Invoke(_currentTurn);
         }
 
         public void Lens(int count)
         {
-            if (currentTurn == Turn.Player)
+            if (_currentTurn == Turn.Player)
             {
                 for (int i = 0; i < count; i++)
                     GameManager.Instance.EnemyCardHolder.ViewCard();
             }
-            else if (currentTurn == Turn.Enemy)
+            else if (_currentTurn == Turn.Enemy)
             {
 
             }
-            OnLensEvent?.Invoke(currentTurn);
+            OnLensEvent?.Invoke(_currentTurn);
         }
 
         public void Reflect()
         {
             var nowDamage = Mathf.Max(_enemyText.Count, _playerText.Count);
 
-            if (currentTurn == Turn.Player)
+            if (_currentTurn == Turn.Player)
             {
                 _playerText.Count -= nowDamage;
                 _enemyText.Count += nowDamage;
@@ -194,7 +199,7 @@ namespace Karin
                     hitInfo.nowhit = false;
                 }
             }
-            else if (currentTurn == Turn.Enemy)
+            else if (_currentTurn == Turn.Enemy)
             {
                 _enemyText.Count -= nowDamage;
                 _playerText.Count += nowDamage;
@@ -207,7 +212,7 @@ namespace Karin
             }
 
 
-            OnReflectEvent?.Invoke(currentTurn);
+            OnReflectEvent?.Invoke(_currentTurn);
         }
 
         public void Dice(float per = 0.5f)
@@ -218,11 +223,11 @@ namespace Karin
             }
             else
             {
-                if (currentTurn == Turn.Player)
+                if (_currentTurn == Turn.Player)
                 {
                     _playerText.Count *= 2;
                 }
-                else if (currentTurn == Turn.Enemy)
+                else if (_currentTurn == Turn.Enemy)
                 {
                     _enemyText.Count *= 2;
                 }

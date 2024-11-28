@@ -87,22 +87,23 @@ namespace Karin
             SortingLayerOrder();
             ApplyLayoutWithTween(0.4f, 1);
 
+            TurnManager.Instance.useCard = true;
+            TurnManager.Instance.firstUse = true;
 
-            if (card.cardData.count != CountType.King)
+            if (card.cardData.IsThis(SpecialShapeType.King))
             {
-                TurnManager.Instance.useCard = true;
-                TurnManager.Instance.firstUse = true;
-                //CardDrag(false);
-            }
-            else
-            {
+                TurnManager.Instance.firstUse = false;
                 TurnManager.Instance.useCard = false;
             }
 
             if (cards.Count <= 0)
             {
-                StartSettings(() => CardDrag(false));
-                TurnManager.Instance.Attack(10);
+                StartSettings(() =>
+                {
+                    CardDrag(false);
+                    TurnManager.Instance.Attack(10);
+                });
+
             }
 
             ApplyLayoutWithTween(.3f);

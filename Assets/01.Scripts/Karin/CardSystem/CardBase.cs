@@ -21,6 +21,7 @@ namespace Karin
         public bool isDragging;
         public bool indexChange;
         public bool canDrag;
+        public bool usedCard = false;
         [SerializeField] private bool _isHovering;
 
         [Header("Move-Settings")]
@@ -84,6 +85,7 @@ namespace Karin
         {
             if (TurnManager.Instance.firstUse ? !_place.CanUseOther(cardData) : !_place.CanUse(cardData)) return false;
             canDrag = false;
+            usedCard = true;
 
             _cardHolder.UseCard(this);
             _place.UseCard(this);
@@ -117,11 +119,13 @@ namespace Karin
         #region Interface
         public void OnPointerEnter(PointerEventData eventData)
         {
+            if (usedCard) return;
             Explain.Instance.ShowExplain(cardData.specialShape, gameObject);
             PointerEnterEvent?.Invoke();
         }
         public void OnPointerExit(PointerEventData eventData)
         {
+            if (usedCard) return;
             Explain.Instance.HideExplain();
             PointerExitEvent?.Invoke();
         }
@@ -141,10 +145,11 @@ namespace Karin
             if (!canDrag) return;
             if (eventData.button != PointerEventData.InputButton.Left) return;
 
-            float pointDownThreshold = 0.2f;
+            float pointDownThreshold = 0.05f;
             _lastPointerUpTime = Time.time;
 
             //짧게 클린한건지 알아보기 위해
+            if (usedCard) return;
             bool isTab = _lastPointerUpTime - _lastPointerDownTime < pointDownThreshold;
             if (isTab)
                 PointerUpEvent?.Invoke();
@@ -175,7 +180,7 @@ namespace Karin
 
             if ((_place.transform.position - transform.position).sqrMagnitude <= 1.5f && _place.CanUse(cardData))
             {
-                if(!UseCard())
+                if (!UseCard())
                 {
                     CardVisual.isSelected = false;
                     if (!indexChange)

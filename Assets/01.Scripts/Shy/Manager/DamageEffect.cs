@@ -64,7 +64,7 @@ namespace Shy
             else if (_turnChange)
             {
                 if(_target.health > 0)
-                    Coin_Turn.Instance.CoinToss(Karin.TurnManager.Instance.currentTurn, Karin.TurnManager.Instance.turnChangeBtn);
+                    Coin_Turn.Instance.CoinToss(Karin.TurnManager.Instance.CurrentTurn, Karin.TurnManager.Instance.turnChangeBtn);
             }
             
         }

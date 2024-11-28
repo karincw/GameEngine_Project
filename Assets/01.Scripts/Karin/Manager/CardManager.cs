@@ -59,7 +59,6 @@ namespace Karin
 
             switch (card.specialShape)
             {
-
                 case SpecialShapeType.Shield:
                     TurnManager.Instance.Defence(-1);
                     SoundManager.Instance.PlayEffect(_shieldClip);

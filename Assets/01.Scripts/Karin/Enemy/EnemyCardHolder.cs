@@ -220,19 +220,21 @@ namespace Karin
             }
 
             TurnManager.Instance.useCard = true;
+            TurnManager.Instance.firstUse = true;
             selectedCard.Flip(true);
             UseCard(selectedCard);
             _cardPlace.UseCard(selectedCard);
             Shy.ArtifactManager.Instance.OnEvent(Shy.EVENT_TYPE.NONE, Shy.EVENT_TYPE.USE_CARD);
 
-            if (selectedCard.cardData.count == CountType.King)
+            if (selectedCard.cardData.IsThis(SpecialShapeType.King))
             {
                 TurnManager.Instance.useCard = false;
+                TurnManager.Instance.firstUse = false;
                 AutoRun();
                 yield break;
             }
 
-            if (selectedCard.cardData.count == CountType.ACE || selectedCard.cardData.count == CountType.Two)
+            if (selectedCard.cardData.IsAttackCard())
                 TurnManager.Instance.hitInfo.nowhit = false;
 
             TurnManager.Instance.ChangeTurn();

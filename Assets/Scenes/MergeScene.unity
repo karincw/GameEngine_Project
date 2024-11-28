@@ -909,6 +909,7 @@ MonoBehaviour:
   _enemyText: {fileID: 3991445429755403724}
   turnChangeBtn: {fileID: 9125303882617351787}
   useCard: 0
+  firstUse: 0
 --- !u!1 &339987733
 GameObject:
   m_ObjectHideFlags: 0
@@ -14388,18 +14389,6 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
---- !u!114 &4533040218086578505
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8369196111174425355}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ea334e8adbdc5464fb3ed0e41c6a757e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &4551050390261101475
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15785,7 +15774,6 @@ GameObject:
   - component: {fileID: 1375119132259876102}
   - component: {fileID: 2088599932040209682}
   - component: {fileID: 9125303882617351787}
-  - component: {fileID: 4533040218086578505}
   m_Layer: 5
   m_Name: TurnEndBtn
   m_TagString: Untagged
@@ -15980,9 +15968,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4533040218086578505}
-        m_TargetAssemblyTypeName: Karin.TurnChangeBtn, Assembly-CSharp
-        m_MethodName: TurnChange
+      - m_Target: {fileID: 276011523}
+        m_TargetAssemblyTypeName: Karin.TurnManager, Assembly-CSharp
+        m_MethodName: ChangeTurn
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

@@ -62,7 +62,7 @@ namespace Karin
 
             if (card.cardData.specialShape == SpecialShapeType.ChangeShape)
             {
-                if (TurnManager.Instance.currentTurn == Turn.Player)
+                if (TurnManager.Instance.CurrentTurn == Turn.Player)
                 {
                     _current = card.ChangeSprite;
                     _current.SelectStart();
