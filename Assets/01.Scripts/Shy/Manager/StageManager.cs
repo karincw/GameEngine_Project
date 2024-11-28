@@ -322,7 +322,7 @@ namespace Shy
                 int vlu = (curSelectItem as Selector_Enemy).data.life - 5;
 
                 seq.Append(display.DOMoveY(displayPos.position.y, 0.7f).OnStart(()=>
-                Damage((vlu >= 5 ? vlu : 5), Turn.Player, ATTACK_TYPE.HEAL, false)));
+                Damage((vlu >= 5 ? vlu : 5), Turn.Enemy, ATTACK_TYPE.HEAL, false)));
                 seq.OnComplete(() => StageClear());
             }
         }
