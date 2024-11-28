@@ -87,7 +87,7 @@ namespace Karin
 
             _cardHolder.UseCard(this);
             _place.UseCard(this);
-            Shy.ArtifactManager.Instance.OnEvent(Shy.EVENT_TYPE.USE_CARD);
+            Shy.ArtifactManager.Instance.OnEvent(cardData, Shy.EVENT_TYPE.USE_CARD);
 
             SoundManager.Instance.PlayEffect(_useCardClip);
             return true;
