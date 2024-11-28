@@ -75,9 +75,7 @@ namespace Shy
             int rand = (int)Random.Range(Mathf.Min(nowMap[0].spawnCnt.x, nowMap[0].spawnCnt.y),
                 Mathf.Max(nowMap[0].spawnCnt.x, nowMap[0].spawnCnt.y) + 1);
 
-            //Pool
             List<Item_DataSO> cList = new List<Item_DataSO>();
-
 
             while (selectorPos.childCount < rand)
             {
@@ -225,7 +223,7 @@ namespace Shy
             StartCoroutine(Updating());
         }
 
-        public IEnumerator Updating()
+        private IEnumerator Updating()
         {
             Debug.Log("StageUpdate : " + nowMap[0].mapType);
             DisplayManager.Instance.SignUpdate(nowMap[0].mapType == MAP_TYPE.BATTLE ? "WHO'S NEXT?" : "CHOOSE ONE");
@@ -239,6 +237,9 @@ namespace Shy
         [SerializeField] private GameObject End;
         public void StageClear()
         {
+            SelectorPooling.Instance.ReturnPool(selectorPos.GetComponentsInChildren<SelectorItem>());
+            ExplainManager.Instance.HideExplain();
+
             if (nowMap.Count == 1)
             {
                 Debug.Log("clear");
@@ -246,12 +247,8 @@ namespace Shy
                 return;
             }
 
-            SelectorPooling.Instance.ReturnPool(selectorPos.GetComponentsInChildren<SelectorItem>());
-
-            ExplainManager.Instance.HideExplain();
-
             nowMap.RemoveAt(0);
-            StartCoroutine(Updating());
+            StageUpdate();
         }
 
         public void StageInit()
@@ -294,7 +291,7 @@ namespace Shy
             _startBt.interactable = false;
 
             playerNameCard.transform.GetChild(0).gameObject.SetActive(true);
-            playerNameCard.transform.GetChild(0).DOLocalMoveY(100, 1f).OnComplete(() => StartCoroutine(Updating()));
+            playerNameCard.transform.GetChild(0).DOLocalMoveY(100, 1f).OnComplete(() => StageUpdate());
         }
 
         public void GameFin()
@@ -338,12 +335,12 @@ namespace Shy
             if (_turn == Turn.Player)
             {
                 DamageEffect.Instance.Damage(_value, playerNameCard, cardEffect);
-                if (playerNameCard.health - _value <= 0) return true;
+                return playerNameCard.health - _value <= 0;
             }
             else if (_turn == Turn.Enemy)
             {
                 DamageEffect.Instance.Damage(_value, enemyNameCard, cardEffect);
-                if (enemyNameCard.health - _value <= 0) return true;
+                return enemyNameCard.health - _value <= 0;
             }
 
             return false;

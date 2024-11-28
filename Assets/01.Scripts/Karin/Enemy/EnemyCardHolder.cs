@@ -222,9 +222,11 @@ namespace Karin
             TurnManager.Instance.useCard = true;
             TurnManager.Instance.firstUse = true;
             selectedCard.Flip(true);
+
+            //use Card
             UseCard(selectedCard);
             _cardPlace.UseCard(selectedCard);
-            Shy.ArtifactManager.Instance.OnEvent(Shy.EVENT_TYPE.NONE, Shy.EVENT_TYPE.USE_CARD);
+            Shy.ArtifactManager.Instance.OnEvent(selectedCard.cardData, Shy.EVENT_TYPE.NONE, Shy.EVENT_TYPE.USE_CARD);
 
             if (selectedCard.cardData.IsThis(SpecialShapeType.King))
             {

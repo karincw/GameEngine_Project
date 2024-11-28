@@ -9,6 +9,4 @@ public class HealingDice : ArtifactEffect
     {
         DamageEffect.Instance.Damage(Random.Range(1, 7) * 2, transform.parent.GetComponentInParent<Selector_Enemy>(), false);
     }
-
-    public override void Init(){}
 }

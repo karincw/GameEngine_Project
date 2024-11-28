@@ -46,6 +46,9 @@ namespace Karin
             Debug.Log("Turn Change!!!");
             if (_currentTurn == Turn.Player) turnChangeBtn.interactable = false;
             firstUse = false;
+
+            turnChangeBtn.interactable = false;
+
             if (!useCard) // useCard == false
             {
                 if (_currentTurn == Turn.Player)

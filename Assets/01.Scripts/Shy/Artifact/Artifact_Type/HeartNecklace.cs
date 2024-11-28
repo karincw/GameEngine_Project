@@ -11,7 +11,7 @@ public class HeartNecklace : ArtifactEffect
 
     public override void Effect(Selector_Enemy _opponent)
     {
-        if (ArtifactManager.Instance.currentUseType == Karin.BaseShapeType.Heart)
+        if (ArtifactManager.Instance.currentUseCard.shape == Karin.BaseShapeType.Heart)
         {
             if(++cnt == 7)
             {
