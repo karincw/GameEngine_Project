@@ -75,9 +75,7 @@ namespace Shy
             int rand = (int)Random.Range(Mathf.Min(nowMap[0].spawnCnt.x, nowMap[0].spawnCnt.y),
                 Mathf.Max(nowMap[0].spawnCnt.x, nowMap[0].spawnCnt.y) + 1);
 
-            //Pool
             List<Item_DataSO> cList = new List<Item_DataSO>();
-
 
             while (selectorPos.childCount < rand)
             {
@@ -239,16 +237,15 @@ namespace Shy
         [SerializeField] private GameObject End;
         public void StageClear()
         {
+            SelectorPooling.Instance.ReturnPool(selectorPos.GetComponentsInChildren<SelectorItem>());
+            ExplainManager.Instance.HideExplain();
+
             if (nowMap.Count == 1)
             {
                 Debug.Log("clear");
                 End.SetActive(true);
                 return;
             }
-
-            SelectorPooling.Instance.ReturnPool(selectorPos.GetComponentsInChildren<SelectorItem>());
-
-            ExplainManager.Instance.HideExplain();
 
             nowMap.RemoveAt(0);
             StageUpdate();
