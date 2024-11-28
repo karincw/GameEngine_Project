@@ -304,9 +304,9 @@ namespace Shy
             }));
 
             SoundManager.Instance.StopBGM();
+            Karin.GameManager.Instance.ReleaseGame();
 
             battleUI.SetActive(false);
-            Karin.GameManager.Instance.ReleaseGame();
 
             if (playerNameCard.health <= 0)
             {

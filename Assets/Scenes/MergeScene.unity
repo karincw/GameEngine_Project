@@ -904,7 +904,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03a9a2546c03fe448a0dbf8a54830d12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentTurn: 0
   _playerText: {fileID: 2220697682911570402}
   _enemyText: {fileID: 3991445429755403724}
   turnChangeBtn: {fileID: 9125303882617351787}
