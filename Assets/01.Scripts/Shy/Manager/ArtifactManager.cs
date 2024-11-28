@@ -1,4 +1,4 @@
-﻿using BaseShapeType = Karin.BaseShapeType;
+﻿using CardData = Karin.CardDataSO;
 using UnityEngine;
 using System.Collections;
 
@@ -20,16 +20,16 @@ namespace Shy
 
     public class ArtifactManager : MonoSingleton<ArtifactManager>
     {
-        public BaseShapeType currentUseType;
+        public CardData currentUseCard;
 
         public void OnEvent(EVENT_TYPE _pType, EVENT_TYPE _eType = EVENT_TYPE.NONE)
         {
             StartCoroutine(EventRoutine(_pType, _eType));
         }
 
-        public void OnEvent(BaseShapeType _type, EVENT_TYPE _pType, EVENT_TYPE _eType = EVENT_TYPE.NONE)
+        public void OnEvent(CardData _type, EVENT_TYPE _pType, EVENT_TYPE _eType = EVENT_TYPE.NONE)
         {
-            currentUseType = _type;
+            currentUseCard = _type;
             OnEvent(_pType, _eType);
         }
         public void OnEvent(EVENT_TYPE _pType, EVENT_TYPE _eType, EnemyData _edata)

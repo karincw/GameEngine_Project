@@ -10,6 +10,8 @@ namespace Shy
 
         public abstract void Effect(Selector_Enemy _opponent);
 
-        public abstract void Init();
+        public virtual void Init()
+        { 
+        }
     }
 }

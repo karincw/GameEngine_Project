@@ -10,9 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 43566e8f1501ff9469dc24bc97a2dbec, type: 3}
-  m_Name: New Artifact Data
+  m_Name: RabbitJuly
   m_EditorClassIdentifier: 
-  iType: 0
-  itemName: 
-  itemExplain: 
-  artifact: {fileID: 0}
+  iType: 3
+  itemName: "7\uC6D4\uC758 \uD1A0\uB07C"
+  itemExplain: "7\uC744  \uB0B4\uBA74  1~5\uAC1C\uC758  \uCE69\uC744  \uC5BB\uAC70\uB098 
+    1~5\uAC1C\uC758  \uCE69\uC744  \uC783\uC2B5\uB2C8\uB2E4."
+  artifact: {fileID: 3125783770619259300, guid: 3b8e7b15eaf393d41afe8e90b8d7d662, type: 3}
