@@ -37,7 +37,8 @@ public class SoundManager : MonoSingleton<SoundManager>
     public void PlayBGM(AudioClip clip)
     {
         StopBGM();
-        _bgmPlayer.PlayOneShot(clip);
+        _bgmPlayer.clip = clip;
+        _bgmPlayer.Play();
     }
     public void PlayEffect(AudioClip clip)
     {
@@ -56,6 +57,7 @@ public class SoundManager : MonoSingleton<SoundManager>
     public void StopBGM()
     {
         _bgmPlayer.Stop();
+        _bgmPlayer.clip = null;
     }
 
     public void OpenPanel()
