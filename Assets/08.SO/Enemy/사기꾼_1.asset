@@ -15,10 +15,31 @@ MonoBehaviour:
   iType: 1
   itemName: "\uC0AC\uAE30\uAFBC"
   itemExplain: 
-  life: 22
+  life: 21
   cardDeck:
-  - {fileID: 11400000, guid: 9837fb294e3aa1447ae20bef24b7c91d, type: 2}
-  - {fileID: 11400000, guid: face458ac518709459105ca8c844c885, type: 2}
-  - {fileID: 11400000, guid: 9837fb294e3aa1447ae20bef24b7c91d, type: 2}
+  - _sticker: {fileID: 11400000, guid: a795047f5c219274f9e7f9dfba9bdd66, type: 2}
+    _count: 11
+    _shape: 3
+  - _sticker: {fileID: 11400000, guid: a795047f5c219274f9e7f9dfba9bdd66, type: 2}
+    _count: 12
+    _shape: 2
+  - _sticker: {fileID: 11400000, guid: a795047f5c219274f9e7f9dfba9bdd66, type: 2}
+    _count: 13
+    _shape: 0
+  - _sticker: {fileID: 11400000, guid: 33b392e3a6fa51a4ea1a97116edbf658, type: 2}
+    _count: 4
+    _shape: 2
+  - _sticker: {fileID: 11400000, guid: 54bc9e42d2a4e214cbc42411418ef9f4, type: 2}
+    _count: 5
+    _shape: 1
+  - _sticker: {fileID: 11400000, guid: ec3e4629fbbde294eaec8023604672c5, type: 2}
+    _count: 10
+    _shape: 1
+  - _sticker: {fileID: 11400000, guid: ec3e4629fbbde294eaec8023604672c5, type: 2}
+    _count: 1
+    _shape: 3
+  - _sticker: {fileID: 11400000, guid: a795047f5c219274f9e7f9dfba9bdd66, type: 2}
+    _count: 11
+    _shape: 1
   artifacts: []
-  audio: {fileID: 8300000, guid: e522e49c5c5f6a44e8dbf862a9a595e9, type: 3}
+  audio: {fileID: 8300000, guid: 4852c8aaaa8627f4eb8de7168a62bd89, type: 3}

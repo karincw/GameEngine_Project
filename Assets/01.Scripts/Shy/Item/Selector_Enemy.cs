@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using CardDataSO = Karin.CardDataSO;
 
 namespace Shy
 {
     public class Selector_Enemy : SelectorItem
     {
-        public EnemyData data;
+        internal EnemyData data;
+        public List<CardDataSO> cardDataSoList;
+
         [SerializeField] private TextMeshProUGUI namePos;
         [SerializeField] private TextMeshProUGUI lifePos;
         [SerializeField] private int Health;
@@ -29,24 +32,24 @@ namespace Shy
             health = data.life;
             namePos.text = data.itemName;
 
-            StageManager.Instance.ResetArtifact(this);
+            cardDataSoList = new List<CardDataSO>();
+            foreach (EnemyHaveCard _item in data.cardDeck)
+            {
+                cardDataSoList.Add(new CardDataSO(Karin.CardType.Gold, _item._count, _item._shape, _item._sticker.shape));
+            }
 
+            StageManager.Instance.ResetArtifact(this);
             gameObject.SetActive(true);
 
             for (int i = 0; i < data.artifacts.Count; i++)
                 StageManager.Instance.AddArtifact(data.artifacts[i], this);
         }
 
-        public void GetDamage()
-        {
-
-        }
-
         public override void OnPointerDown(PointerEventData eventData)
         {
             if (isButton == false) return;
 
-            StageManager.Instance.EnemyChoose(this);
+            StageManager.Instance.ItemChoose(this);
         }
     }
 }

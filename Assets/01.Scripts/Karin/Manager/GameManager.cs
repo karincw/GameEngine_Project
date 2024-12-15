@@ -51,12 +51,12 @@ namespace Karin
 #endif
 
         [ContextMenu("GameStart")]
-        public void GameStart(EnemyData eData)
+        public void GameStart()
         {
             //ReleaseGame();
             Debug.Log("GameStart");
             cardPack.SetCards(PlayerCardHolder.myCards);
-            cardPack.SetCards(eData.cardDeck);
+            cardPack.SetCards(StageManager.Instance.enemyNameCard.cardDataSoList);
             cardPlace.CardSetting();
             PlayerCardHolder.StartSettings(null);
             EnemyCardHolder.StartSettings();
@@ -70,7 +70,7 @@ namespace Karin
             PlayerCardHolder.Release();
             cardPack.Release();
             TurnManager.Instance.ChangeTurn(Turn.Player);
-            TurnManager.Instance.turnChangeBtn.interactable = true;
+            Coin_Turn.Instance.CoinToss(Turn.Player, TurnManager.Instance.turnChangeBtn);
             TurnManager.Instance.ReleaseTexts();
         }
 

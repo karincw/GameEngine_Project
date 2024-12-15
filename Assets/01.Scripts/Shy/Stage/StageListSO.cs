@@ -21,6 +21,6 @@ namespace Shy
     {
         public MAP_TYPE mapType;
         public List<Item_DataSO> spawnItem;
-        [Tooltip("최소, 최대 순서 상관 없음")] public Vector2 spawnCnt;
+        [Tooltip("최소, 최대 순서 상관 없음")] public Vector2 spawnCnt = Vector2.one;
     }
 }

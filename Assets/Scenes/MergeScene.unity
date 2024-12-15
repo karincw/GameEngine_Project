@@ -379,7 +379,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stageSO: {fileID: 11400000, guid: 839b5a3cba107b146a856c8420b0dff2, type: 2}
-  nowMap: []
+  stageList: []
   cardAnimeStart: {fileID: 7096282527078890123}
   selectorPos: {fileID: 1580393572042303702}
   enemyCardPrefab: {fileID: 1418144473465914197, guid: f0af84da7c520eb4db20c645d9590033, type: 3}
@@ -391,8 +391,8 @@ MonoBehaviour:
   playerNameCard: {fileID: 3647851974620186918}
   enemyNameCard: {fileID: 3378758993372777956}
   _startBt: {fileID: 2789529811725052306}
-  battleUI: {fileID: 8905824002300287836}
   End: {fileID: 1574265552}
+  battleUI: {fileID: 8905824002300287836}
 --- !u!114 &35916866
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3395,7 +3395,7 @@ GameObject:
   - component: {fileID: 1041112017}
   - component: {fileID: 1041112016}
   m_Layer: 5
-  m_Name: EnemyCardUi
+  m_Name: ShowEnemyCardUi
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13142,8 +13142,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -92.5}
-  m_SizeDelta: {x: 0, y: -185}
+  m_AnchoredPosition: {x: 0, y: -60}
+  m_SizeDelta: {x: 0, y: -220}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1618822900144941021
 GameObject:
@@ -13668,7 +13668,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 35916865}
         m_TargetAssemblyTypeName: Shy.StageManager, Assembly-CSharp
-        m_MethodName: GameStart
+        m_MethodName: GameStartBT
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -13949,7 +13949,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   iType: 0
-  data: {fileID: 11400000, guid: ecba0fd0c4c57134a83bc6dd31d55108, type: 2}
+  cardDataSoList: []
   namePos: {fileID: 1106294296206730831}
   lifePos: {fileID: 791610719011615405}
   Health: 0
@@ -14054,7 +14054,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   iType: 0
-  data: {fileID: 0}
+  cardDataSoList: []
   namePos: {fileID: 5278744120569336368}
   lifePos: {fileID: 540234872196120171}
   Health: 0

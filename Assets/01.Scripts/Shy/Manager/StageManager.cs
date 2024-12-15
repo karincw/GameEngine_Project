@@ -16,9 +16,9 @@ namespace Shy
 
     public class StageManager : MonoSingleton<StageManager>
     {
+        #region Variable
         [SerializeField, Header("STAGE")] private StageListSO stageSO;
-        [SerializeField] private List<Stage> nowMap;
-
+        [SerializeField] private List<Stage> stageList;
 
         [SerializeField, Header("ITEM")] private Transform cardAnimeStart;
         [SerializeField] private Transform selectorPos;
@@ -31,7 +31,7 @@ namespace Shy
         [SerializeField] private Transform display;
         [SerializeField] private Transform displayPos;
 
-        [SerializeField, Header("NAMECARD")] private EnemyData playerNormalSO;
+        [SerializeField, Header("NAME CARD")] private EnemyData playerNormalSO;
         public Selector_Enemy playerNameCard;
         public Selector_Enemy enemyNameCard;
         [SerializeField] private Button _startBt;
@@ -39,148 +39,133 @@ namespace Shy
         private bool canUseItem = false;
         private CardBase[] enemyHaveCards = new CardBase[31];
 
+        [SerializeField] private GameObject End;
+
         [SerializeField, Header("BATTLE")] private GameObject battleUI;
+        #endregion
 
-
+        #region Artifact
         public void ResetArtifact(Selector_Enemy _nameCard = null)
         {
             if (_nameCard == null) _nameCard = playerNameCard;
-
             Transform pos = _nameCard.transform.GetChild(0).Find("Artifact");
 
-            for (int i = pos.childCount; i > 0; i--)
-            {
-                Destroy(pos.GetChild(0).gameObject);
-            }
+            for (int i = pos.childCount; i > 0; i--) Destroy(pos.GetChild(0).gameObject);
 
             _nameCard.artifacts.RemoveRange(0, _nameCard.artifacts.Count);
         }
 
         public void AddArtifact(ArtifactData _art, Selector_Enemy _nameCardPos = null)
         {
-            Debug.Log(_nameCardPos);
-
             if (_nameCardPos == null) _nameCardPos = playerNameCard;
 
             Artifact a = Instantiate(_art.artifact, _nameCardPos.transform.GetChild(0).Find("Artifact"));
             a.Init(_art);
             _nameCardPos.artifacts.Add(a);
         }
+        #endregion
 
-        #region ������ ����
+        #region Item
         public void SetItem()
         {
+            Debug.Log("Item Setting");
+            List<Item_DataSO> cList = new List<Item_DataSO>();
             selectorPos.gameObject.SetActive(true);
 
-            int rand = (int)Random.Range(Mathf.Min(nowMap[0].spawnCnt.x, nowMap[0].spawnCnt.y),
-                Mathf.Max(nowMap[0].spawnCnt.x, nowMap[0].spawnCnt.y) + 1);
-
-            List<Item_DataSO> cList = new List<Item_DataSO>();
+            int rand = (int)Random.Range(Mathf.Min(stageList[0].spawnCnt.x, stageList[0].spawnCnt.y),
+                Mathf.Max(stageList[0].spawnCnt.x, stageList[0].spawnCnt.y) + 1);
 
             while (selectorPos.childCount < rand)
             {
-                Item_DataSO c = nowMap[0].spawnItem[Random.Range(0, nowMap[0].spawnItem.Count)];
+                Item_DataSO c = stageList[0].spawnItem[Random.Range(0, stageList[0].spawnItem.Count)];
                 SelectorItem item = SelectorPooling.Instance.GetPool(c.iType);
 
                 item.transform.parent = selectorPos;
                 item.transform.GetChild(0).gameObject.SetActive(false);
-
                 item.Init(c);
-                nowMap[0].spawnItem.Remove(c);
+
+                stageList[0].spawnItem.Remove(c);
                 cList.Add(c);
             }
 
-            for (int i = 0; i < cList.Count; i++)
-                nowMap[0].spawnItem.Add(cList[i]);
+            for (int i = 0; i < cList.Count; i++) stageList[0].spawnItem.Add(cList[i]);
 
             canUseItem = false;
-            StartCoroutine(ItemAnime());
+            StartCoroutine(ItemAppearAnime());
         }
 
-        public IEnumerator ItemAnime()
+        public IEnumerator ItemAppearAnime()
         {
             yield return new WaitForEndOfFrame();
 
             Sequence seq = DOTween.Sequence();
-
             for (int i = 0; i < selectorPos.childCount; i++)
             {
                 Transform visual = selectorPos.GetChild(i).Find("Visual");
                 visual.position = cardAnimeStart.position;
-                visual.gameObject.SetActive(true);
-
-                seq.Append(visual.DOLocalMove(Vector3.zero, 0.8f));
+                seq.Append(visual.DOLocalMove(Vector3.zero, 0.8f).OnStart(() => visual.gameObject.SetActive(true)));
             }
-
             seq.OnComplete(() => canUseItem = true);
         }
 
-        public void EnemyChoose(SelectorItem _item)
+        public void ItemChoose(SelectorItem _item)
         {
             curSelectItem = _item;
+
+            if (curSelectItem is Selector_Enemy) EnemyChoose();
+        }
+        #endregion
+
+        #region Enemy
+        private void EnemyChoose()
+        {
+            Selector_Enemy item = curSelectItem as Selector_Enemy;
+            int enemyCardCnt = item.cardDataSoList.Count;
+
             enemyCardUi.gameObject.SetActive(true);
+            enemyCardUi.GetChild(1).gameObject.SetActive(enemyCardCnt != 0);
+            enemyCardUi.GetChild(0).gameObject.SetActive(enemyCardCnt == 0);
 
-            if (_item is Selector_Enemy)
+            Debug.Log("EnemyChoosing");
+
+            if (enemyCardCnt == 0) return;
+
+            for (int i = 0; i < 30; i++)
             {
-                Selector_Enemy item = _item as Selector_Enemy;
-                if (item.data.cardDeck.Count != 0)
-                {
-                    enemyCardUi.GetChild(1).gameObject.SetActive(true);
-                    enemyCardUi.GetChild(0).gameObject.SetActive(false);
+                enemyHaveCards[i].gameObject.SetActive(i < enemyCardCnt);
 
-                    for (int i = 0; i < 30; i++)
+                if (i < enemyCardCnt)
+                {
+                    CardDataSO so = enemyHaveCards[i].cardData = item.cardDataSoList[i];
+                    Transform paPos = enemyHaveCards[i].transform.GetChild(0);
+                    Color32 _color = Color.white;
+                    TMP_FontAsset _font;
+                    Sprite _sprite = CardManager.Instance.ShapeToSpriteDictionary[enemyHaveCards[i].cardData.specialShape];
+
+                    #region Center Sticker
+                    if (so.specialShape == (SpecialShapeType)so.shape)
+                        _color = CardManager.Instance.ShapeToColorDictionary[so.specialShape];
+
+                    paPos.GetChild(0).GetComponent<Image>().color = _color;
+                    paPos.GetChild(0).GetComponent<Image>().sprite = _sprite;
+                    #endregion
+
+                    #region Out Sticker
+                    _font = (int)so.shape < 2 ? CardManager.Instance.PinkFont : CardManager.Instance.BlackFont;
+                    _color = (int)so.shape < 2 ? Color.red : Color.black;
+                    _sprite = CardManager.Instance.ShapeToSpriteDictionary[(SpecialShapeType)so.shape];
+
+                    for (int j = 1; j < 3; j++)
                     {
-                        if (i < item.data.cardDeck.Count)
-                        {
-                            enemyHaveCards[i].gameObject.SetActive(true);
-                            enemyHaveCards[i].cardData = item.data.cardDeck[i];
-                            CardDataSO so = enemyHaveCards[i].cardData;
+                        Image v = paPos.GetChild(j).GetComponent<Image>();
+                        v.sprite = _sprite;
+                        v.color = _color;
 
-                            Transform visual = enemyHaveCards[i].transform.GetChild(0);
-                            Color32 color;
-
-                            if (so.specialShape == (SpecialShapeType)so.shape)
-                                color = CardManager.Instance.ShapeToColorDictionary[(SpecialShapeType)so.shape];
-                            else
-                                color = Color.white;
-
-                            visual.GetChild(0).GetComponent<Image>().color = color;
-                            visual.GetChild(0).GetComponent<Image>().sprite = CardManager.Instance.ShapeToSpriteDictionary[enemyHaveCards[i].cardData.specialShape];
-
-                            TMP_FontAsset font;
-                            Sprite sprite;
-
-                            if (so.shape == BaseShapeType.Diamond || so.shape == BaseShapeType.Heart)
-                            {
-                                font = CardManager.Instance.PinkFont;
-                                color = Color.red;
-                                sprite = CardManager.Instance.ShapeToSpriteDictionary[(SpecialShapeType)so.shape];
-                            }
-                            else
-                            {
-                                font = CardManager.Instance.BlackFont;
-                                color = Color.black;
-                                sprite = CardManager.Instance.ShapeToSpriteDictionary[(SpecialShapeType)so.shape];
-                            }
-
-                            visual.GetChild(1).GetComponent<Image>().sprite = sprite;
-                            visual.GetChild(1).GetComponent<Image>().color = color;
-                            visual.GetChild(2).GetComponent<Image>().sprite = sprite;
-                            visual.GetChild(2).GetComponent<Image>().color = color;
-
-                            visual.GetChild(3).GetComponent<TextMeshProUGUI>().text = CardManager.Instance.GetCountText(so.count);
-                            visual.GetChild(3).GetComponent<TextMeshProUGUI>().font = font;
-                            visual.GetChild(4).GetComponent<TextMeshProUGUI>().text = CardManager.Instance.GetCountText(so.count);
-                            visual.GetChild(4).GetComponent<TextMeshProUGUI>().font = font;
-                        }
-                        else
-                            enemyHaveCards[i].gameObject.SetActive(false);
+                        TextMeshProUGUI txt = paPos.GetChild(j + 2).GetComponent<TextMeshProUGUI>();
+                        txt.text = CardManager.Instance.GetCountText(so.count);
+                        txt.font = _font;
                     }
-                }
-                else
-                {
-                    enemyCardUi.transform.GetChild(0).gameObject.SetActive(true);
-                    enemyCardUi.transform.GetChild(1).gameObject.SetActive(false);
+                    #endregion
                 }
             }
         }
@@ -193,22 +178,9 @@ namespace Shy
 
             enemyNameCard.Init((curSelectItem as Selector_Enemy).data);
             //여기서 전투 시작 함수
-
+      
             SoundManager.Instance.PlayBGM((curSelectItem as Selector_Enemy).data.audio);
-            StartCoroutine(StartGameCoroutine());
-        }
-
-        private IEnumerator StartGameCoroutine()
-        {
-            DisplayManager.Instance.SignUpdate("");
-            battleUI.SetActive(true);
-            display.DOMoveY(displayAnime.position.y, 0.8f);
-
-            ArtifactManager.Instance.ArtifactsInit();
-
-            yield return new WaitForSeconds(1f);
-
-            ArtifactManager.Instance.OnEvent(EVENT_TYPE.STAGE_START, EVENT_TYPE.STAGE_START, (curSelectItem as Selector_Enemy).data);
+            StartCoroutine(StartBattleCoroutine());
         }
 
         public void EnemyCancel()
@@ -218,40 +190,41 @@ namespace Shy
         }
         #endregion
 
-        public void StageUpdate()
+        private void Start()
         {
-            StartCoroutine(Updating());
+            DisplayManager.Instance.SignUpdate("");
+            for (int i = 0; i < 30; i++) Instantiate(enemyCardPrefab, enemyCardUi.GetChild(1));
+            enemyHaveCards = enemyCardUi.GetChild(1).GetComponentsInChildren<CardBase>();
+            MapInit();
         }
 
-        private IEnumerator Updating()
+        public void StageUpdate() { StartCoroutine(UpdatingCoroutine()); }
+
+        private IEnumerator UpdatingCoroutine()
         {
-            Debug.Log("StageUpdate : " + nowMap[0].mapType);
-            DisplayManager.Instance.SignUpdate(nowMap[0].mapType == MAP_TYPE.BATTLE ? "WHO'S NEXT?" : "CHOOSE ONE");
-
-
+            DisplayManager.Instance.SignUpdate(stageList[0].mapType == MAP_TYPE.BATTLE ? "WHO'S NEXT?" : "CHOOSE ONE");
             yield return new WaitForSeconds(0.7f);
-
-            if (nowMap[0].mapType != MAP_TYPE.EVENT) SetItem();
+            if (stageList[0].mapType != MAP_TYPE.EVENT) SetItem();
         }
-
-        [SerializeField] private GameObject End;
+        
         public void StageClear()
         {
             SelectorPooling.Instance.ReturnPool(selectorPos.GetComponentsInChildren<SelectorItem>());
             ExplainManager.Instance.HideExplain();
 
-            if (nowMap.Count == 1)
+            stageList.RemoveAt(0);
+
+            if (stageList.Count == 0)
             {
                 Debug.Log("clear");
                 End.SetActive(true);
                 return;
             }
-
-            nowMap.RemoveAt(0);
+            
             StageUpdate();
         }
 
-        public void StageInit()
+        public void MapInit()
         {
             //display
             DisplayManager.Instance.SignUpdate("");
@@ -266,7 +239,7 @@ namespace Shy
             enemyNameCard.gameObject.SetActive(false);
 
             //Map
-            nowMap = new List<Stage>(stageSO.stageList);
+            stageList = new List<Stage>(stageSO.stageList);
 
             battleUI.SetActive(false);
             _startBt.interactable = true;
@@ -275,26 +248,28 @@ namespace Shy
             display.DOMoveY(displayPos.position.y, 0.7f).OnComplete(() => DisplayManager.Instance.SignUpdate("Own Card"));
         }
 
-        private void Start()
-        {
-            DisplayManager.Instance.SignUpdate("");
-            for (int i = 0; i < 30; i++)
-            {
-                Instantiate(enemyCardPrefab, enemyCardUi.GetChild(1));
-            }
-            enemyHaveCards = enemyCardUi.GetChild(1).GetComponentsInChildren<CardBase>();
-            StageInit();
-        }
-
-        public void GameStart()
+        public void GameStartBT()
         {
             _startBt.interactable = false;
-
             playerNameCard.transform.GetChild(0).gameObject.SetActive(true);
             playerNameCard.transform.GetChild(0).DOLocalMoveY(100, 1f).OnComplete(() => StageUpdate());
         }
 
-        public void GameFin()
+        #region Battle
+        private IEnumerator StartBattleCoroutine()
+        {
+            DisplayManager.Instance.SignUpdate("");
+            battleUI.SetActive(true);
+            display.DOMoveY(displayAnime.position.y, 0.8f);
+
+            ArtifactManager.Instance.ArtifactsInit();
+
+            yield return new WaitForSeconds(1f);
+
+            ArtifactManager.Instance.OnEvent(EVENT_TYPE.STAGE_START, EVENT_TYPE.STAGE_START);
+        }
+
+        public void BattleFin()
         {
             Sequence seq = DOTween.Sequence();
             seq.Append(enemyNameCard.transform.GetChild(0).DOMoveY(8, 1.5f).OnComplete(() =>
@@ -305,28 +280,23 @@ namespace Shy
 
             SoundManager.Instance.StopBGM();
             Karin.GameManager.Instance.ReleaseGame();
-
             battleUI.SetActive(false);
+            ExplainManager.Instance.HideExplain();
 
-            if (playerNameCard.health <= 0)
+            if (playerNameCard.health <= 0) //플레이어 죽는 거
             {
-                //플레이어 죽는 거
-                Debug.Log("enemy win");
-                
                 seq.Append(display.DOMoveY(displayPos.position.y, 0.7f));
                 seq.OnComplete(() => DisplayManager.Instance.DieSign());
             }
             else if (enemyNameCard.health <= 0)
             {
-                Debug.Log("player win");
                 int vlu = (curSelectItem as Selector_Enemy).data.life - 5;
 
                 seq.Append(display.DOMoveY(displayPos.position.y, 0.7f).OnStart(()=>
-                Damage((vlu >= 5 ? vlu : 5), Turn.Enemy, ATTACK_TYPE.HEAL, false)));
+                    Damage(vlu >= 5 ? vlu : 5, Turn.Enemy, ATTACK_TYPE.HEAL, false))); //reward
                 seq.OnComplete(() => StageClear());
             }
         }
-
 
         public bool Damage(int _value, Turn _turn, ATTACK_TYPE _atkType = ATTACK_TYPE.ATTACK, bool cardEffect = true)
         {
@@ -342,8 +312,8 @@ namespace Shy
                 DamageEffect.Instance.Damage(_value, enemyNameCard, cardEffect);
                 return enemyNameCard.health - _value <= 0;
             }
-
             return false;
         }
+        #endregion
     }
 }

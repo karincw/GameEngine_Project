@@ -19,6 +19,7 @@ namespace Shy
             }
         }
 
+        #region Get
         public SelectorItem GetPool(ITEM_TYPE _type)
         {
             for (int i = 0; i < poolResult.Count; i++)
@@ -33,13 +34,16 @@ namespace Shy
 
             return CreatePool(_type);
         }
+        #endregion
 
+        #region Return
         public void ReturnPool(SelectorItem _item)
         {
             _item.transform.parent = transform;
             _item.gameObject.SetActive(false);
             poolResult.Add(_item);
         }
+
         public void ReturnPool(SelectorItem[] _item)
         {
             if (_item == null) return;
@@ -51,7 +55,9 @@ namespace Shy
                 poolResult.Add(item);
             }
         }
+        #endregion
 
+        #region Create
         public SelectorItem CreatePool(ITEM_TYPE _type)
         {
             if (!poolingItem.ContainsKey(_type)) return null;
@@ -60,5 +66,6 @@ namespace Shy
             item.gameObject.SetActive(false);
             return item;
         }
+        #endregion
     }
 }

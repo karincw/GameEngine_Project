@@ -21,22 +21,21 @@ MonoBehaviour:
     spawnItem:
     - {fileID: 11400000, guid: 303fab3807c04d642b5db0fad627d88c, type: 2}
     - {fileID: 11400000, guid: 303fab3807c04d642b5db0fad627d88c, type: 2}
-    - {fileID: 11400000, guid: 745c3680384abb6469b0c3a83d767385, type: 2}
-    - {fileID: 11400000, guid: 745c3680384abb6469b0c3a83d767385, type: 2}
-    - {fileID: 11400000, guid: 646521cbad27cae43b73895a18703de8, type: 2}
-    - {fileID: 11400000, guid: 7b6010a00f5f78943ba0522e90634fdd, type: 2}
-    - {fileID: 11400000, guid: 7b6010a00f5f78943ba0522e90634fdd, type: 2}
-    - {fileID: 11400000, guid: 54bc9e42d2a4e214cbc42411418ef9f4, type: 2}
     - {fileID: 11400000, guid: 646521cbad27cae43b73895a18703de8, type: 2}
     - {fileID: 11400000, guid: d550d4486df45e848a1b3f6ffebf1de5, type: 2}
-    spawnCnt: {x: 2, y: 4}
+    - {fileID: 11400000, guid: 54bc9e42d2a4e214cbc42411418ef9f4, type: 2}
+    - {fileID: 11400000, guid: 745c3680384abb6469b0c3a83d767385, type: 2}
+    - {fileID: 11400000, guid: 7b6010a00f5f78943ba0522e90634fdd, type: 2}
+    - {fileID: 11400000, guid: 646521cbad27cae43b73895a18703de8, type: 2}
+    - {fileID: 11400000, guid: 745c3680384abb6469b0c3a83d767385, type: 2}
+    - {fileID: 11400000, guid: 7b6010a00f5f78943ba0522e90634fdd, type: 2}
+    spawnCnt: {x: 1, y: 4}
   - mapType: 0
     spawnItem:
-    - {fileID: 11400000, guid: f290fce500f62a44c88ce909f472a72f, type: 2}
+    - {fileID: 11400000, guid: e9d5d22c3bffef84690c8b3db894ac76, type: 2}
     - {fileID: 11400000, guid: 88287f86d565bc144b0d2be479da6232, type: 2}
-    - {fileID: 11400000, guid: 6452673bb5c530449a7de28a3e3f9987, type: 2}
     - {fileID: 11400000, guid: bdb197f0608b9e347a007002b2651d69, type: 2}
-    spawnCnt: {x: 2, y: 1}
+    spawnCnt: {x: 1, y: 3}
   - mapType: 2
     spawnItem:
     - {fileID: 11400000, guid: 646521cbad27cae43b73895a18703de8, type: 2}
@@ -49,21 +48,21 @@ MonoBehaviour:
     - {fileID: 11400000, guid: a795047f5c219274f9e7f9dfba9bdd66, type: 2}
     - {fileID: 11400000, guid: 39ca85a2d596a7b4ea1840374569d566, type: 2}
     - {fileID: 11400000, guid: 39ca85a2d596a7b4ea1840374569d566, type: 2}
-    spawnCnt: {x: 3, y: 4}
+    spawnCnt: {x: 1, y: 3}
   - mapType: 2
     spawnItem:
     - {fileID: 11400000, guid: 30afb8e6f5ca49141b06da764e4228e3, type: 2}
     - {fileID: 11400000, guid: 2c9321f977bbd8142b4369493f9b0b13, type: 2}
     - {fileID: 11400000, guid: 1e142c53695316b4198af12d76785c28, type: 2}
-    spawnCnt: {x: 2, y: 2}
+    spawnCnt: {x: 1, y: 2}
   - mapType: 0
     spawnItem:
     - {fileID: 11400000, guid: f214e357d6e05dc42911da8b906eb09b, type: 2}
-    - {fileID: 11400000, guid: a9ffd3edd819e6a4c8ca48130ab3399b, type: 2}
+    - {fileID: 11400000, guid: b4431c6e809ff6e449da32298fc4cf38, type: 2}
     - {fileID: 11400000, guid: be44153023df11548919de2b1fce5cdc, type: 2}
     - {fileID: 11400000, guid: 9291070056977594c911dca0e318e340, type: 2}
     - {fileID: 11400000, guid: dfb4a00afbab69c4d8f9adeb75074530, type: 2}
-    spawnCnt: {x: 1, y: 3}
+    spawnCnt: {x: 2, y: 2}
   - mapType: 2
     spawnItem:
     - {fileID: 11400000, guid: 39ca85a2d596a7b4ea1840374569d566, type: 2}
@@ -79,9 +78,8 @@ MonoBehaviour:
     spawnCnt: {x: 2, y: 4}
   - mapType: 0
     spawnItem:
-    - {fileID: 11400000, guid: 6452673bb5c530449a7de28a3e3f9987, type: 2}
-    - {fileID: 11400000, guid: b2cc1e0494054be4298a794da31354a8, type: 2}
-    - {fileID: 11400000, guid: 99d6e765914daf143a7b75b85c05fe84, type: 2}
+    - {fileID: 11400000, guid: 130f4bb0b8024854e95b122e7186d3d6, type: 2}
+    - {fileID: 11400000, guid: 338b1e7c97479cd43b289ec17d700abf, type: 2}
     spawnCnt: {x: 1, y: 1}
   - mapType: 2
     spawnItem:
@@ -94,9 +92,10 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 46f9d6cec73f9c343b4dc51d53d67961, type: 2}
     - {fileID: 11400000, guid: 46f9d6cec73f9c343b4dc51d53d67961, type: 2}
     - {fileID: 11400000, guid: 46f9d6cec73f9c343b4dc51d53d67961, type: 2}
-    spawnCnt: {x: 2, y: 3}
+    spawnCnt: {x: 3, y: 3}
   - mapType: 0
     spawnItem:
-    - {fileID: 11400000, guid: 338b1e7c97479cd43b289ec17d700abf, type: 2}
-    - {fileID: 11400000, guid: 130f4bb0b8024854e95b122e7186d3d6, type: 2}
-    spawnCnt: {x: 1, y: 1}
+    - {fileID: 11400000, guid: 0ad91df77750b3e4890cdfe99dc314a2, type: 2}
+    - {fileID: 11400000, guid: b2cc1e0494054be4298a794da31354a8, type: 2}
+    - {fileID: 11400000, guid: 68d894e6c36cc4b418f93794bb9f990b, type: 2}
+    spawnCnt: {x: 2, y: 3}
