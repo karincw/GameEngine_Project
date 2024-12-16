@@ -17,8 +17,14 @@ MonoBehaviour:
   itemExplain: 
   life: 24
   cardDeck:
-  - {fileID: 11400000, guid: 9837fb294e3aa1447ae20bef24b7c91d, type: 2}
-  - {fileID: 11400000, guid: face458ac518709459105ca8c844c885, type: 2}
-  - {fileID: 11400000, guid: 9837fb294e3aa1447ae20bef24b7c91d, type: 2}
+  - _sticker: {fileID: 11400000, guid: 1b9c67e5e7e01744582502b7cd89914d, type: 2}
+    _count: 6
+    _shape: 1
+  - _sticker: {fileID: 11400000, guid: 1b9c67e5e7e01744582502b7cd89914d, type: 2}
+    _count: 6
+    _shape: 1
+  - _sticker: {fileID: 11400000, guid: 46f9d6cec73f9c343b4dc51d53d67961, type: 2}
+    _count: 9
+    _shape: 3
   artifacts: []
   audio: {fileID: 8300000, guid: ed5ebcdf9c0fb5e48a0e0fdc7adbc59b, type: 3}

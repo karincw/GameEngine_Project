@@ -15,7 +15,7 @@ namespace Karin
 
         public void GoToTitle()
         {
-            StageManager.Instance.StageInit();
+            StageManager.Instance.MapInit();
         }
 
         public void ExitGame()

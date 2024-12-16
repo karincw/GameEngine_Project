@@ -59,7 +59,7 @@ namespace Shy
             if (_target.health <= 0)
             {
                 yield return new WaitForSeconds(1.2f);
-                StageManager.Instance.GameFin();
+                StageManager.Instance.BattleFin();
             }
             else if (_turnChange)
             {

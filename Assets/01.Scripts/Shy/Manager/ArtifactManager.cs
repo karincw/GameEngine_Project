@@ -32,16 +32,6 @@ namespace Shy
             currentUseCard = _type;
             OnEvent(_pType, _eType);
         }
-        public void OnEvent(EVENT_TYPE _pType, EVENT_TYPE _eType, EnemyData _edata)
-        {
-            StartCoroutine(EventRoutine(_pType, _eType, _edata));
-        }
-
-
-        public void GameStart(EnemyData eData)
-        {
-            Karin.GameManager.Instance.GameStart(eData);
-        }
 
         public void ArtifactsInit()
         {
@@ -57,7 +47,7 @@ namespace Shy
             }
         }
 
-        private IEnumerator EventRoutine(EVENT_TYPE _pType, EVENT_TYPE _eType, EnemyData _edata = null)
+        private IEnumerator EventRoutine(EVENT_TYPE _pType, EVENT_TYPE _eType)
         {
             if (_pType != EVENT_TYPE.NONE)
             {
@@ -87,7 +77,7 @@ namespace Shy
                 }
             }
 
-            if(_pType == EVENT_TYPE.STAGE_START) Karin.GameManager.Instance.GameStart(_edata);
+            if(_pType == EVENT_TYPE.STAGE_START) Karin.GameManager.Instance.GameStart();
         }
     }
 }

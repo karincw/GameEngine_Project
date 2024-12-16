@@ -15,14 +15,44 @@ MonoBehaviour:
   iType: 1
   itemName: "\uB4B7\uACE8\uBAA9\uC758 \uC655"
   itemExplain: 
-  life: 40
+  life: 30
   cardDeck:
-  - {fileID: 11400000, guid: 59436164414a71542b1b968476c5d110, type: 2}
-  - {fileID: 11400000, guid: 59436164414a71542b1b968476c5d110, type: 2}
-  - {fileID: 11400000, guid: 2945add722d30a54b9ba85919da62b30, type: 2}
-  - {fileID: 11400000, guid: 2945add722d30a54b9ba85919da62b30, type: 2}
-  - {fileID: 11400000, guid: 2d1a6cf8881cbde4a885c824d9613ce9, type: 2}
-  - {fileID: 11400000, guid: 2d1a6cf8881cbde4a885c824d9613ce9, type: 2}
+  - _sticker: {fileID: 11400000, guid: 745c3680384abb6469b0c3a83d767385, type: 2}
+    _count: 12
+    _shape: 0
+  - _sticker: {fileID: 11400000, guid: 745c3680384abb6469b0c3a83d767385, type: 2}
+    _count: 12
+    _shape: 1
+  - _sticker: {fileID: 11400000, guid: 745c3680384abb6469b0c3a83d767385, type: 2}
+    _count: 12
+    _shape: 2
+  - _sticker: {fileID: 11400000, guid: 745c3680384abb6469b0c3a83d767385, type: 2}
+    _count: 12
+    _shape: 3
+  - _sticker: {fileID: 11400000, guid: 745c3680384abb6469b0c3a83d767385, type: 2}
+    _count: 11
+    _shape: 0
+  - _sticker: {fileID: 11400000, guid: 745c3680384abb6469b0c3a83d767385, type: 2}
+    _count: 11
+    _shape: 1
+  - _sticker: {fileID: 11400000, guid: 745c3680384abb6469b0c3a83d767385, type: 2}
+    _count: 11
+    _shape: 2
+  - _sticker: {fileID: 11400000, guid: 745c3680384abb6469b0c3a83d767385, type: 2}
+    _count: 11
+    _shape: 3
+  - _sticker: {fileID: 11400000, guid: 646521cbad27cae43b73895a18703de8, type: 2}
+    _count: 13
+    _shape: 3
+  - _sticker: {fileID: 11400000, guid: 646521cbad27cae43b73895a18703de8, type: 2}
+    _count: 11
+    _shape: 3
+  - _sticker: {fileID: 11400000, guid: 646521cbad27cae43b73895a18703de8, type: 2}
+    _count: 11
+    _shape: 3
+  - _sticker: {fileID: 11400000, guid: 646521cbad27cae43b73895a18703de8, type: 2}
+    _count: 11
+    _shape: 3
   artifacts:
   - {fileID: 11400000, guid: 06d3335f7e859d74689cc2da4e37173d, type: 2}
   audio: {fileID: 8300000, guid: 6a44c43d3a8f5a7498c74307f71da34a, type: 3}

@@ -98,10 +98,10 @@ namespace Karin
 
             if (cards.Count <= 0)
             {
+                TurnManager.Instance.Attack(10, AttackText.isAttackSticker(card.cardData.specialShape));
                 StartSettings(() =>
                 {
                     CardDrag(false);
-                    TurnManager.Instance.Attack(10);
                 });
 
             }

@@ -210,9 +210,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardData: {fileID: 11400000, guid: 9837fb294e3aa1447ae20bef24b7c91d, type: 2}
+  CardVisual: {fileID: 0}
+  ChangeSprite: {fileID: 0}
+  _useCardClip: {fileID: 0}
   isDragging: 0
   indexChange: 0
   canDrag: 0
+  usedCard: 0
   _isHovering: 0
   _moveSpeedLimit: 50
   originPos: {x: 0, y: 0, z: 0}
@@ -236,7 +240,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 437910178, guid: 15741bcbcefbf5e44a1e268cabdfa632, type: 3}
+  m_Sprite: {fileID: 2090582405, guid: 15741bcbcefbf5e44a1e268cabdfa632, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

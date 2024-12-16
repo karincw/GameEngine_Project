@@ -15,10 +15,25 @@ MonoBehaviour:
   iType: 1
   itemName: "\uC0AC\uAE30\uAFBC"
   itemExplain: 
-  life: 38
+  life: 35
   cardDeck:
-  - {fileID: 11400000, guid: 9837fb294e3aa1447ae20bef24b7c91d, type: 2}
-  - {fileID: 11400000, guid: face458ac518709459105ca8c844c885, type: 2}
-  - {fileID: 11400000, guid: 9837fb294e3aa1447ae20bef24b7c91d, type: 2}
+  - _sticker: {fileID: 11400000, guid: a795047f5c219274f9e7f9dfba9bdd66, type: 2}
+    _count: 9
+    _shape: 3
+  - _sticker: {fileID: 11400000, guid: a795047f5c219274f9e7f9dfba9bdd66, type: 2}
+    _count: 9
+    _shape: 3
+  - _sticker: {fileID: 11400000, guid: 130eae284740fd140a74e4a8159da8b9, type: 2}
+    _count: 9
+    _shape: 3
+  - _sticker: {fileID: 11400000, guid: 130eae284740fd140a74e4a8159da8b9, type: 2}
+    _count: 9
+    _shape: 3
+  - _sticker: {fileID: 11400000, guid: 46f9d6cec73f9c343b4dc51d53d67961, type: 2}
+    _count: 9
+    _shape: 3
+  - _sticker: {fileID: 11400000, guid: 745c3680384abb6469b0c3a83d767385, type: 2}
+    _count: 9
+    _shape: 3
   artifacts: []
   audio: {fileID: 8300000, guid: e522e49c5c5f6a44e8dbf862a9a595e9, type: 3}
