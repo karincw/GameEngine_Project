@@ -10,6 +10,9 @@ namespace Karin
     {
         [Header("Settings")]
         private TextMeshProUGUI _text;
+
+        public int delayCnt;
+
         public int Count
         {
             get => _count;
@@ -22,6 +25,8 @@ namespace Karin
                 value = Mathf.Max(0, value);
                 if (value > Count)
                 {
+                    value += delayCnt;
+                    delayCnt = 0;
                     StartCoroutine(CountChangeCoroutine(1, _count, value));
                 }
                 else if (value < Count)
@@ -32,6 +37,17 @@ namespace Karin
                 _count = value;
             }
         }
+
+        public static bool isAttackSticker(SpecialShapeType _type)
+        {
+            if (_type == SpecialShapeType.Sword2) return true;
+            if (_type == SpecialShapeType.Sword3) return true;
+            if (_type == SpecialShapeType.Sword5) return true;
+            if (_type == SpecialShapeType.Sword7) return true;
+
+            return false;
+        }
+
         [SerializeField] private int _count;
 
         [Header("Fade")]
@@ -64,6 +80,7 @@ namespace Karin
 
         public IEnumerator CountChangeCoroutine(int add, int now, int final)
         {
+            Debug.Log("Count : " + Count + " / final : " + final);
             while (final != now)
             {
                 now += add;

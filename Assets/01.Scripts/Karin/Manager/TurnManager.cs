@@ -102,22 +102,38 @@ namespace Karin
             firstUse = false;
         }
 
-        public void Attack(int damage)
+        public void Attack(int damage, bool delay = false)
         {
-            Debug.Log("Attack Him!!!");
+            Debug.Log("Attack Him!!! " + damage);
             if (damage <= 0) return;
 
             var nowDamage = Mathf.Max(_enemyText.Count, _playerText.Count);
 
             if (_currentTurn == Turn.Player)
             {
-                _enemyText.Count = nowDamage + damage;
+                if(delay)
+                {
+                    _enemyText.delayCnt = nowDamage + damage;
+                }
+                else
+                {
+                    _enemyText.Count = nowDamage + damage;
+                }
+
                 _playerText.Count = 0;
                 _playerText.Fade(false);
             }
             else if (_currentTurn == Turn.Enemy)
             {
-                _playerText.Count = nowDamage + damage;
+                if (delay)
+                {
+                    _playerText.delayCnt = nowDamage + damage;
+                }
+                else
+                {
+                    _playerText.Count = nowDamage + damage;
+                }
+                
                 _enemyText.Count = 0;
                 _enemyText.Fade(false);
             }

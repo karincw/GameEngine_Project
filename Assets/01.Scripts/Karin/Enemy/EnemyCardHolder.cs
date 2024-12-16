@@ -74,7 +74,7 @@ namespace Karin
             if (cards.Count <= 0)
             {
                 StartSettings();
-                TurnManager.Instance.Attack(10);
+                TurnManager.Instance.Attack(10, AttackText.isAttackSticker(card.cardData.specialShape));
             }
         }
         private void AddLayout()
