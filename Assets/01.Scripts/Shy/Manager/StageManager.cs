@@ -241,7 +241,7 @@ namespace Shy
             //Map
             stageList = new List<Stage>(stageSO.stageList);
 
-            battleUI.SetActive(false);
+            Release();
             _startBt.interactable = true;
             
             //display
@@ -269,6 +269,14 @@ namespace Shy
             ArtifactManager.Instance.OnEvent(EVENT_TYPE.STAGE_START, EVENT_TYPE.STAGE_START);
         }
 
+        public void Release()
+        {
+            SoundManager.Instance.StopBGM();
+            Karin.GameManager.Instance.ReleaseGame();
+            battleUI.SetActive(false);
+            ExplainManager.Instance.HideExplain();
+        }
+
         public void BattleFin()
         {
             Sequence seq = DOTween.Sequence();
@@ -278,10 +286,7 @@ namespace Shy
                 enemyNameCard.transform.GetChild(0).DOLocalMoveY(-100, 0);
             }));
 
-            SoundManager.Instance.StopBGM();
-            Karin.GameManager.Instance.ReleaseGame();
-            battleUI.SetActive(false);
-            ExplainManager.Instance.HideExplain();
+            Release();
 
             if (playerNameCard.health <= 0) //플레이어 죽는 거
             {
