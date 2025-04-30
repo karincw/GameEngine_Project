@@ -38,18 +38,18 @@ namespace Shy
                 cardDataSoList.Add(new CardDataSO(Karin.CardType.Gold, _item._count, _item._shape, _item._sticker.shape));
             }
 
-            StageManager.Instance.ResetArtifact(this);
+            GameManager.Instance.ResetArtifact(this);
             gameObject.SetActive(true);
 
             for (int i = 0; i < data.artifacts.Count; i++)
-                StageManager.Instance.AddArtifact(data.artifacts[i], this);
+                GameManager.Instance.AddArtifact(data.artifacts[i], this);
         }
 
         public override void OnPointerDown(PointerEventData eventData)
         {
             if (isButton == false) return;
 
-            StageManager.Instance.ItemChoose(this);
+            GameManager.Instance.ItemChoose(this);
         }
     }
 }

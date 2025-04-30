@@ -15,7 +15,7 @@ namespace Karin
 
         public void GoToTitle()
         {
-            StageManager.Instance.MapInit();
+            Shy.GameManager.Instance.MapInit();
         }
 
         public void ExitGame()

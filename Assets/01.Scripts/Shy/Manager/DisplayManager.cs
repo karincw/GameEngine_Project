@@ -46,7 +46,7 @@ namespace Shy
             for (int i = 0; i < roopCnt; i++)
             {
                 seq.Append(boardMes.DOColor(baseColor, delay));
-                seq.Append(boardMes.DOColor(shineColor, delay)).OnComplete(() => StageManager.Instance.MapInit());
+                seq.Append(boardMes.DOColor(shineColor, delay)).OnComplete(() => GameManager.Instance.MapInit());
             }
         }
     }

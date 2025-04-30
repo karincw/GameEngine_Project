@@ -38,7 +38,7 @@ namespace Shy
         public override void OnPointerDown(PointerEventData eventData)
         {
             Karin.GameManager.Instance.PlayerCardHolder.ChangeSpecialType(cardData);
-            StageManager.Instance.StageClear();
+            GameManager.Instance.StageClear();
         }
 
         public override void OnPointerEnter(PointerEventData eventData)

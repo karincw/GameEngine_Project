@@ -69,7 +69,7 @@ namespace Karin
                 AttackText at = GetHitText();
                 attack = true;
                 
-                if (Shy.StageManager.Instance.Damage(at.Count, _currentTurn)) return;
+                if (Shy.GameManager.Instance.Damage(at.Count, _currentTurn)) return;
 
                 at.Count = 0;
                 at.Fade(false);

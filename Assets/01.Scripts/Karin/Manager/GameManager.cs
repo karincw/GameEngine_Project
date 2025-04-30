@@ -56,7 +56,7 @@ namespace Karin
             //ReleaseGame();
             Debug.Log("GameStart");
             cardPack.SetCards(PlayerCardHolder.myCards);
-            cardPack.SetCards(StageManager.Instance.enemyNameCard.cardDataSoList);
+            cardPack.SetCards(Shy.GameManager.Instance.enemyNameCard.cardDataSoList);
             cardPlace.CardSetting();
             PlayerCardHolder.StartSettings(null);
             EnemyCardHolder.StartSettings();

@@ -206,10 +206,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 35916864}
-  - component: {fileID: 35916865}
+  - component: {fileID: 35916867}
   - component: {fileID: 35916866}
   m_Layer: 0
-  m_Name: StageManager
+  m_Name: GameManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -230,33 +230,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1880512567}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &35916865
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 35916863}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 982dadcd751166d4ab02826d67038d42, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  stageSO: {fileID: 11400000, guid: 839b5a3cba107b146a856c8420b0dff2, type: 2}
-  stageList: []
-  cardAnimeStart: {fileID: 7096282527078890123}
-  selectorPos: {fileID: 1580393572042303702}
-  enemyCardPrefab: {fileID: 1418144473465914197, guid: f0af84da7c520eb4db20c645d9590033, type: 3}
-  enemyCardUi: {fileID: 1041112015}
-  displayAnime: {fileID: 8120371169931876621}
-  display: {fileID: 1661162969}
-  displayPos: {fileID: 1724289873576652220}
-  playerNormalSO: {fileID: 11400000, guid: 8fb6b0ba5102a3f4eaafa1f3c4dde389, type: 2}
-  playerNameCard: {fileID: 3647851974620186918}
-  enemyNameCard: {fileID: 3378758993372777956}
-  _startBt: {fileID: 2789529811725052306}
-  End: {fileID: 1574265552}
-  battleUI: {fileID: 8905824002300287836}
 --- !u!114 &35916866
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -275,6 +248,33 @@ MonoBehaviour:
   particle: {fileID: 1235062011}
   pStackPos: {fileID: 5799457007761705744}
   eStackPos: {fileID: 7727988476946753363}
+--- !u!114 &35916867
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 35916863}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78071ba783e88094db56295cb7733bc1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stageSO: {fileID: 11400000, guid: 839b5a3cba107b146a856c8420b0dff2, type: 2}
+  stageList: []
+  cardAnimeStart: {fileID: 7096282527078890123}
+  selectorPos: {fileID: 1580393572042303702}
+  enemyCardPrefab: {fileID: 1418144473465914197, guid: f0af84da7c520eb4db20c645d9590033, type: 3}
+  enemyCardUi: {fileID: 1041112015}
+  displayAnime: {fileID: 8120371169931876621}
+  display: {fileID: 1661162969}
+  displayPos: {fileID: 1724289873576652220}
+  playerNormalSO: {fileID: 11400000, guid: 8fb6b0ba5102a3f4eaafa1f3c4dde389, type: 2}
+  playerNameCard: {fileID: 3647851974620186918}
+  enemyNameCard: {fileID: 3378758993372777956}
+  _startBt: {fileID: 2789529811725052306}
+  End: {fileID: 1574265552}
+  battleUI: {fileID: 8905824002300287836}
 --- !u!1 &103957656
 GameObject:
   m_ObjectHideFlags: 0
@@ -598,7 +598,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 35916865}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Shy.StageManager, Assembly-CSharp
         m_MethodName: EnemyCancel
         m_Mode: 1
@@ -648,51 +648,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 169532033}
   m_CullTransparentMesh: 1
---- !u!1 &189761270
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 189761271}
-  - component: {fileID: 189761272}
-  m_Layer: 0
-  m_Name: GameManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &189761271
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 189761270}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1880512567}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &189761272
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 189761270}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f3d3b56cddc76149b867fa6a7cbdc08, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  testType: 8
 --- !u!1 &272705330
 GameObject:
   m_ObjectHideFlags: 0
@@ -2646,7 +2601,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 35916865}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Shy.StageManager, Assembly-CSharp
         m_MethodName: EnemySelect
         m_Mode: 1
@@ -11101,7 +11056,6 @@ Transform:
   m_Children:
   - {fileID: 1467683876}
   - {fileID: 2009002531}
-  - {fileID: 189761271}
   - {fileID: 2145250918}
   - {fileID: 35916864}
   m_Father: {fileID: 644933375}
@@ -13334,6 +13288,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99bef09fc1282bd4f82429d32daafbe7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  delayCnt: 0
   _count: 0
   _fadeTime: 0.2
   _fadeOutColor: {r: 0.043137256, g: 0.05882353, b: 0.043137256, a: 1}
@@ -13528,8 +13483,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 35916865}
-        m_TargetAssemblyTypeName: Shy.StageManager, Assembly-CSharp
+      - m_Target: {fileID: 35916867}
+        m_TargetAssemblyTypeName: Shy.GameManager, Assembly-CSharp
         m_MethodName: GameStartBT
         m_Mode: 1
         m_Arguments:
@@ -13990,6 +13945,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99bef09fc1282bd4f82429d32daafbe7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  delayCnt: 0
   _count: 0
   _fadeTime: 0.2
   _fadeOutColor: {r: 0.043137256, g: 0.05882353, b: 0.043137256, a: 1}

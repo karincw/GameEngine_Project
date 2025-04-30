@@ -26,8 +26,8 @@ namespace Shy
 
         public override void OnPointerDown(PointerEventData eventData)
         {
-            StageManager.Instance.AddArtifact(data);
-            StageManager.Instance.StageClear();
+            GameManager.Instance.AddArtifact(data);
+            GameManager.Instance.StageClear();
         }
     }
 }

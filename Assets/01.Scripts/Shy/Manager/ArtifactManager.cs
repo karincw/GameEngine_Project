@@ -35,12 +35,12 @@ namespace Shy
 
         public void ArtifactsInit()
         {
-            foreach (Artifact item in StageManager.Instance.playerNameCard.artifacts)
+            foreach (Artifact item in GameManager.Instance.playerNameCard.artifacts)
             {
                 for (int i = 0; i < item.effects.Length; i++)
                     item.effects[i].Init();
             }
-            foreach (Artifact item in StageManager.Instance.enemyNameCard.artifacts)
+            foreach (Artifact item in GameManager.Instance.enemyNameCard.artifacts)
             {
                 for (int i = 0; i < item.effects.Length; i++)
                     item.effects[i].Init();
@@ -51,12 +51,12 @@ namespace Shy
         {
             if (_pType != EVENT_TYPE.NONE)
             {
-                foreach (Artifact item in StageManager.Instance.playerNameCard.artifacts)
+                foreach (Artifact item in GameManager.Instance.playerNameCard.artifacts)
                 {
                     for (int i = 0; i < item.effects.Length; i++)
                         if (item.effects[i].eType == _pType)
                         {
-                            item.effects[i].Effect(StageManager.Instance.enemyNameCard);
+                            item.effects[i].Effect(GameManager.Instance.enemyNameCard);
                             yield return new WaitForSeconds(1.75f);
                             break;
                         }
@@ -65,12 +65,12 @@ namespace Shy
 
             if (_eType != EVENT_TYPE.NONE)
             {
-                foreach (Artifact item in StageManager.Instance.enemyNameCard.artifacts)
+                foreach (Artifact item in GameManager.Instance.enemyNameCard.artifacts)
                 {
                     for (int i = 0; i < item.effects.Length; i++)
                         if (item.effects[i].eType == _eType)
                         {
-                            item.effects[i].Effect(StageManager.Instance.playerNameCard);
+                            item.effects[i].Effect(GameManager.Instance.playerNameCard);
                             yield return new WaitForSeconds(0.1f);
                             break;
                         }
