@@ -78,7 +78,7 @@ namespace Karin
             }
             else
             {
-                Coin_Turn.Instance.CoinToss(_currentTurn, turnChangeBtn);
+                Coin.Instance.CoinToss(_currentTurn, turnChangeBtn);
             }
             
             useCard = false;

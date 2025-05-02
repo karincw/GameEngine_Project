@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using DG.Tweening;
@@ -16,15 +15,11 @@ namespace Shy
         [SerializeField] private Transform pStackPos;
         [SerializeField] private Transform eStackPos;
 
-       
-
         public void HealthEvent(int _value, Selector_Enemy _target, bool cardEffect = true)
         {
             damageTxt.gameObject.SetActive(true);
-
             damageTxt.text = "  " + Mathf.Abs(_value).ToString();
             damageTxt.color = _value < 0 ? minusColor : plusColor;
-
             damageTxt.transform.localScale = Vector3.one;
 
             if (cardEffect)
@@ -35,7 +30,6 @@ namespace Shy
             Karin.GameManager.Instance.PlayerCardHolder.CardDrag(false);
 
             Sequence seq = DOTween.Sequence();
-
             seq.Append(damageTxt.transform.DOMove(_target.transform.GetChild(0).Find("Coin_Img").GetChild(0).position, 0.8f)
                 .OnComplete(()=>
                 {
@@ -64,9 +58,8 @@ namespace Shy
             else if (_turnChange)
             {
                 if(_target.health > 0)
-                    Coin_Turn.Instance.CoinToss(Karin.TurnManager.Instance.CurrentTurn, Karin.TurnManager.Instance.turnChangeBtn);
+                    Coin.Instance.CoinToss(Karin.TurnManager.Instance.CurrentTurn, Karin.TurnManager.Instance.turnChangeBtn);
             }
-            
         }
     }
 }

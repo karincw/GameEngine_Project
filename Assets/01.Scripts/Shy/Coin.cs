@@ -1,13 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using TMPro;
-
 using Karin;
 using UnityEngine.UI;
 
-public class Coin_Turn : MonoSingleton<Coin_Turn>
+public class Coin : MonoSingleton<Coin>
 {
     private TextMeshProUGUI tmp;
 

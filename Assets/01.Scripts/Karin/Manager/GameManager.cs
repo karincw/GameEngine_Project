@@ -70,7 +70,7 @@ namespace Karin
             PlayerCardHolder.Release();
             cardPack.Release();
             TurnManager.Instance.ChangeTurn(Turn.Player);
-            Coin_Turn.Instance.CoinToss(Turn.Player, TurnManager.Instance.turnChangeBtn);
+            Coin.Instance.CoinToss(Turn.Player, TurnManager.Instance.turnChangeBtn);
             TurnManager.Instance.ReleaseTexts();
         }
 
