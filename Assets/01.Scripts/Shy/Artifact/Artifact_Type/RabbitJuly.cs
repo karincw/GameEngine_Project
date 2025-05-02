@@ -4,16 +4,22 @@ namespace Shy
 {
     public class RabbitJuly : ArtifactEffect
     {
-        public override void Effect(Selector_Enemy _opponent)
+        private Selector_Character user;
+
+        public override void Effect(Selector_Character _opponent)
         {
             if(ArtifactManager.Instance.currentUseCard.count == Karin.CountType.Seven)
             {
-                Debug.Log("¿€µø");
-                int value = Random.Range(1, 6);
-                value *= (Random.Range(0, 2) == 1) ? -1 : 1;
+                int value = Random.Range(1, 7);
 
-                HealthEffect.Instance.HealthEvent(value, transform.parent.GetComponentInParent<Selector_Enemy>(), false);
+                if(Random.Range(0, 2) == 1) HealthEffect.Instance.HealthEvent(value, user, false);
+                else HealthEffect.Instance.HealthEvent(-value, _opponent, false);
             }
+        }
+
+        public override void Init()
+        {
+            user = transform.parent.GetComponentInParent<Selector_Character>();
         }
     }
 

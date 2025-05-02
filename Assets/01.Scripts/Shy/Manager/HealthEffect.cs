@@ -15,7 +15,7 @@ namespace Shy
         [SerializeField] private Transform pStackPos;
         [SerializeField] private Transform eStackPos;
 
-        public void HealthEvent(int _value, Selector_Enemy _target, bool cardEffect = true)
+        public void HealthEvent(int _value, Selector_Character _target, bool cardEffect = true)
         {
             damageTxt.gameObject.SetActive(true);
             damageTxt.text = "  " + Mathf.Abs(_value).ToString();
@@ -42,7 +42,7 @@ namespace Shy
             seq.Insert(0, damageTxt.transform.DOScale(0.5f, 0.5f));
         }
 
-        private IEnumerator HealthAnime(int _value, Selector_Enemy _target, bool _turnChange)
+        private IEnumerator HealthAnime(int _value, Selector_Character _target, bool _turnChange)
         {
             for (int i = 0; i < Mathf.Abs(_value); i++)
             {

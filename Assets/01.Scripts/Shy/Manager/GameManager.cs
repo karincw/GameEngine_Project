@@ -32,8 +32,8 @@ namespace Shy
         [SerializeField] private Transform displayPos;
 
         [SerializeField, Header("NAME CARD")] private EnemyData playerNormalSO;
-        public Selector_Enemy playerNameCard;
-        public Selector_Enemy enemyNameCard;
+        public Selector_Character playerNameCard;
+        public Selector_Character enemyNameCard;
         [SerializeField] private Button _startBt;
 
         private CardBase[] enemyHaveCards = new CardBase[31];
@@ -44,7 +44,7 @@ namespace Shy
         #endregion
 
         #region Artifact
-        public void ResetArtifact(Selector_Enemy _nameCard = null)
+        public void ResetArtifact(Selector_Character _nameCard = null)
         {
             if (_nameCard == null) _nameCard = playerNameCard;
             Transform pos = _nameCard.transform.GetChild(0).Find("Artifact");
@@ -54,7 +54,7 @@ namespace Shy
             _nameCard.artifacts.RemoveRange(0, _nameCard.artifacts.Count);
         }
 
-        public void AddArtifact(ArtifactData _art, Selector_Enemy _nameCardPos = null)
+        public void AddArtifact(ArtifactData _art, Selector_Character _nameCardPos = null)
         {
             if (_nameCardPos == null) _nameCardPos = playerNameCard;
 
@@ -109,14 +109,14 @@ namespace Shy
         {
             curSelectItem = _item;
 
-            if (curSelectItem is Selector_Enemy) EnemyChoose();
+            if (curSelectItem is Selector_Character) EnemyChoose();
         }
         #endregion
 
         #region Enemy
         private void EnemyChoose()
         {
-            Selector_Enemy item = curSelectItem as Selector_Enemy;
+            Selector_Character item = curSelectItem as Selector_Character;
             int enemyCardCnt = item.cardDataSoList.Count;
 
             enemyCardUi.gameObject.SetActive(true);
@@ -173,10 +173,10 @@ namespace Shy
             while (selectorPos.childCount != 0)
                 SelectorPooling.Instance.ReturnPool(selectorPos.GetComponentInChildren<SelectorItem>());
 
-            enemyNameCard.Init((curSelectItem as Selector_Enemy).data);
+            enemyNameCard.Init((curSelectItem as Selector_Character).data);
             //여기서 전투 시작 함수
       
-            SoundManager.Instance.PlayBGM((curSelectItem as Selector_Enemy).data.audio);
+            SoundManager.Instance.PlayBGM((curSelectItem as Selector_Character).data.audio);
             StartCoroutine(StartBattleCoroutine());
         }
 
@@ -292,7 +292,7 @@ namespace Shy
             }
             else if (enemyNameCard.health <= 0)
             {
-                int vlu = (curSelectItem as Selector_Enemy).data.life - 5;
+                int vlu = (curSelectItem as Selector_Character).data.life - 5;
 
                 seq.Append(display.DOMoveY(displayPos.position.y, 0.7f).OnStart(()=>
                     Damage(vlu >= 5 ? vlu : 5, Turn.Enemy, ATTACK_TYPE.HEAL, false))); //reward

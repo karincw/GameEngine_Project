@@ -7,7 +7,7 @@ using CardDataSO = Karin.CardDataSO;
 
 namespace Shy
 {
-    public class Selector_Enemy : SelectorItem
+    public class Selector_Character : SelectorItem
     {
         internal EnemyData data;
         public List<CardDataSO> cardDataSoList;
