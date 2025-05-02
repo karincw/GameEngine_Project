@@ -14,7 +14,7 @@ namespace Shy
                 int value = Random.Range(1, 6);
                 value *= (Random.Range(0, 2) == 1) ? -1 : 1;
 
-                DamageEffect.Instance.Damage(value, transform.parent.GetComponentInParent<Selector_Enemy>(), false);
+                HealthEffect.Instance.HealthEvent(value, transform.parent.GetComponentInParent<Selector_Enemy>(), false);
             }
         }
     }

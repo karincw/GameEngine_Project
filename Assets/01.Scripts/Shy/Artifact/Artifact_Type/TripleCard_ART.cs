@@ -13,7 +13,7 @@ namespace Shy
         {
             if(++cnt == 12)
             {
-                DamageEffect.Instance.Damage(3, transform.parent.GetComponentInParent<Selector_Enemy>(), false);
+                HealthEffect.Instance.HealthEvent(3, transform.parent.GetComponentInParent<Selector_Enemy>(), false);
                 cnt = 0;
                 Debug.Log("자신 3 회복");
             }

@@ -36,7 +36,6 @@ namespace Shy
         public Selector_Enemy enemyNameCard;
         [SerializeField] private Button _startBt;
 
-        private bool canUseItem = false;
         private CardBase[] enemyHaveCards = new CardBase[31];
 
         [SerializeField] private GameObject End;
@@ -90,7 +89,6 @@ namespace Shy
 
             for (int i = 0; i < cList.Count; i++) stageList[0].spawnItem.Add(cList[i]);
 
-            canUseItem = false;
             StartCoroutine(ItemAppearAnime());
         }
 
@@ -105,7 +103,6 @@ namespace Shy
                 visual.position = cardAnimeStart.position;
                 seq.Append(visual.DOLocalMove(Vector3.zero, 0.8f).OnStart(() => visual.gameObject.SetActive(true)));
             }
-            seq.OnComplete(() => canUseItem = true);
         }
 
         public void ItemChoose(SelectorItem _item)
@@ -309,12 +306,12 @@ namespace Shy
 
             if (_turn == Turn.Enemy)
             {
-                DamageEffect.Instance.Damage(_value, playerNameCard, cardEffect);
+                HealthEffect.Instance.HealthEvent(_value, playerNameCard, cardEffect);
                 return playerNameCard.health - _value <= 0;
             }
             else if (_turn == Turn.Player)
             {
-                DamageEffect.Instance.Damage(_value, enemyNameCard, cardEffect);
+                HealthEffect.Instance.HealthEvent(_value, enemyNameCard, cardEffect);
                 return enemyNameCard.health - _value <= 0;
             }
             return false;

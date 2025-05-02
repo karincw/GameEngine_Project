@@ -6,7 +6,7 @@ using DG.Tweening;
 
 namespace Shy
 {
-    public class DamageEffect : MonoSingleton<DamageEffect>
+    public class HealthEffect : MonoSingleton<HealthEffect>
     {
         [SerializeField] private Color minusColor;
         [SerializeField] private Color plusColor;
@@ -18,7 +18,7 @@ namespace Shy
 
        
 
-        public void Damage(int _value, Selector_Enemy _target, bool cardEffect = true)
+        public void HealthEvent(int _value, Selector_Enemy _target, bool cardEffect = true)
         {
             damageTxt.gameObject.SetActive(true);
 
