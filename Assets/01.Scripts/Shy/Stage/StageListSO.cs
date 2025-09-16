@@ -21,6 +21,6 @@ namespace Shy
     {
         public MAP_TYPE mapType;
         public List<Item_DataSO> spawnItem;
-        [Tooltip("ÃÖ¼Ò, ÃÖ´ë ¼ø¼­ »ó°ü ¾øÀ½")] public Vector2 spawnCnt = Vector2.one;
+        [Tooltip("ÃƒÃ–Â¼Ã’, ÃƒÃ–Â´Ã« Â¼Ã¸Â¼Â­ Â»Ã³Â°Ã¼ Â¾Ã¸Ã€Â½")] public Vector2Int spawnCnt = Vector2Int.one;
     }
 }
