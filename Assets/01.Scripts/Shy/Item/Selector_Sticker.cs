@@ -10,28 +10,26 @@ namespace Shy
     {
         private StickerData data;
         private CardDataSO cardData;
+        
         [SerializeField] private Image image;
         [SerializeField] private Image[] subIcon;
-        [SerializeField] private TextMeshProUGUI[] num;
-
-        private int rand, shape;
+        [SerializeField] private TextMeshProUGUI[] numTmp;
 
         public override void Init(Item_DataSO _base)
         {
             data = _base as StickerData;
-            CardManager cm = CardManager.Instance;
+            CardManager _cm = CardManager.Instance;
 
-            rand = Random.Range(1, 14);
-            shape = Random.Range(0, 4);
+            int _num = Random.Range(1, 14), _shape = Random.Range(0, 4);
 
-            num[0].text = cm.GetCountText((CountType)rand);
-            num[1].text = cm.GetCountText((CountType)rand);
+            numTmp[0].text = _cm.GetCountText((CountType)_num);
+            numTmp[1].text = _cm.GetCountText((CountType)_num);
 
-            ChangeSprite(subIcon[0], (SpecialShapeType)shape);
-            ChangeSprite(subIcon[1], (SpecialShapeType)shape);
+            ChangeSprite(subIcon[0], (SpecialShapeType)_shape);
+            ChangeSprite(subIcon[1], (SpecialShapeType)_shape);
             ChangeSprite(image, data.shape);
 
-            cardData = new CardDataSO(CardType.Gold, (CountType)rand, (BaseShapeType)shape, data.shape);
+            cardData = new CardDataSO(CardType.Gold, (CountType)_num, (BaseShapeType)_shape, data.shape);
             gameObject.SetActive(true);
         }
 
@@ -49,12 +47,11 @@ namespace Shy
         private void ChangeSprite(Image _img, SpecialShapeType _shape)
         {
             _img.sprite = CardManager.Instance.ShapeToSpriteDictionary[_shape];
-            Color color;
+            
             if (CardManager.Instance.ShapeToColorDictionary.ContainsKey(_shape))
-                color = CardManager.Instance.ShapeToColorDictionary[_shape];
+                img.color = CardManager.Instance.ShapeToColorDictionary[_shape];
             else
-                color = Color.white;
-            _img.color = color;
+                img.color = Color.white;
         }
     }
 }
