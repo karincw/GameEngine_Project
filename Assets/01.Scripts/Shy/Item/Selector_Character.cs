@@ -11,19 +11,17 @@ namespace Shy
     {
         internal EnemyData data;
         public List<CardDataSO> cardDataSoList;
+        public List<Artifact> artifacts;
 
-        [SerializeField] private TextMeshProUGUI namePos;
-        [SerializeField] private TextMeshProUGUI lifePos;
-        [SerializeField] private int Health;
+        [SerializeField] private TextMeshProUGUI namePos, lifePos;
         [SerializeField] private bool isButton = true;
 
+        private int Health;
         public int health
         {
             get => Health;
             set { Health = value; lifePos.text = Health.ToString(); }
         }
-        public List<Artifact> artifacts;
-
 
         public override void Init(Item_DataSO _base)
         {
@@ -47,9 +45,7 @@ namespace Shy
 
         public override void OnPointerDown(PointerEventData eventData)
         {
-            if (isButton == false) return;
-
-            GameManager.Instance.ItemChoose(this);
+            if (isButton) GameManager.Instance.ItemChoose(this);
         }
     }
 }
