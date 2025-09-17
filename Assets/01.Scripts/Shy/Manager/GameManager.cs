@@ -75,15 +75,15 @@ namespace Shy
 
             while (selectorPos.childCount < _cnt)
             {
-                Item_DataSO _item = stageList[0].spawnItem[Random.Range(0, stageList[0].spawnItem.Count)];
+                Item_DataSO _data = stageList[0].spawnItem[Random.Range(0, stageList[0].spawnItem.Count)];
                 
-                SelectorItem item = SelectorPooling.Instance.GetPool(_item.iType);
-                item.transform.parent = selectorPos;
-                item.transform.GetChild(0).gameObject.SetActive(false);
-                item.Init(_item);
+                SelectorItem _item = SelectorPooling.Instance.GetPool(_data.iType);
+                _item.transform.parent = selectorPos;
+                _item.transform.GetChild(0).gameObject.SetActive(false);
+                _item.Init(_data);
 
-                stageList[0].spawnItem.Remove(_item);
-                cList.Add(_item);
+                stageList[0].spawnItem.Remove(_data);
+                cList.Add(_data);
             }
 
             for (int i = 0; i < cList.Count; i++) stageList[0].spawnItem.Add(cList[i]);
