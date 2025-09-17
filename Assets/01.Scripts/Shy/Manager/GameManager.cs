@@ -67,24 +67,23 @@ namespace Shy
         #region Item
         public void SetItem()
         {
-            Debug.Log("Item Setting");
             List<Item_DataSO> cList = new List<Item_DataSO>();
             selectorPos.gameObject.SetActive(true);
 
-            int rand = (int)Random.Range(Mathf.Min(stageList[0].spawnCnt.x, stageList[0].spawnCnt.y),
-                Mathf.Max(stageList[0].spawnCnt.x, stageList[0].spawnCnt.y) + 1);
+            int x = stageList[0].spawnCnt.x, y = stageList[0].spawnCnt.y;
+            int _cnt = Random.Range(Mathf.Min(x, y), Mathf.Max(x, y) + 1);
 
-            while (selectorPos.childCount < rand)
+            while (selectorPos.childCount < _cnt)
             {
-                Item_DataSO c = stageList[0].spawnItem[Random.Range(0, stageList[0].spawnItem.Count)];
-                SelectorItem item = SelectorPooling.Instance.GetPool(c.iType);
-
+                Item_DataSO _item = stageList[0].spawnItem[Random.Range(0, stageList[0].spawnItem.Count)];
+                
+                SelectorItem item = SelectorPooling.Instance.GetPool(_item.iType);
                 item.transform.parent = selectorPos;
                 item.transform.GetChild(0).gameObject.SetActive(false);
-                item.Init(c);
+                item.Init(_item);
 
-                stageList[0].spawnItem.Remove(c);
-                cList.Add(c);
+                stageList[0].spawnItem.Remove(_item);
+                cList.Add(_item);
             }
 
             for (int i = 0; i < cList.Count; i++) stageList[0].spawnItem.Add(cList[i]);
@@ -97,6 +96,7 @@ namespace Shy
             yield return new WaitForEndOfFrame();
 
             Sequence seq = DOTween.Sequence();
+            
             for (int i = 0; i < selectorPos.childCount; i++)
             {
                 Transform visual = selectorPos.GetChild(i).Find("Visual");
@@ -108,7 +108,6 @@ namespace Shy
         public void ItemChoose(SelectorItem _item)
         {
             curSelectItem = _item;
-
             if (curSelectItem is Selector_Character) EnemyChoose();
         }
         #endregion
@@ -122,8 +121,6 @@ namespace Shy
             enemyCardUi.gameObject.SetActive(true);
             enemyCardUi.GetChild(1).gameObject.SetActive(enemyCardCnt != 0);
             enemyCardUi.GetChild(0).gameObject.SetActive(enemyCardCnt == 0);
-
-            Debug.Log("EnemyChoosing");
 
             if (enemyCardCnt == 0) return;
 
@@ -174,8 +171,7 @@ namespace Shy
                 SelectorPooling.Instance.ReturnPool(selectorPos.GetComponentInChildren<SelectorItem>());
 
             enemyNameCard.Init((curSelectItem as Selector_Character).data);
-            //여기서 전투 시작 함수
-      
+
             SoundManager.Instance.PlayBGM((curSelectItem as Selector_Character).data.audio);
             StartCoroutine(StartBattleCoroutine());
         }
@@ -195,7 +191,7 @@ namespace Shy
             MapInit();
         }
 
-        public void StageUpdate() { StartCoroutine(UpdatingCoroutine()); }
+        public void StageUpdate() => StartCoroutine(UpdatingCoroutine());
 
         private IEnumerator UpdatingCoroutine()
         {
@@ -213,7 +209,6 @@ namespace Shy
 
             if (stageList.Count == 0)
             {
-                Debug.Log("clear");
                 End.SetActive(true);
                 return;
             }
@@ -223,25 +218,19 @@ namespace Shy
 
         public void MapInit()
         {
-            //display
             DisplayManager.Instance.SignUpdate("");
 
             End.SetActive(false);
 
-            //playerCard
             playerNameCard.Init(playerNormalSO);
             playerNameCard.transform.GetChild(0).transform.DOMoveY(-10, 0);
-
-            //enemyCard
             enemyNameCard.gameObject.SetActive(false);
 
-            //Map
             stageList = new List<Stage>(stageSO.stageList);
 
             Release();
             _startBt.interactable = true;
             
-            //display
             display.DOMoveY(displayPos.position.y, 0.7f).OnComplete(() => DisplayManager.Instance.SignUpdate("Own Card"));
         }
 
@@ -285,17 +274,17 @@ namespace Shy
 
             Release();
 
-            if (playerNameCard.health <= 0) //플레이어 죽는 거
+            if (playerNameCard.health <= 0)
             {
                 seq.Append(display.DOMoveY(displayPos.position.y, 0.7f));
                 seq.OnComplete(() => DisplayManager.Instance.DieSign());
             }
             else if (enemyNameCard.health <= 0)
             {
-                int vlu = (curSelectItem as Selector_Character).data.life - 5;
+                int _value = (curSelectItem as Selector_Character).data.life - 5;
 
                 seq.Append(display.DOMoveY(displayPos.position.y, 0.7f).OnStart(()=>
-                    Damage(vlu >= 5 ? vlu : 5, Turn.Enemy, ATTACK_TYPE.HEAL, false))); //reward
+                    Damage(_value >= 5 ? _value : 5, Turn.Enemy, ATTACK_TYPE.HEAL, false)));
                 seq.OnComplete(() => StageClear());
             }
         }
